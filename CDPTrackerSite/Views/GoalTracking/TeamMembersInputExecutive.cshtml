@@ -1,0 +1,371 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Performance Development System Results
+        </h2>
+
+        <p>
+            This report display the data from a particular employee. Up to 4 different bars for question, one for each Qrtr.
+        </p>
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    Site :
+                </p>
+                <select id="combo1" class="cbCoreValue form-control">
+                    <option value="-1"> Please select.... </option>
+                    <option value="0"> All Sites </option>
+
+                    @foreach (var site in Model)
+                    {
+                        <option value="@site.ID"> @site.Name </option>
+                    }
+
+                </select>
+            </div>
+        </div>
+
+                @*
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>
+                                Site :
+                            </p>
+                            <select id="combo1" class="cbCoreValue form-control">
+                                <option value="-1"> Please select.... </option>
+                                <option value="0"> All Sites </option>
+
+                                @foreach (var site in Model)
+                                {
+                                    <option value="@site.ID"> @site.Name </option>
+                                }
+
+                            </select>
+
+                        </div>
+                        <div class="col-md-4">
+                            <p>
+                                Manager :
+                            </p>
+                            <select id="combo2" class="cbCoreValue form-control">
+
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <p>
+                                Project :
+                            </p>
+                            <select id="combo3" class="cbCoreValue form-control">
+
+                            </select>
+                        </div>
+                    </div>
+                    <p>
+
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                Team Member :
+                            </p>
+                            <select id="combo4" class="cbCoreValue form-control">
+
+                            </select>
+
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                Cycle :
+                            </p>
+                            <select id="combo5" class="cbCoreValue form-control">
+
+                            </select>
+                        </div>
+                    </div>
+                    <p>
+
+                    </p>
+                *@
+
+                <div class="fancy-tables-container">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <p>
+
+                </p>
+
+
+
+                <div class="fancy-tables-container">
+
+                    <div>
+                        <div id="barchart_material" style="min-height: 450px; height: 100%; width: 80% "></div>
+                    </div>
+                  
+
+                </div>
+                <p>
+
+                </p>
+                <div class="fancy-tables-container">
+                    <div id="Questions">
+
+                    </div>
+                </div>
+                <p>
+
+                </p>
+      
+        <p>
+
+        </p>
+
+                <div class="fancy-tables-container">
+
+                    <div class="fancy-tables-container">
+                        <table id="location" class="table table-bordered"></table>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <p>
+
+        </p>
+
+       
+
+        <script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", { packages: ["bar"] });
+         
+        </script>
+
+        <script type="text/javascript">
+
+
+
+
+            function myGraph(idLocation, nameLocation) {
+
+                var dataToSend = {};
+                dataToSend.LocationId = idLocation;
+                dataToSend.nameLocation = nameLocation;
+            
+
+                $.ajax({
+                    type: "post",
+                    url: "GetDataResponsesTeamMemberInput",
+                    data: { data: JSON.stringify(dataToSend) },
+                    success: function (sr) {
+
+                        console.debug(sr);
+                        
+                        var data = new google.visualization.DataTable();
+
+                        data.addColumn('string', 'Questions');
+
+                        data.addColumn('number', 'Strongly_Agree');
+
+                        data.addColumn('number', 'Agree');
+
+                        data.addColumn('number', 'Neutral');
+
+                        data.addColumn('number', 'Disagree');
+
+                        data.addColumn('number', 'Strongly_Disagree');
+                       
+                    
+
+                        if (sr == null) {
+                            data.addRow(['0', 0, 0, 0, 0, 0]);
+                            $(".hello").remove();
+                            $(".helloQuestion").remove();
+                            $(".helloul").remove();
+                            $(".helloText").remove();
+                            $(".hellowDarkness").remove();
+                            $(".helloQuestionsText").remove();
+
+                        }
+                        else {
+                            for (var i = 0; i < sr.length; i++) {
+                               
+                                data.addRow([(i + 1).toString(), sr[i].Strongly_Agree, sr[i].Agree, -1* sr[i].Neutral, -1* sr[i].Disagree, -1* sr[i].Strongly_Disagree]);
+                            }
+
+                            
+                            var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+
+                            for (var i = 0; i < sr.length; i++) {
+                               
+                                questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + sr[i].Text + '</li>';
+                            }
+
+
+                            $(".hello").remove();
+                            $(".helloQuestion").remove();
+                            $(".helloul").remove();
+                            $(".helloText").remove();
+                            $(".helloQuestionsText").remove();
+                            $(".hellowDarkness").remove();
+                           
+                            questionsHTML += '</ul>';
+
+                            $('#Questions').append(questionsHTML);
+
+                            var thHTML = '<thead class="hello" class="table table-bordered">  <tr>  <th> Question </th>  <th> Strongly_Agree</th>  <th>Agree </th>  <th> Neutral </th> <th> Disagree</th> <th> Strongly_Disagree </th>   </tr> </thead>';
+
+
+                            $('#location').append(thHTML);
+
+                                for (var i = 0; i < sr.length; i++) {
+                                    var trHTML = '<tr class= "hellowDarkness"> ';
+
+                                    trHTML += '<td font-size: 8 pt>' + sr[i].Text + '</td>';
+                                    trHTML += '<td>' + sr[i].Strongly_Agree + '</td>';
+                                    trHTML += '<td>' + sr[i].Agree + '</td>';
+                                    trHTML += '<td>' + sr[i].Neutral + '</td>';
+                                    trHTML += '<td>' + sr[i].Disagree + '</td>';
+                                    trHTML += '<td>' + sr[i].Strongly_Disagree + '</td>';
+
+
+                                    trHTML += '</tr>';
+
+                                    $('#location').append(trHTML);
+                                }
+
+                            
+                              //  $('#location').append(trHTML);
+
+                            
+
+                        
+                            /*
+                            if (sr.Q1 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                                for (var i = 0; i < sr.Q1.length; i++) {
+                                    trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                $(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+
+                            // Data about  acutual Quarter
+                            if (sr.Q1 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                                for (var i = 0; i < sr.Q1.length; i++) {
+                                    trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                $(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q2 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q2[0].Quarter + ' </th>';
+                                for (var i = 0; i < sr.Q2.length; i++) {
+                                    trHTML += '<th>' + sr.Q2[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q3 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q3[0].Quarter + ' </th>';
+                                for (var i = 0; i < sr.Q3.length; i++) {
+                                    trHTML += '<th>' + sr.Q3[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q4 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q4[0].Quarter + ' </th>';
+                                for (var i = 0; i < sr.Q4.length; i++) {
+                                    trHTML += '<th>' + sr.Q4[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            */
+
+                        }
+
+
+
+
+
+
+                        // Instantiate and draw our chart, passing in some options
+                        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+                        chart.draw(data,
+                         {
+                             chart: {
+                                 title: 'All data',
+                                 subtitle: 'All data',
+
+                             },
+                             legend: { position: 'top', maxLines: 3 },
+                             colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff','#ffaaff'],
+                             hAxis:{
+                                 baselineColor: '#fff',
+                                 gridlineColor: '#fff',
+                                 textPosition: 'none'
+                             },
+                             bars: 'horizontal'
+
+                         });
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                })
+
+                return null;
+            }
+
+
+
+
+            $("#btnBuildReport").click(function () {
+
+                    var idLocation = $("#combo1").val();
+                    var nameLocation = $("#combo1 :selected").text();
+                   
+               
+                    myGraph(idLocation, nameLocation);
+
+            });
+
+
+
+
+        </script>

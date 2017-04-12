@@ -1,0 +1,199 @@
+﻿ <!DOCTYPE html>
+
+@model DataSource.GoalTracking
+
+@{
+    ViewBag.Title = "Create New Goal";
+}
+
+@if (ViewBag.message != null)
+{
+    <script type='text/javascript'>alert('Please choose a training category.');</script>                              
+}
+
+<h2>@ViewBag.Title</h2>
+<style type="text/css">
+  table{
+    border-collapse: collapse;
+    border: 0;
+  }
+  table td{
+    border: 0;
+  }
+</style>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type ="text/javascript">
+    $(document).ready(function () {
+        var dropdown = document.getElementById("trainingCategory")
+        var textbox = document.getElementById("TDUs2")
+        var description = document.getElementById("description")
+        $("#trainingCategory").change(function () {
+            switch (dropdown.value) {
+                case "1":
+                    description.textContent = '@ViewBag.Description[0]'
+                    textbox.max = '@ViewBag.MaxTDU[0]'
+                    textbox.value = '@ViewBag.TDU[0]'
+                    break;
+                case "2":
+                    description.textContent = '@ViewBag.Description[1]'
+                    textbox.max = '@ViewBag.MaxTDU[1]'
+                    textbox.value = '@ViewBag.TDU[1]'
+                    break;
+                case "3":
+                    description.textContent = '@ViewBag.Description[2]'
+                    textbox.max = '@ViewBag.MaxTDU[2]'
+                    textbox.value = '@ViewBag.TDU[2]'
+                    break;
+                case "4":
+                    description.textContent = '@ViewBag.Description[3]'
+                    textbox.max = '@ViewBag.MaxTDU[3]'
+                    textbox.value = '@ViewBag.TDU[3]'
+                    break;
+                case "5":
+                    description.textContent = '@ViewBag.Description[4]'
+                    textbox.max = '@ViewBag.MaxTDU[4]'
+                    textbox.value = '@ViewBag.TDU[4]'
+                    break;
+                case "6":
+                    description.textContent = '@ViewBag.Description[5]'
+                    textbox.max = '@ViewBag.MaxTDU[5]'
+                    textbox.value = '@ViewBag.TDU[5]'
+                    break;
+                default:
+                    description.textContent = "Please select a training category to show its description";
+                    textbox.value = 0;
+            }
+        })
+        $("#sourceOption").change(function () {
+            var sourceText = document.getElementById("sourceText");
+            var source = document.getElementById("source");
+            var sourceDropdown = document.getElementById("sourceOption");
+            if (sourceDropdown.value == "0") {
+                sourceText.style.display = 'block';
+                source.style.display = 'block'
+            }
+            else {
+                sourceText.style.display = 'none';
+                source.style.display = 'none';
+            }
+        })
+    })
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Goal Tracking</legend>
+        <div style="float:right; max-width: 300px">
+            <b>Mastery Objective Thinking:</b>
+            <span>
+            <br/>
+            What exactly do I want to know and be able to do when the quarter is over?
+            <br/><br/>
+            How can my manager know that I have learned?
+            <br/><br/>
+            What kind of evidence can be provided?
+            <br /><br/>
+            </span>
+            <span><b>Please consider</b>
+                <br/>
+                Is the objective worded so that the learning target is clear for me and my manager?
+                <br/><br/>                
+                Is the the objective worth knowing/learning?
+                <br/><br/>
+                Is the objective challenging and attainable?
+                <br/><br/>
+                Is the objective able to be assessed and measured?
+                <br/><br/>
+            </span>
+        </div>
+        @Html.HiddenFor(m => m.ResourceId)
+        <div class="editor-label">
+            <table id="editGoalTable">
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Goal)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(model => model.Goal, new { style = "width:500px", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Goal)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Training Category
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DropDownListFor(model => model.TrainingCategoryId, new SelectList(ViewBag.ListOfCategories2, "Value", "Text"), "Please select a category", new { required = "required", @id = "trainingCategory", @name = "trainingCategory", @runat = "server" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Description
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="description">Please select a training category to show its description</label>
+                    </td>
+                </tr>
+                </table>
+            <table>
+                <tr>
+                    <td>
+                        Source
+                    </td>
+                    <td id="sourceText" style="display:none">
+                        Specify
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DropDownListFor(model => model.SourceId, new SelectList(ViewBag.ListOfSources2, "Value", "Text"), "Please select a source", new { required = "required", id = "sourceOption" })      
+                    </td>
+                    <td>     
+                        <input id="source" name="source" style="display:none; height:20px" required></>
+                    </td>
+                </tr>
+                </table>
+            <table>
+                <tr>
+                    <td>
+                        TDUs
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input id="TDUs2" type="number" name="TDUs2" min="0"></>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Finish By
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(model => model.FinishDate, new { @class = "date", @readonly = "readonly" })            
+                        @Html.ValidationMessageFor(model => model.FinishDate)
+                    </td>
+                </tr>
+            </table>   
+        </div>
+        <p>
+            <input type="submit" value="Create"/>
+        </p>
+    </fieldset>
+    <p>
+        <a href="@Url.Action("Index", "GoalTracking")">
+            <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to My Goals" style="border: none" />
+        </a>
+    </p>
+}

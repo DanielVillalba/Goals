@@ -1,0 +1,200 @@
+﻿ <!DOCTYPE html>
+
+@model DataSource.GoalTracking
+@{
+    ViewBag.Title = "Goal Edition";
+}
+<style type="text/css">
+  table{
+    border-collapse: collapse;
+    border: 0;
+  }
+  table td{
+    border: 0;
+  }
+</style>
+<script type="text/javascript">
+    $(function () {
+        $("#Year").val(@DateTime.Now.Year);
+    });
+    $(document).ready(function () {
+        var dropdown = document.getElementById("trainingCategory")
+        var textbox = document.getElementById("TDUs")
+        var description = document.getElementById("description")
+        textbox.max = @ViewBag.MaxTDU[ViewBag.TrainingCategoryId - 1]
+        @*textbox.value = '@ViewBag.TDU[ViewBag.TrainingCategoryId - 1]'*@
+        $("#sourceOption").change(function () {
+            var sourceText = document.getElementById("sourceText");
+            var source = document.getElementById("source");
+            var sourceDropdown = document.getElementById("sourceOption");
+            if (sourceDropdown.value == "0") {
+                sourceText.style.display = 'block';
+                source.style.display = 'block'
+            }
+            else {
+                sourceText.style.display = 'none';
+                source.style.display = 'none';
+            }
+        });
+        $("#trainingCategory").change(function () {
+            var dropdown = document.getElementById("trainingCategory")
+            var textbox = document.getElementById("TDUs")
+            var description = document.getElementById("description")
+            switch(dropdown.value)
+            {
+                case "1":                   
+                    description.textContent = '@ViewBag.Description[0]'
+                    textbox.max = '@ViewBag.MaxTDU[0]'
+                    textbox.value = '@ViewBag.TDU[0]'
+                    break;
+                case "2":
+                    description.textContent = '@ViewBag.Description[1]'
+                    textbox.max = '@ViewBag.MaxTDU[1]'
+                    textbox.value = '@ViewBag.TDU[1]'
+                    break;
+                case "3":
+                    description.textContent = '@ViewBag.Description[2]'
+                    textbox.max = '@ViewBag.MaxTDU[2]'
+                    textbox.value = '@ViewBag.TDU[2]'
+                    break;
+                case "4":
+                    description.textContent = '@ViewBag.Description[3]'
+                    textbox.max = '@ViewBag.MaxTDU[3]'
+                    textbox.value = '@ViewBag.TDU[3]'
+                    break;
+                case "5":
+                    description.textContent = '@ViewBag.Description[4]'
+                    textbox.max = '@ViewBag.MaxTDU[4]'
+                    textbox.value = '@ViewBag.TDU[4]'
+                    break;
+                case "6":
+                    description.textContent = '@ViewBag.Description[5]'
+                    textbox.max = '@ViewBag.MaxTDU[5]'
+                    textbox.value = '@ViewBag.TDU[5]'
+                    break;
+            }
+        })
+    });
+</script>
+<h2>@ViewBag.Title</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Goal Tracking</legend>
+        @Html.HiddenFor(model => model.ResourceId)
+        @Html.HiddenFor(model => model.GoalId)
+        <div class="editor-label" id="editorLabel">
+            <table id="editGoalTable">
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Goal)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBoxFor(model => model.Goal, new { style = "width:500px", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Goal)
+                    </td>
+                </tr>
+                <tr>
+                    <td>     
+                        @Html.Label("Objective")                    
+                    </td>
+                </tr>
+                <tr>
+                    <td>     
+                        @Html.DropDownListFor(model => model.ObjectiveId, new SelectList(ViewBag.ListOfObjectives, "Value", "Text"))
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Training Category
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DropDownListFor(model => model.TrainingCategoryId, ViewBag.ListOfCategories as IEnumerable<SelectListItem>, new { required = "required", @id="trainingCategory", @name="trainingCategory", @runat="server"})
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Description
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="description">@ViewBag.Description[ViewBag.TrainingCategoryId - 1]</label>
+                    </td>
+                </tr>
+                </table>
+            <table>
+                <tr>
+                    <td>
+                        Source
+                    </td>
+                    <td id="sourceText" style="display:none">
+                        Specify
+                    </td>
+                </tr>
+                <tr>
+                    <td>     
+                        @Html.DropDownListFor(model => model.SourceId, new SelectList(ViewBag.ListOfSources, "Value", "Text"), new {required = "required", id = "sourceOption" })
+                    </td>
+                    <td>     
+                        <input id="source" name="source" style="display:none; height:20px" required></>
+                    </td>
+                </tr>
+                </table>
+            <table>
+                <tr>
+                    <td>
+                        TDUs
+                    </td>
+                </tr>
+                <tr>
+                    @*<td>
+                        @Html.TextBoxFor(model => model.TDU, new {id = "TDUs", name = "TDUs", type = "number", min = "0", required = "required"})
+                    </td>*@
+                    <td>
+                        <input id="TDUs" min="0" value="@Model.TDU" type="number" name="TDUs" onkeydown="return false" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.Progress)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DropDownList("Progress")
+                        @Html.ValidationMessageFor(model => model.Progress)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(model => model.FinishDate) - Only the Month and Year are used to validate your progress on this Goal; 
+                        you can still specify a date for your own personal track.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("FinishDate", Model.FinishDate.Value.ToShortDateString(), new { @class = "date", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.FinishDate)
+                    </td>
+                </tr>
+            </table>   
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+    <div>
+        <a href="@Url.Action("Index", "GoalTracking")">
+            <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to List" style="border: none" />
+        </a>
+    </div>
+}

@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "ConfigurationTeamMembersInput";
+}
+<div class="pageDescription">
+    <div class="row">
+        <h2>@ViewBag.SurveyText - Survey configuration</h2>
+        <div>
+            <p>Configure the Team Members Input survey access, you can update the DB to get a new survey for a specific quarter</p>
+        </div>
+    </div>
+    <p>
+
+    </p>
+    <div class="row">
+        <div class="col-md-12">
+            <button id="addSurveyBtn" type="button" class="btn btn-success">Add New Survey Data</button>
+        </div>
+    </div>
+    <p>
+
+    </p>
+    <div class="employeeGoalsContainer panel-group">
+        <div class="employeeGoals panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <p class="text-center"> Available Survey Data </p>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <table id="surveysTable" class="table table-responsive table-hover ">
+                    <thead>
+                        <tr>
+                            <th data-column-id="cycle">Cycle</th>
+                            <th data-column-id="enabledDate">Enabled Date</th>
+                            <th data-column-id="title">Survey Title</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var survey in Model[0])
+                        {
+                            <tr>
+                                <td>Q@(survey.Quarter) @survey.Year</td>
+                                <td>@survey.CreatedTimeStamp.ToShortDateString()</td>
+                                <td>@ViewBag.SurveyText Q@(survey.Quarter) @survey.Year</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <p>
+
+    </p>
+
+    @*This div is used as a container for the available cycle options that were calculated on server side, thats the reason why it's hidden
+        the generated drop down list will be added dinamycally to the table when required*@
+    <div id="availableQuartersHiddenDiv" style="visibility: hidden">
+        <select id="availableQuarters" class="cbCoreValue form-control">
+            @foreach (var quarter in Model[1])
+            {
+                <option value="@quarter.Value"> @quarter.Text </option>
+            }
+        </select>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<script type='text/javascript'>
+    // flag to identify is we are currently adding a new survey
+    var isCurrentlyAdding = false;
+    $(function () {
+        $('#surveysTable').on('focus', '.input-group.date', function () {
+            $(this).datepicker({
+                calendarWeeks: true,
+                todayHighlight: true,
+                autoclose: true,
+                orientation: 'bottom',
+                startDate: '+0d'
+            });
+        });
+
+        $('#surveysTable').on('click', '#addSurveyBtn', function () {
+            // validate the required data is selected by the user
+            if ($("#datetxt").val() === '') {
+                alert('Please select a date to enable the survey.');
+                return;
+            }
+
+            var surveyType = '@ViewBag.SurveyType';
+
+            var data = {
+                Cycle: $("#availableQuarters").val(),
+                Type: surveyType,
+                EnableDate: $("#datetxt").val()
+            };
+
+            $.ajax({
+                type: "post",
+                url: "AddNewSurvey",
+                data: { data: JSON.stringify(data) },
+                success: function (result) {
+                    if (result.success) {
+                        console.log(result.message);
+                    }
+                    else {
+                        console.log(result.message);
+                        alert('Something went wrong when updating the DB, please try again.');
+                    }
+                },
+                error: function () {
+                    alert('Something went wrong when updating the DB, please try again.');
+                }
+            });
+
+            // once the update to the DB is ready just reload this view
+            window.location.reload();
+        });
+
+        $('#surveysTable').on('click', '#cancelAddSurveyBtn', function () {
+            // add operation was cancelled
+            console.log('Add new survey operation cancelled.')
+            window.location.reload();
+        });
+    });
+
+    $("#addSurveyBtn").click(function () {
+        if (!isCurrentlyAdding) {
+            var cycleSelectionHtmlCode = $('#availableQuartersHiddenDiv').html();
+
+            var dateTimePickerHtmlCode = '<div class="row">' +
+                                            '<div class="col-sm-6">' +
+                                                '<div class="form-group">' +
+                                                    '<div class="input-group date" id="datetimepicker1">' +
+                                                        '<input id="datetxt" type="text" class="form-control" />' +
+                                                        '<span class="input-group-addon">' +
+                                                            '<span class="glyphicon glyphicon-calendar"></span>' +
+                                                        '</span>' +
+                                                    '</div>' +
+                                                '</div>' +
+                                            '</div>' +
+                                         '</div>';
+
+            var saveDataBtnHtmlCode = '<button id="addSurveyBtn" type="button" class="btn btn-success">Save Data</button>';
+
+            var cancelBtnHtmlCode = '<button id="cancelAddSurveyBtn" type="button" class="btn btn-danger">  Cancel  </button>';
+
+            var rowToAddSurvey = '<tr>' +
+                                    '<td>' +
+                                        cycleSelectionHtmlCode +
+                                    '</td>' +
+                                    '<td>' +
+                                        dateTimePickerHtmlCode +
+                                    '</td>' +
+                                    '<td>' +
+                                        saveDataBtnHtmlCode +
+                                        '<div style="width:10px; height:auto; display:inline-block;"/>' +
+                                        cancelBtnHtmlCode +
+                                    '</td>' +
+                                 '</tr>';
+            $('#surveysTable').append(rowToAddSurvey);
+
+            // disabling the add new survey data button
+            isCurrentlyAdding = true;
+        }
+        else {
+            console.log('Already started to add a new survey data, please complete this task first.');
+        }
+    });
+
+</script>
+
+

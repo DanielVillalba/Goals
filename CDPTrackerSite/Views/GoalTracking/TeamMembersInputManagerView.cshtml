@@ -1,0 +1,646 @@
+﻿
+<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Team member (Manager's view)
+        </h2>
+
+        <p>
+            The following report shows the answered survey, up to 4 different bars, one for each Qrtr.
+        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Project :
+                </p>
+                <select id="combo1" class="cbCoreValue form-control">
+                    <option value="0"> Please select.... </option>
+ 
+                    @foreach (var project in Model)
+                    {
+                        <option value="@project.ProjectId"> @project.Project1 </option>
+                    }
+                    
+                </select>
+
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Team Member :
+                </p>
+                <select id="combo2" class="cbCoreValue form-control">
+                    @* @foreach (var coreVal in Model)
+                    {
+                        <option value="@coreVal.CoreValuesId"> @coreVal.coreValue </option>
+                    }
+                    *@
+                </select>
+            </div>
+
+        </div>
+        <p>
+             
+        </p>
+        <div class="fancy-tables-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <p>
+
+        </p>
+
+
+
+            <div class="fancy-tables-container">
+
+                <div>
+                    <div id="barchart_material" style="min-height: 450px; height: 100%; width: 80%; margin: auto; background: #fff; text-align: center"></div>
+                </div>
+
+            </div>
+        <p>
+
+        </p>
+            <div class="fancy-tables-container">
+                <div  id="Questions">
+
+                </div>
+            </div>
+        <p>
+
+        </p>
+            <div class="fancy-tables-container">
+            
+                <div class="fancy-tables-container">
+                    <table id="location" class="table table-bordered"></table>
+                </div>
+
+
+            @* --------------------------- Mannager's comemts --------------------------- *@
+            <div id="cycleCommentsContainer" class="fancy-table fancy-todo-table">
+                <div class="fancy-description">
+                    <div>
+                        <label class="subtitle"> Manager's comments </label>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="fancy-body">
+                    <div class="fancy-row form-group">
+                        <div class="form-group">
+                            <textarea class="form-control txtCycleComments" id="txtManagerComment" rows="4" readonly> </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fancy-tables-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="btnPDF" type="button" class="btn btn-success">Create PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+            google.load("visualization", "1", { packages: ["bar"] });
+        </script>
+
+<script type="text/javascript">
+
+    var questionsHtml;
+    var managerCommentsHtml;
+
+    $("#combo1").change(function ()
+    {
+        /* if ($(this).data('options') == undefined) {
+             $(this).data('options', $('#combo2 option').clone());
+         }*/
+
+        var id = $(this).val();
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        // console.debug(data);
+        $.ajax({
+            type: "post",
+            url: "GetEmployeeFromProject",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                //   console.debug(sr);
+
+                $('#combo2')
+                             .find('option')
+                             .remove()
+                             .end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '-1';
+                var select = document.getElementById("combo2");
+                select.appendChild(option);
+
+                var option = document.createElement("option");
+                option.text = 'All members';
+                option.value = '0';
+                var select = document.getElementById("combo2");
+                select.appendChild(option);
+
+         
+
+                for (var i = 0; i < sr.length; i++)
+                {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name ;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("combo2");
+                    select.appendChild(option);
+                }
+
+
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+
+
+    });
+
+    $("#btnBuildReport").click(function () {
+
+        var idUser = $("#combo2").val();
+        var nameUser = $("#combo2 :selected").text();
+        var idProject = $("#combo1").val();
+
+        var data = {};
+
+        if (idUser > 0)
+        {
+            data.ResourceId = idUser;
+            data.Name = nameUser;
+            data.ProjectId = idProject;
+
+            getManagerComments(data.ResourceId, data.Name);
+
+            $.ajax({
+                type: "post",
+                url: "GetDataSurveys",
+                data: { data: JSON.stringify(data) },
+                success: function (sr) {
+
+                    var availableQuarterData = null;   // get the first available quarter data set and use it to handle the form
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'Questions');
+                    if (sr.Q1 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q1[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q1;
+                    }
+                    if (sr.Q2 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q2[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q2;
+                    }
+                    if (sr.Q3 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q3[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q3;
+                    }
+                    if (sr.Q4 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q4[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q4;
+                    }
+                 
+                  
+                    var value1 = 0;
+                    var value2 = 0;
+                    var value3 = 0;
+                    var value4 = 0;
+
+
+                    if (availableQuarterData) {
+
+                        // retrieving data and populate 'data' object
+                        for (var i = 0; i < availableQuarterData.length; i++) {   // change the limit
+                            if (sr.Q1 == null)
+                                value1 = 0;
+                            else
+                                value1 = sr.Q1[i].ResponseId;
+
+                            if (sr.Q2 == null)
+                                value2 = 0;
+                            else
+                                value2 = sr.Q2[i].ResponseId;
+
+                            if (sr.Q3 == null)
+                                value3 = 0;
+                            else
+                                value3 = sr.Q3[i].ResponseId;
+
+                            if (sr.Q4 == null)
+                                value4 = 0;
+                            else
+                                value4 = sr.Q4[i].ResponseId;
+
+                            data.addRow([(i + 1).toString(), value1, value2, value3, value4]);
+                        }
+
+
+                        var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                        var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+
+                        for (var i = 0; i < availableQuarterData.length; i++) {
+                            thHTML += '<th class="helloText">' + availableQuarterData[i].Text + '</th>';
+                            questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + availableQuarterData[i].Text + '</li>';
+                        }
+
+                        $(".hello").remove();
+                        $(".helloQuestion").remove();
+                        $(".helloul").remove();
+                        $(".helloText").remove();
+                        $(".hellowDarkness").remove();
+                        $(".helloQuestionsText").remove();
+
+                        thHTML += '</tr> </thead>';
+                        questionsHTML += '</ul>';
+
+                        $('#Questions').append(questionsHTML);
+                        // set the questions data for PDF report
+                        questionsHtml = $('#Questions').html();
+
+
+                        $('#location').append(thHTML);
+
+                        // Data about  acutual Quarter
+                        if (sr.Q1 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            $(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q2 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q2[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q2[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q3 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q3[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q3[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q4 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q4[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q4[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                    } else {
+                        data.addRow(['0', 0, 0, 0, 0]);
+                        $(".hello").remove();
+                        $(".helloQuestion").remove();
+                        $(".helloul").remove();
+                        $(".helloText").remove();
+                        $(".hellowDarkness").remove();
+                        $(".helloQuestionsText").remove();
+                    }
+
+
+                    // Instantiate and draw our chart, passing in some options
+                    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+                    chart.draw(data,
+                     {
+                         chart: {
+                             title: 'Team members input',
+                             subtitle: nameUser,
+
+                         },
+                         hAxis: {
+                             viewWindowMode: 'explicit',
+                             viewWindow: {
+                                 max: 5
+                             }
+                         },
+                         colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+
+                         bars: 'horizontal'
+
+                     });
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            })
+        }
+        else
+        {
+            if (idUser != 0)
+                alert("Please Select a valid option");
+            else
+            {
+               // alert("all members");
+                data.ResourceId = idUser;
+                data.Name = nameUser;
+                data.ProjectId = idProject;
+
+                // need to remove the Manager's comments area, since we are displaying the All members option
+                $('#cycleCommentsContainer').hide();
+
+                $.ajax({
+                    type: "post",
+                    url: "GetDataSurveysAllMembers",
+                    data: { data: JSON.stringify(data) },
+                    success: function (sr) {
+
+                        var availableQuarterData = null;   // get the first available quarter data set and use it to handle the form
+                        var data = new google.visualization.DataTable();
+
+                        data.addColumn('string', 'Questions');
+                        if (sr.Q1 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q1[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q1;
+                        }
+                        if (sr.Q2 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q2[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q2;
+                        }
+                        if (sr.Q3 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q3[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q3;
+                        }
+                        if (sr.Q4 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q4[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q4;
+                        }
+
+
+                        var value1 = 0;
+                        var value2 = 0;
+                        var value3 = 0;
+                        var value4 = 0;
+
+                        if (availableQuarterData) {
+                            // retrieving data and populate 'data' object
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                if (sr.Q1 == null)
+                                    value1 = 0;
+                                else
+                                    value1 = sr.Q1[i].ResponseId;
+
+                                if (sr.Q2 == null)
+                                    value2 = 0;
+                                else
+                                    value2 = sr.Q2[i].ResponseId;
+
+                                if (sr.Q3 == null)
+                                    value3 = 0;
+                                else
+                                    value3 = sr.Q3[i].ResponseId;
+
+                                if (sr.Q4 == null)
+                                    value4 = 0;
+                                else
+                                    value4 = sr.Q4[i].ResponseId;
+
+                                data.addRow([(i + 1).toString(), value1, value2, value3, value4]);
+                            }
+
+                            var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                            var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                thHTML += '<th class="helloText">' + availableQuarterData[i].Text + '</th>';
+                                questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + availableQuarterData[i].Text + '</li>';
+                            }
+
+                            $(".hello").remove();
+                            $(".helloQuestion").remove();
+                            $(".helloul").remove();
+                            $(".helloText").remove();
+                            $(".hellowDarkness").remove();
+                            $(".helloQuestionsText").remove();
+
+                            thHTML += '</tr> </thead>';
+                            questionsHTML += '</ul>';
+
+                            $('#Questions').append(questionsHTML);
+                            $('#location').append(thHTML);
+
+                            
+                            // Data about  acutual Quarter
+                            if (sr.Q1 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                $(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q2 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q2[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q2[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q3 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q3[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q3[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q4 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q4[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q4[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+
+                        } else {
+                            data.addRow(['0', 0, 0, 0, 0]);
+                            $(".hello").remove();
+                            $(".helloQuestion").remove();
+                            $(".helloul").remove();
+                            $(".helloText").remove();
+                            $(".hellowDarkness").remove();
+                            $(".helloQuestionsText").remove();
+
+                        }
+
+                        // Instantiate and draw our chart, passing in some options
+                        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+                        chart.draw(data,
+                         {
+                             chart: {
+                                 title: 'Team members input',
+                                 subtitle: 'All Team members',
+
+                             },
+                             hAxis: {
+                                 viewWindowMode: 'explicit',
+                                 viewWindow: {
+                                     max: 5
+                                 }
+                             },
+                             
+                             colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+
+                             bars: 'horizontal'
+
+                         });
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                })
+
+
+            } 
+
+        }
+        
+    });
+
+    function getManagerComments(id, name) {
+        var data = {};
+        data.ResourceId = id;
+        data.Name = name;
+
+        $.ajax({
+            type: "post",
+            url: "GetManagerComment",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#cycleCommentsContainer').show();
+                if (sr == null) {
+                    var ta = document.getElementById('txtManagerComment');
+                    ta.value = '';
+                }
+                else {
+                    var ta = document.getElementById('txtManagerComment');
+                    ta.value = sr[0].ResponseText;
+                    managerCommentsHtml = sr[0].ResponseText;
+                }
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        })
+        return 0;
+    };
+
+
+    $('#btnPDF').click(function () {
+        var chartHtml = $('#barchart_material').html();
+        var toPDF = chartHtml +
+                   questionsHtml +
+                   '<p>Manager comments:</p>' +
+                   '</br>' +
+                   managerCommentsHtml;
+        var documentName = 'Team Members Input Managers Check';
+
+        var data = {
+            html2PDF: toPDF,
+            Name: documentName
+        };
+        console.log(data);
+
+        $.ajax({
+            type: 'post',
+            url: 'ConvertToPDF',
+            data: { data: JSON.stringify(data) },
+            success: function (data) {
+                alert('Data size: ' + data.length);
+                // TODO: Find out how to download the pdf file here !
+            },
+            error: function (e) {
+                console.log(e.responseText);
+            }
+        });
+
+        return false;
+    });
+
+</script>

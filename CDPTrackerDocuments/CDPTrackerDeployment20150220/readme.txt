@@ -1,0 +1,11 @@
+- Run TrainingProgramOnDemand Script
+- Run TrainingProgramOnDemandDetails Script
+- Run SkillCompassGlossary Script
+- Run update Unassing Objectives Script
+- Run update script (fixed bugs)
+- Run Update script (fixed bugs) version 2
+- Run Delete Assessments and AssessmentCategory Script
+- Run Project Table Script
+- Run ProjectId column to Employee Script
+- Run Assign year to objectives with null script
+- Run Delete Constraint Manager On Employee table Script

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TBLDataSet" targetNamespace="http://tempuri.org/TBLDataSet.xsd" xmlns:mstns="http://tempuri.org/TBLDataSet.xsd" xmlns="http://tempuri.org/TBLDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CDPTrackConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CDPTrackConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CDPTrackConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CDPViewTableAdapter" GeneratorDataComponentClassName="CDPViewTableAdapter" Name="CDPView" UserDataComponentName="CDPViewTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="CDPTrackConnectionString1 (Web.config)" DbObjectName="CDPTrack.dbo.CDPView" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT PositionName, CDP, Name, Year, Quarter FROM dbo.CDPView</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="PositionName" DataSetColumn="PositionName" />
+              <Mapping SourceColumn="CDP" DataSetColumn="CDP" />
+              <Mapping SourceColumn="Name" DataSetColumn="Name" />
+              <Mapping SourceColumn="Year" DataSetColumn="Year" />
+              <Mapping SourceColumn="Quarter" DataSetColumn="Quarter" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TBLDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="TBLDataSet" msprop:Generator_UserDSName="TBLDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="CDPView" msprop:Generator_TableClassName="CDPViewDataTable" msprop:Generator_TableVarName="tableCDPView" msprop:Generator_TablePropName="CDPView" msprop:Generator_RowDeletingName="CDPViewRowDeleting" msprop:Generator_RowChangingName="CDPViewRowChanging" msprop:Generator_RowEvHandlerName="CDPViewRowChangeEventHandler" msprop:Generator_RowDeletedName="CDPViewRowDeleted" msprop:Generator_UserTableName="CDPView" msprop:Generator_RowChangedName="CDPViewRowChanged" msprop:Generator_RowEvArgName="CDPViewRowChangeEvent" msprop:Generator_RowClassName="CDPViewRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PositionName" msprop:Generator_ColumnVarNameInTable="columnPositionName" msprop:Generator_ColumnPropNameInRow="PositionName" msprop:Generator_ColumnPropNameInTable="PositionNameColumn" msprop:Generator_UserColumnName="PositionName">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CDP" msprop:Generator_ColumnVarNameInTable="columnCDP" msprop:Generator_ColumnPropNameInRow="CDP" msprop:Generator_ColumnPropNameInTable="CDPColumn" msprop:Generator_UserColumnName="CDP" type="xs:int" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Year" msprop:Generator_ColumnVarNameInTable="columnYear" msprop:Generator_ColumnPropNameInRow="Year" msprop:Generator_ColumnPropNameInTable="YearColumn" msprop:Generator_UserColumnName="Year" type="xs:int" minOccurs="0" />
+              <xs:element name="Quarter" msprop:Generator_ColumnVarNameInTable="columnQuarter" msprop:Generator_ColumnPropNameInRow="Quarter" msprop:Generator_ColumnPropNameInTable="QuarterColumn" msprop:Generator_UserColumnName="Quarter" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

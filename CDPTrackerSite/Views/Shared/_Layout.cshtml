@@ -1,0 +1,452 @@
+﻿<!DOCTYPE html>
+<html>    
+<head>
+
+    <title>Tiempo Goals</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link href="@Url.Content("~/Content/bootstrap-3.3.6/css/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/SiteMedium.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/SiteSmall.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css"/>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/jquery.bootgrid.css" rel="stylesheet" type="text/css" />
+    
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-2.2.4.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootbox.js")"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.bootgrid.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.bootgrid.fa.js"></script>
+
+    
+    <link rel="shortcut icon" href=@Url.Content("~/Content/images/favicon.ico") />
+
+    @*@{
+        string _currentUrl = Request.RawUrl.ToString();
+        Response.AppendHeader("Refresh", "600; URL=" + _currentUrl + "");
+    }*@
+</head>
+<body>
+
+    <div id="bodyContainer">
+        <header>
+            @if (ViewBag.IsResourceSetup != true)
+            {
+                <div id='cssmenu'>
+                    <ul>
+                        <li class='has-sub'>
+                            <a>
+                                <img src="@Url.Content("~/Content/images/goals_training.png")" title="Personal Evaluation" class="menu_image_button" />
+                            </a>
+                            <ul>
+                                <li>@Html.ActionLink("Priorities Management", "PrioritiesManagement", "GoalTracking")</li>
+                                <li>@Html.ActionLink("Priorities Visualization", "PrioritiesVisualization", "GoalTracking")</li>
+                                <li><a href="https://sites.google.com/a/tiempodevelopment.com/talent_management_resources/home/trainings" target="_blank">Training@Tiempo</a></li>
+                                <li>@Html.ActionLink("My Responses", "TeamMembersInputReportLEAA", "GoalTracking")</li>
+                            </ul>
+                        </li>
+
+                        <li class="has-sub">
+                            <a>
+                                <img src="@Url.Content("~/Content/images/career_development_guidelines.png")" title="CDP Guidelines" class="menu_image_button" />
+                            </a>
+                            <ul>
+                                <li>@Html.ActionLink("Career Path and Job Descriptions", "CareerPath", "GoalTracking")</li>
+                                <li>@Html.ActionLink("Skill Compass", "SkillCompass", "GoalTracking")</li>
+                                <li><a class="linkDisabled" style="color:#949494;">Suggestions</a></li>
+                                @*<li>@Html.ActionLink("Suggestions", "Suggestions", "GoalTracking")</li>*@
+                            </ul>
+                        </li>
+
+                        @if (ViewBag.IsManager == true || ViewBag.IsTalentManagementResource == true)
+                        {
+                            string pendingGoalsCount = string.Empty;
+                            if (ViewBag.PendingGoalsCount is int && ViewBag.PendingGoalsCount > 0)
+                            {
+                                pendingGoalsCount = " (" + ViewBag.PendingGoalsCount.ToString() + ")";
+                            }
+                            <li class="has-sub">
+                                <a>
+                                    <img src="@Url.Content("~/Content/images/review_goals.png")" title="Employee Goals" class="menu_image_button" />
+                                </a>
+                                <ul>
+                                    <li>@Html.ActionLink("Goals Tracking & Verification" + pendingGoalsCount, "EmployeeGoals", "GoalTracking")</li>
+                                    @*<li>@Html.ActionLink("Goal Verification" + pendingGoalsCount, "ManagerVerification", "GoalTracking")</li>*@
+                                    <li>@Html.ActionLink("Pending Verifications", "PendingVerifications", "GoalTracking")</li>
+                                </ul>
+                            </li>
+                        }
+
+                        @if (ViewBag.IsTalentManagementResource == true)
+                        {
+                            <li class="has-sub">
+                                <a>
+                                    <img src="@Url.Content("~/Content/images/reports.png")" title="Reports" class="menu_image_button" />
+                                </a>
+                                <ul>
+                                    @if (ViewBag.IsManager == true)
+                                    {
+                                        <li><a class="linkDisabled" style="color:#949494;">Progress Report</a></li>
+                                        @*<li>@Html.ActionLink("Progress Report", "ProgressReport", "GoalTracking")</li>*@
+                                    }
+                                    <li><a class="linkDisabled" style="color:#949494;">Progress Report with Area</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">Progress By Project Report</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">Monthly Report</a></li>
+                                    <li>@Html.ActionLink("No Priorities Report", "NoPrioritiesReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Team member's input Report", "TeamMembersInputReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Manager's Check Report", "ManagersCheckReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Team member - Manager", "TeamMembersInputManagerView", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Team member - Director", "TeamMembersInputDirectorView", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("T Member vs Project - Manager", "TeamMembersInputByProject", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("T Member vs Project - Talent", "TeamMembersInputTalent", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("By project", "TeamMembersInputByProjectAverage", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("By site", "TeamMembersInputBySite", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("By all sites", "TeamMembersInputByAllSites", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("By Managers from a site", "TeamMembersInputByManagersPerSites", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("By Managers from all sites", "TeamMembersInputByManagersAllSites", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("By projects from ALL sites", "TeamMembersInputByProjectsAllSites", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("One Project vs all projects", "TeamMembersInputByProjectVsAllProjects", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("T Member Master", "TeamMembersInputMaster", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Dashboard", "DashboardReport", "GoalTracking")</li> 
+                                    <li><a class="linkDisabled" style="color:#949494;">Unassign Objectives Report</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">Training Program Report</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">KPI Report</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">TDU Report</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">TDU Detail Report</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">Trend By Level Report</a></li>
+                                    <li><a class="linkDisabled" style="color:#949494;">Training Program Visits Report</a></li>                                    
+                                    @*<li>@Html.ActionLink("Progress Report with Area", "ProgressReportWithArea", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Progress By Project Report", "ProgressByProjectReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Monthly Report", "MonthlyReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("No Objectives Report", "NoObjectivesReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Unassign Objectives Report", "UnassignObjectiveReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Training Program Report", "TrainingProgramReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("KPI Report", "KPIReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("TDU Report", "TDUReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("TDU Detail Report", "TDUDetailsReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Trend By Level Report", "TrendByLevelReport", "GoalTracking")</li>
+                                    <li>@Html.ActionLink("Training Program Visits Report", "TrainingProgramVisitsReport", "GoalTracking")</li>*@
+                                </ul>
+                            </li>
+                        }
+
+                        @if (ViewBag.IsTalentManagementResource == true)
+                        {
+                            <li class="has-sub">
+                                <a>
+                                    <img src="@Url.Content("~/Content/images/admin_catalogs.png")" title="Admin Catalogs" class="menu_image_button" />
+                                </a>
+                                <ul>
+                                    <li>@Html.ActionLink("Job Descriptions", "JobDescriptionAdmin", "GoalTracking")</li>
+                                    <li class='has-sub hidden-xs'>
+                                        <a>Training Programs</a>
+                                        <ul>
+                                            <li>@Html.ActionLink("General Training Programs", "GeneralTrainingProgramAdmin", "GoalTracking")</li>
+                                            <li>@Html.ActionLink("Training Programs Categories", "TrainingProgramCategory", "GoalTracking")</li>
+                                            <li><a class="linkDisabled" style="color:#949494;">Training Programs</a></li>
+                                            @*<li>@Html.ActionLink("Training Programs", "TrainingProgramAdmin", "GoalTracking")</li>*@
+                                        </ul>
+                                            
+                                    </li>
+                                    <li class="visible-xs">@Html.ActionLink("General Training Programs", "GeneralTrainingProgramAdmin", "GoalTracking")</li>
+                                    <li class="visible-xs">@Html.ActionLink("Training Programs Categories", "TrainingProgramCategory", "GoalTracking")</li>
+                                    <li class="visible-xs"><a class="linkDisabled" style="color:#949494;">Training Programs</a></li>
+                                    @*<li class="visible-xs">@Html.ActionLink("Training Programs", "TrainingProgramAdmin", "GoalTracking")</li>*@
+
+                                    <li class='has-sub hidden-xs'>
+                                        <a>Suggestions</a>
+                                        <ul>
+                                            <li>@Html.ActionLink("Levels", "Level", "GoalTracking")</li>
+                                            <li>@Html.ActionLink("Technologies", "Technology", "GoalTracking")</li>
+                                            <li><a class="linkDisabled" style="color:#949494;">Suggestions</a></li>
+                                            @*<li>@Html.ActionLink("Suggestions", "SuggestionsAdmin", "GoalTracking")</li>*@
+                                        </ul>
+                                    </li>
+                                    <li class="visible-xs">@Html.ActionLink("Levels", "Level", "GoalTracking")</li>
+                                    <li class="visible-xs">@Html.ActionLink("Technologies", "Technology", "GoalTracking")</li>
+                                    <li class="visible-xs"><a class="linkDisabled" style="color:#949494;">Suggestions</a></li>
+                                    @*<li class="visible-xs">@Html.ActionLink("Suggestions", "SuggestionsAdmin", "GoalTracking")</li>*@
+
+                                    <li>@Html.ActionLink("Skill Compass Glossary", "SkillCompassGlossary", "GoalTracking")</li>
+                                    <li><a class="linkDisabled" style="color:#949494;">TDU Reward Payment</a></li>
+                                    @*<li>@Html.ActionLink("TDU Reward Payment", "RewardsVerification", "GoalTracking")</li>*@
+                                    <li><a class="linkDisabled" style="color:#949494;">Tiempo Connect Objective Sync</a></li>
+                                    @*<li>@Html.ActionLink("Tiempo Connect Objective Sync", "TiempoConnectSync", "GoalTracking")</li>*@
+                                    <li>@Html.ActionLink("Configuration Module", "ConfigurationOptions", "GoalTracking")</li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <div id="header-center">
+                Quarter:
+                @if (ViewBag.changeQuarter != null && ViewBag.changeQuarter == true)
+                {                                   
+                    @Html.DropDownList("ListOfQuarters") @Html.DropDownList("ListOfYears")
+                    <button id="quarterButton" class="btn btn-default" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Find</button>
+                }
+                else
+                {
+                    @ViewBag.CurrentCycle
+                }
+            </div>
+
+            <div id="logindisplay">
+                @if (!Request.Url.OriginalString.Contains("Resource/SetupResourceData"))
+                {
+                    <div id="contentPicture">
+                        <div id="username" class="hidden-xs">
+                            <strong>@ViewBag.userName</strong>
+                        </div>
+                    
+                        <div id='cssmenu' class="menu_reverse">
+                            <ul>
+                                <li class='has-sub'>
+                                    <a style="padding: 0">
+                                        <img id="profilePicture" src=@ViewBag.PROFILE_PICTURE_URL onError="this.onerror=null; this.src='/Content/images/missing.png';" />
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <fieldset class="userProfileBox">
+                                                <div class="userInfo">
+                                                    <h5 class="visible-xs">NAME : </h5>
+                                                    <p class="visible-xs">@ViewBag.resourceName</p>
+                                                    <h5>MANAGER : </h5>
+                                                    <p>@ViewBag.ManagerName</p>
+                                                    <h5>CURRENT POSITION : </h5>
+                                                    <p>@ViewBag.CurrentPositionFromAD</p>
+                                                    <h5>ASPIRING POSITION : </h5>
+                                                    <p>@ViewBag.resourceAspiringPosition</p>
+                                                    <h5>TOTAL TDU'S : </h5>
+                                                    <p>@ViewBag.TDUPointsDisplay</p>
+                                                </div>
+                                                <div class="userActions">
+                                                    <a href="@Url.Action("PositionEdit", new { id = ViewBag.ResourceId })" style="background-color: #FFFFFF">
+                                                        <img src="@Url.Content("~/Content/images/Edit-icon.png")" height="22" width="22" title="Edit Aspiring Position" style="border: none" />
+                                                    </a>
+                                                </div>
+                                            </fieldset>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+               }
+             </div>
+        </header>
+
+        <main>
+            @RenderBody()
+        </main>
+
+        <footer style="text-align:left; padding-left:7px; padding-right: 7px;">
+            <a href="~/GoalTracking/Index"><img src="/Content/images/tiempo-goals.png" /></a>
+
+            <div class="footer-buttons">
+                
+            </div>
+        </footer>
+    </div>
+
+
+
+    <script>
+        
+        // Document ready
+        jQuery(document).ready(function () {
+
+            // Get all footer buttons
+            var footerButtons = jQuery('main .footer-button').detach();
+
+            // Append all footer buttons into footer section for a correct UI experience
+            jQuery('#bodyContainer > footer .footer-buttons').append(footerButtons);
+
+            // Apply date picker
+            jQuery('input.date').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true
+            });
+        });
+
+
+        var myApp = {};
+
+        // Dialogs
+        // bootboxjs -> http://bootboxjs.com/documentation.html
+        myApp.Dialogs = (function () {
+            var module = {};
+            
+            module.showLoadingDialog = function () {
+                if (jQuery('.bootbox.modal-progress').length == 0) {
+                    bootbox.dialog({
+                        title: 'Loading...',
+                        message: '<div class="progress progress-striped active"><div class="progress-bar" style="width: 100%;"></div></div>',
+                        className: 'modal-progress',
+                        closeButton: true,
+                        backdrop: true
+                    });
+                }
+            };
+
+            module.hideLoadingDialog = function () {
+                jQuery('.bootbox.modal.modal-progress').modal('hide');
+            };
+
+            module.alertSuccess = function (title,message, settings) {
+                module.alertMessage('modal-success', title, message, settings);
+            };
+            
+            module.alertWarning = function (title,message, settings) {
+                module.alertMessage('modal-warning', title, message, settings);
+            };
+            
+            module.alertDanger = function (title,message, settings) {
+                module.alertMessage('modal-danger', title, message, settings);
+            };
+            
+            module.alertMessage = function (alertType, title,message, settings) {
+                var whenToShow = 0;
+                var defaultSettings = {
+                    title: title,
+                    message: message,
+                    className: alertType,
+                    backdrop: true
+                };
+                var newSettings = $.extend({}, defaultSettings, settings || {});
+
+                if (jQuery('.bootbox.modal').length > 0) {
+                    jQuery('.bootbox.modal').modal('hide');
+                    whenToShow = 500;
+                }
+
+                setTimeout(function () {
+                    bootbox.alert(newSettings);
+                }, whenToShow);
+            };
+
+            module.alertConfirm = function (title,message, callback) {
+                bootbox.confirm({
+                    title: title,
+                    message: message,
+                    className: 'modal-confirm',
+                    callback: callback,
+                    backdrop: true
+                });
+            };
+
+            return module;
+        })();
+
+
+        // System Utils
+        myApp.Utils = (function () {
+            var module = {};
+            var SIGN_IN_PAGE = '/';
+            
+            // str = YYYY-MM-DD
+            module.parseDate = function (str) {
+                var m = str.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+                return (m) ? new Date(m[1], m[2] - 1, m[1]) : null;
+            };
+
+            // str = MM/DD/YYYY
+            module.parseDateMDY = function (str) {
+                var m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                return (m) ? new Date(m[2], m[1] - 1, m[3]) : null;
+            };
+
+            module.isInteger = function (number) {
+                return /^\d+$/.test(number);
+            };
+
+            module.logOut = function () {
+                window.location.href = SIGN_IN_PAGE;
+            };
+
+            return module;
+        })();
+
+
+        // Request Handler
+        myApp.Requests = (function () {
+            var module = {};
+            var ERROR_MESSAGE = 'Ooops Something went wrong!<br><br>Please contact the Administrator';
+
+            function onBeforeSend() {
+                myApp.Dialogs.showLoadingDialog();
+            }
+
+            function onAlways() {
+                myApp.Dialogs.hideLoadingDialog();
+            }
+
+            /**
+            {
+                error: {
+                    errcode: -1,
+                    message: 'Priority cannot be deleted because A, B and C'
+                }
+            }
+            */
+            function onError(xhr, status, error) {
+                var errorMessage = ERROR_MESSAGE;
+
+                if (typeof xhr.responseJSON === "object" && xhr.responseJSON.hasOwnProperty("error")) {
+                    var errorResponse = xhr.responseJSON.error;
+                    
+                    if (errorResponse.hasOwnProperty("errcode") && errorResponse.errcode == "-1") {
+                        myApp.Utils.userLogout();
+                        return;
+                    }
+
+                    if (errorResponse.hasOwnProperty("message")) {
+                        errorMessage = errorResponse.message;
+                    }
+                }
+
+                myApp.Dialogs.alertDanger('Error',errorMessage);
+            }
+
+            module.getRequest = function (options) {
+                var request = $.extend({}, { 'type': 'GET' }, options);
+                return module.request(request);
+            };
+            
+            module.postRequest = function (options) {
+                var request = $.extend({}, { 'type': 'POST' }, options);
+                return module.request(request);
+            };
+
+            module.putRequest = function () {
+                var request = $.extend({}, { 'type': 'PUT' }, options);
+                return module.request(request);
+            };
+
+            module.deleteRequest = function () {
+                var request = $.extend({}, { 'type': 'DELETE' }, options);
+                return module.request(request);
+            };
+
+            module.request = function (request) {
+                var defaultSettings = {
+                    beforeSend: onBeforeSend,
+                    always: onAlways,
+                    error: onError
+                };
+                var requestSettings = $.extend({}, defaultSettings, request);
+                return jQuery.ajax(requestSettings);
+            }
+
+            return module;
+        })();
+    </script>
+</body>
+</html>

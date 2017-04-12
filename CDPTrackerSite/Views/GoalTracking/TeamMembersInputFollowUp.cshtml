@@ -1,0 +1,122 @@
+﻿@model IEnumerable<dynamic>
+
+@if (Model == null)
+{
+}
+else { 
+<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Team Member's Input Follow Up
+        </h2>
+        <br />
+        <div class="followUpContainer">
+            <IFrame id="progressReportFrame" src="@Url.Content("~/Reporting/TeamMembersInputFollowUpReport.aspx")" style="width:100%;height:auto;" seamless="seamless"></IFrame>
+            
+                @*<div class="fancy-table">
+                    <div class="fancy-header hidden-xs">
+                        <div class="fancy-row form-group">
+                            
+                            <div class="form-group col-sm-9">
+                                Team Member
+                            </div>                                
+                            <div class="form-group col-sm-3 text-center">
+                                Survey Status
+                            </div>
+                        </div>
+                    </div>
+                        <div class="fancy-body" id="followUpTableBody">
+                            @if (Model.Any())
+                            {
+                                @foreach (var item in Model)
+                                {
+                                <section id="followUpTableRow" style="display: none">
+                                    <div class="fancy-row priority-task-row form-group">                                   
+                                        <div class="form-group col-sm-9 team-member-column">
+                                            <div class="smallLabels visible-xs">
+                                                Team Member
+                                            </div>
+                                            @(item.GetType().GetProperty("Name").GetValue(item,null))
+                                        </div>                                       
+                                        <div class="form-group col-sm-3 text-center survey-status-column">
+                                            <div class="smallLabels visible-xs">
+                                                Survey Status
+                                            </div>
+                                            @if (item.GetType().GetProperty("completed").GetValue(item, null))
+                                            {
+                                                <img class="mediumButton" src="@Url.Content("~/Content/images/completed.png")" title="Completed" />
+                                            }
+                                            else
+                                            {
+                                                <img class="mediumButton" src="@Url.Content("~/Content/images/notStarted.png")" title="Pending" />
+                                            }
+                                        </div>
+                                    </div>
+                                </section>
+                                }
+                            }
+                        </div>                    
+                </div>*@              
+            
+        </div>
+    </div>
+</div>
+
+}
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/TeamMembersInput/SurveyGenerator.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/TeamMembersInput/SurveyAnswers.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/TeamMembersInput/TeamMembersInputRequestHandler.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/TeamMembersInput/TeamMembersInputManager.js")"></script>
+
+<script>
+    jQuery(document).ready(function () {
+
+        var data = {
+            team: [
+                {
+                    memberId: 1,
+                    name: 'Laura Lopez',
+                    completed: true,
+                    imgProgress: "/Content/images/completed.png",
+                    statusTitle: "Completed"
+                },
+                {
+                    memberId: 2,
+                    name: 'Leopoldo Moranchel',
+                    completed: true,
+                    imgProgress: '/Content/images/completed.png',
+                    statusTitle: 'Completed'
+                },                
+                {
+                    memberId: 3,
+                    name: 'Cruz Enrique Perez Rodriguez',
+                    completed: false,
+                    imgProgress: '/Content/images/notStarted.png',
+                    statusTitle: 'Incomplete'
+                },
+                {
+                    memberId: 4,
+                    name: 'Denisse Vega',
+                    completed: false,
+                    imgProgress: "/Content/images/notStarted.png",
+                    statusTitle: "Incomplete"
+                },
+                {
+                    memberId: 5,
+                    name: 'Celeste Santana Medina',
+                    completed: true,
+                    imgProgress: "/Content/images/completed.png",
+                    statusTitle: "Completed"
+                }
+            ]
+        };
+
+        //var surveyGenerator = new SurveyGenerator();
+        //var surveyAnswers = new SurveyAnswers();
+        //var teamMembersInputRequestHandler = new TeamMembersInputRequestHandler();
+        //var teamMembersInputManager = new TeamMembersInputManager(surveyGenerator, surveyAnswers, teamMembersInputRequestHandler);
+
+        // Initialize
+       // teamMembersInputManager.init(data.team);
+    });
+</script>

@@ -1,0 +1,135 @@
+﻿@model DataSource.Objective
+
+@{
+    ViewBag.Title = "Edit Objective";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<style type="text/css">
+  table{
+    border-collapse: collapse;
+    border: none;
+  }
+  table td{
+    border: none;
+  }
+</style>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sourceOption").change(function () {
+            var sourceText = document.getElementById("sourceText");
+            var source = document.getElementById("source");
+            var sourceDropdown = document.getElementById("sourceOption");
+            if (sourceDropdown.value == "0") {
+                sourceText.style.display = 'block';
+                source.style.display = 'block'
+            }
+            else {
+                sourceText.style.display = 'none';
+                source.style.display = 'none';
+            }
+        });
+    })
+</script>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Objective</legend>
+        @Html.HiddenFor(model => model.ResourceId)
+        @Html.HiddenFor(model => model.ObjectiveId)
+        <div style="float:right; max-width: 300px">
+            <b>Mastery Objective Thinking:</b>
+            <span>
+            <br/>
+            What exactly do I want to know and be able to do when the quarter is over?
+            <br/><br/>
+            How can my manager know that I have learned?
+            <br/><br/>
+            What kind of evidence can be provided?
+            <br /><br/>
+            </span>
+            <span><b>Please consider</b>
+                <br/>
+                Is the objective worded so that the learning target is clear for me and my manager?
+                <br/><br/>                
+                Is the the objective worth knowing/learning?
+                <br/><br/>
+                Is the objective challenging and attainable?
+                <br/><br/>
+                Is the objective able to be assessed and measured?
+                <br/><br/>
+            </span>
+        </div>
+        <div class="editor-label">
+            <table id="objectiveTable">
+                <tr>   
+                    <td>       
+                        @Html.Label("Objective")
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="editor-field">
+            <table id="objTextTable">
+                <tr>   
+                    <td>       
+                        @Html.TextBoxFor(model => model.Objective1, new { style = "width:500px", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Objective1)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="editor-label">
+            <table id="categoryTable">
+                <tr>   
+                    <td>       
+                        @Html.Label("Category")
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="editor-field">
+               <table id="categoryTextTable">
+                <tr>   
+                    <td>       
+                        @Html.DropDownListFor(model => model.CategoryId, new SelectList(ViewBag.ListOfCategories, "Value", "Text"), "Please select a category", new {required = "required" })
+                    </td>
+                </tr>
+            </table>         
+        </div>
+        <div class="editor-label">
+            <table id="progressTable">
+                <tr>   
+                    <td>       
+                        @Html.LabelFor(model => model.Progress)
+                    </td>
+                </tr>
+            </table> 
+        </div>
+        <div class="editor-field">
+            <table id="progressTextTable">
+                <tr>   
+                    <td>       
+                        @Html.DropDownList("Progress")
+                        @Html.ValidationMessageFor(model => model.Progress)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+    <p>
+        <a href="@Url.Action("Index", "GoalTracking")">
+            <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to My Goals" style="border: none" />
+        </a>
+    </p>
+}

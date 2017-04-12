@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CDPTrackDataSet" targetNamespace="http://tempuri.org/CDPTrackDataSet.xsd" xmlns:mstns="http://tempuri.org/CDPTrackDataSet.xsd" xmlns="http://tempuri.org/CDPTrackDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CDPTrackConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CDPTrackConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CDPTrackConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="GoalsViewTableAdapter" GeneratorDataComponentClassName="GoalsViewTableAdapter" Name="GoalsView" UserDataComponentName="GoalsViewTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="CDPTrackConnectionString1 (Web.config)" DbObjectName="CDPTrack.dbo.GoalsView" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        GoalId, ManagerId, Manager, ResourceId, Employee, ManagerLocation, EmployeeLocation, Goal, Objective, FinishDate, Verified, MustCheck, Progress, 
+                         TrainingCategory, TDU
+FROM            GoalsView</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="GoalId" DataSetColumn="GoalId" />
+              <Mapping SourceColumn="ManagerId" DataSetColumn="ManagerId" />
+              <Mapping SourceColumn="Manager" DataSetColumn="Manager" />
+              <Mapping SourceColumn="ResourceId" DataSetColumn="ResourceId" />
+              <Mapping SourceColumn="Employee" DataSetColumn="Employee" />
+              <Mapping SourceColumn="Goal" DataSetColumn="Goal" />
+              <Mapping SourceColumn="FinishDate" DataSetColumn="FinishDate" />
+              <Mapping SourceColumn="Verified" DataSetColumn="Verified" />
+              <Mapping SourceColumn="MustCheck" DataSetColumn="MustCheck" />
+              <Mapping SourceColumn="Progress" DataSetColumn="Progress" />
+              <Mapping SourceColumn="TDU" DataSetColumn="TDU" />
+              <Mapping SourceColumn="Objective" DataSetColumn="Objective" />
+              <Mapping SourceColumn="TrainingCategory" DataSetColumn="TrainingCategory" />
+              <Mapping SourceColumn="ManagerLocation" DataSetColumn="ManagerLocation" />
+              <Mapping SourceColumn="EmployeeLocation" DataSetColumn="EmployeeLocation" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CDPTrackDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="CDPTrackDataSet" msprop:Generator_UserDSName="CDPTrackDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="GoalsView" msprop:Generator_TableClassName="GoalsViewDataTable" msprop:Generator_TableVarName="tableGoalsView" msprop:Generator_TablePropName="GoalsView" msprop:Generator_RowDeletingName="GoalsViewRowDeleting" msprop:Generator_RowChangingName="GoalsViewRowChanging" msprop:Generator_RowEvHandlerName="GoalsViewRowChangeEventHandler" msprop:Generator_RowDeletedName="GoalsViewRowDeleted" msprop:Generator_UserTableName="GoalsView" msprop:Generator_RowChangedName="GoalsViewRowChanged" msprop:Generator_RowEvArgName="GoalsViewRowChangeEvent" msprop:Generator_RowClassName="GoalsViewRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="GoalId" msprop:Generator_ColumnVarNameInTable="columnGoalId" msprop:Generator_ColumnPropNameInRow="GoalId" msprop:Generator_ColumnPropNameInTable="GoalIdColumn" msprop:Generator_UserColumnName="GoalId" type="xs:int" />
+              <xs:element name="ManagerId" msprop:Generator_ColumnVarNameInTable="columnManagerId" msprop:Generator_ColumnPropNameInRow="ManagerId" msprop:Generator_ColumnPropNameInTable="ManagerIdColumn" msprop:Generator_UserColumnName="ManagerId" type="xs:int" />
+              <xs:element name="Manager" msprop:Generator_ColumnVarNameInTable="columnManager" msprop:Generator_ColumnPropNameInRow="Manager" msprop:Generator_ColumnPropNameInTable="ManagerColumn" msprop:Generator_UserColumnName="Manager" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ResourceId" msprop:Generator_ColumnVarNameInTable="columnResourceId" msprop:Generator_ColumnPropNameInRow="ResourceId" msprop:Generator_ColumnPropNameInTable="ResourceIdColumn" msprop:Generator_UserColumnName="ResourceId" type="xs:int" />
+              <xs:element name="Employee" msprop:Generator_ColumnVarNameInTable="columnEmployee" msprop:Generator_ColumnPropNameInRow="Employee" msprop:Generator_ColumnPropNameInTable="EmployeeColumn" msprop:Generator_UserColumnName="Employee" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="250" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Goal" msprop:Generator_ColumnVarNameInTable="columnGoal" msprop:Generator_ColumnPropNameInRow="Goal" msprop:Generator_ColumnPropNameInTable="GoalColumn" msprop:Generator_UserColumnName="Goal">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FinishDate" msprop:Generator_ColumnVarNameInTable="columnFinishDate" msprop:Generator_ColumnPropNameInRow="FinishDate" msprop:Generator_ColumnPropNameInTable="FinishDateColumn" msprop:Generator_UserColumnName="FinishDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Verified" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnVerified" msprop:Generator_ColumnPropNameInRow="Verified" msprop:Generator_ColumnPropNameInTable="VerifiedColumn" msprop:Generator_UserColumnName="Verified" type="xs:int" minOccurs="0" />
+              <xs:element name="MustCheck" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMustCheck" msprop:Generator_ColumnPropNameInRow="MustCheck" msprop:Generator_ColumnPropNameInTable="MustCheckColumn" msprop:Generator_UserColumnName="MustCheck" type="xs:int" minOccurs="0" />
+              <xs:element name="Progress" msprop:Generator_ColumnVarNameInTable="columnProgress" msprop:Generator_ColumnPropNameInRow="Progress" msprop:Generator_ColumnPropNameInTable="ProgressColumn" msprop:Generator_UserColumnName="Progress" type="xs:int" />
+              <xs:element name="TDU" msprop:Generator_ColumnVarNameInTable="columnTDU" msprop:Generator_ColumnPropNameInRow="TDU" msprop:Generator_ColumnPropNameInTable="TDUColumn" msprop:Generator_UserColumnName="TDU" type="xs:int" minOccurs="0" />
+              <xs:element name="Objective" msprop:Generator_ColumnVarNameInTable="columnObjective" msprop:Generator_ColumnPropNameInRow="Objective" msprop:Generator_ColumnPropNameInTable="ObjectiveColumn" msprop:Generator_UserColumnName="Objective" type="xs:string" minOccurs="0" />
+              <xs:element name="TrainingCategory" msprop:Generator_ColumnVarNameInTable="columnTrainingCategory" msprop:Generator_ColumnPropNameInRow="TrainingCategory" msprop:Generator_ColumnPropNameInTable="TrainingCategoryColumn" msprop:Generator_UserColumnName="TrainingCategory" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ManagerLocation" msprop:Generator_ColumnVarNameInTable="columnManagerLocation" msprop:Generator_ColumnPropNameInRow="ManagerLocation" msprop:Generator_ColumnPropNameInTable="ManagerLocationColumn" msprop:Generator_UserColumnName="ManagerLocation">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmployeeLocation" msprop:Generator_ColumnVarNameInTable="columnEmployeeLocation" msprop:Generator_ColumnPropNameInRow="EmployeeLocation" msprop:Generator_ColumnPropNameInTable="EmployeeLocationColumn" msprop:Generator_UserColumnName="EmployeeLocation">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

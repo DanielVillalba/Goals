@@ -1,0 +1,60 @@
+﻿@model DataSource.SkillCompassGlossary
+
+@{
+    ViewBag.Title = "EditSkillCompassGlossary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>Edit Skill</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+
+                @Html.HiddenFor(model => model.SkillCompassGlossaryId)
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.AreaId, "Area")
+                </div>
+                <div class="editor-field skillArea">
+                    @Html.DropDownList("AreaId", (IEnumerable<SelectListItem>)ViewData["ListOfAreas"])
+                </div>
+
+                <br />
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="editor-field skillname">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+
+                <br />
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Description)
+                </div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(model => model.Description, new { style = "width:50%;height:100px" })
+                    @Html.ValidationMessageFor(model => model.Description)                    
+                </div>
+
+                <br />
+                
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+
+                @if (ViewBag.error != "")
+                {
+                    <p style="color: #FF0000; font-size: medium;"><strong>@ViewBag.error</strong></p>
+                }
+            </fieldset>
+        }
+    </div>
+</div>
+

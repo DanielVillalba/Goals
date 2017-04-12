@@ -1,0 +1,277 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            What are your priorities for the upcoming cycle?
+        </h2>
+        <p>
+            In your priorities you can include skills you would like to develop, key goals, activities you want to complete.
+            <br />
+            Think of this as your growth plan for the upcoming cycle. In your priorities you may also include any performance goal.
+            <br /><br />
+            Useful information you can include:<br />
+            What will you do and when. How will you measure your success?
+        </p>
+
+
+        <form id="addPriorityForm" class="form-horizontal">
+            <div class="form-group">
+                <input type="hidden" id="priorityId" value="@Model.priorityId">
+                <label for="Priority" class="col-sm-2 control-label">
+                    Priority:
+                </label>
+                <div class="col-sm-6">
+                    <input id="Priority" type="text" class="form-control" placeholder="Priority" value="@Model.priorityDescription" maxlength="500" required>                    
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Category" class="col-sm-2 control-label">
+                    Category:
+                </label>
+                <div class="col-sm-6">
+                    @Html.DropDownList("categoryDescription", new SelectList(ViewBag.ListOfCategories, "categoryId", "categoryDescription", Model.categoryId), new { @class = "form-control", @id = "Category" })
+                </div>
+            </div>
+            <div class="form-group cycleContainer">
+                <label for="Year" class="col-sm-2 control-label">
+                    Cycle:
+                </label>
+                <div class="col-sm-6">
+                    <div class="form-group col-sm-4">
+                        @Html.DropDownList("Text", new SelectList(ViewBag.ListOfYears, "Value", "Text", Model.priorityYear), new { @class = "form-control", @id = "Year" })
+                    </div>
+                    <div class="form-group col-sm-8">
+                        @Html.DropDownList("Text", new SelectList(ViewBag.ListOfQuarters, "Value", "Text", ViewBag.ActualQuarter), new { @class = "form-control", @id = "Quarter" })
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div id="tasksContainer">
+            <div id="tasksHeader">
+                <div>
+                    Tasks
+                </div>
+                <div>
+                    <img id="addTaskButton" src="@Url.Content("~/Content/images/Add.png")" title="Add New Task" />
+                </div>
+            </div>
+
+            <div id="tasksListHeader">
+                <div class="task-row form-group question panel-default">
+                    <div class="form-group col-sm-1 ">
+                        #
+                    </div>
+                    <div class="form-group col-sm-4">
+                        Task
+                    </div>
+                    <div class="form-group col-sm-2">
+                        Category
+                    </div>
+                    <div class="form-group col-sm-2">
+                        Source
+                    </div>
+                    <div class="form-group col-sm-1">
+                        TDUs <img src="@Url.Content("~/Content/images/question_mark.png")" title="TDUs Info" class="infoButton" />
+                    </div>
+                    <div class="form-group col-sm-2">
+                        Finish By
+                    </div>
+                    <div class="form-group col-sm-1">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+
+            <div id="taskList">
+                @if (Model.tasks != null)
+                {
+                    foreach (var item in Model.tasks)
+                    {
+                        <div class="task-row form-group" data-task-id="@item.taskId">
+                            <div class="form-group col-sm-1">
+                                <div class="smallLabels visible-xs">
+
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <div class="smallLabels visible-xs">
+                                    Task
+                                </div>
+                                <input type="hidden" class="form-control txtProgress" value="@item.taskProgress">
+                                <input type="text" class="form-control txtTask" value="@item.taskDescription" required="required" maxlength="500"/>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="smallLabels visible-xs">
+                                    Category
+                                </div>
+                                @Html.DropDownList("Name", new SelectList(ViewBag.ListOfTCategories, "TrainingCategoryId", "Name", item.trainingCategoryId), new { @class = "form-control cbCategory", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="smallLabels visible-xs">
+                                    Source
+                                </div>
+                                @Html.DropDownList("Name", new SelectList(ViewBag.ListOfSources, "SourceId", "Name", item.sourceId), new { @class = "form-control cbSource", @required = "required" })
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <div class="smallLabels visible-xs">
+                                    TDUs <img src="@Url.Content("~/Content/images/question_mark.png")" title="TDUs Info" class="infoButton" />
+                                </div>
+                                <input type="number" class="form-control txtTdus" min="0" value="@item.taskTdu" required />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <div class="smallLabels visible-xs">
+                                    Finished By
+                                </div>
+                                <input type="text"  class="form-control txtFinishBy" placeholder="MM/DD/YYYY" value="@item.taskFinishDate.ToString("MM/dd/yyyy")" required />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                @if (item.taskVerified)
+                                {
+                                    <img src="@Url.Content("~/Content/images/verifiedManager.png")" title="Task verified by Manager" class="verifiedTaskButton" />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove Task" class="removeTaskButton" />
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div id="taskTemplate">
+            <div class="task-row form-group" style="display: none" data-task-id="0">
+                <div class="form-group col-sm-1">
+                    <div class="smallLabels visible-xs">
+
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">
+                    <div class="smallLabels visible-xs">
+                        Task
+                    </div>
+                    <input type="hidden" class="form-control txtProgress" value="0">
+                    <input type="text" class="form-control txtTask" required="required" />
+                </div>
+                <div class="form-group col-sm-2">
+                    <div class="smallLabels visible-xs">
+                        Category
+                    </div>
+                    @Html.DropDownList("Name", new SelectList(ViewBag.ListOfTCategories, "TrainingCategoryId", "Name"), new { @class = "form-control cbCategory", @required = "required" })
+                </div>
+                <div class="form-group col-sm-2">
+                    <div class="smallLabels visible-xs">
+                        Source
+                    </div>
+                    @Html.DropDownList("Name", new SelectList(ViewBag.ListOfSources, "SourceId", "Name"), new { @class = "form-control cbSource", @required = "required" })
+                </div>
+                <div class="form-group col-sm-1">
+                    <div class="smallLabels visible-xs">
+                        TDUs <img src="@Url.Content("~/Content/images/question_mark.png")" title="TDUs Info" class="infoButton" />
+                    </div>
+                    <input type="number" class="form-control txtTdus" min="0" value="0" required />
+                </div>
+                <div class="form-group col-sm-2">
+                    <div class="smallLabels visible-xs">
+                        Finished By
+                    </div>
+                    <input type="text"   class="form-control txtFinishBy" placeholder="MM/DD/YYYY" required />
+                </div>
+                <div class="form-group col-sm-1">
+                    <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove Task" class="removeTaskButton" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <fieldset class="infoPop pop greyBorder">
+        <img src="@Url.Content("~/Content/images/TDUsInfo.png")"/>
+    </fieldset>
+    
+
+</div>
+
+<!-- Footer Button -->
+<div id="savePriority" class="btn-group footer-button" role="group">
+    <span class="icon">
+        <img src="@Url.Content("~/Content/images/save.png")" title="Save Priority" />
+    </span>
+    <span class="text">
+        Save
+    </span>
+</div>
+
+
+<!-- Footer Button -->
+@if (Model.priorityId > 0)
+{
+    <div id="deletePriority" class="btn-group footer-button" role="group">
+        <span class="icon">
+            <img src="@Url.Content("~/Content/images/Trash_Can.png")" title="Delete Priority" />
+        </span>
+        <span class="text">
+            Delete
+        </span>
+    </div>
+}
+
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/Priority/TaskListManager.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/Priority/PriorityRequestHandler.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/Priority/PriorityManager.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.browser.js")"></script>
+<script>
+    jQuery(document).ready(function () {
+        $(".txtFinishBy").datepicker();
+        var priorityConfig = {
+            priorityId: @Model.priorityId,
+            isPriorityVerified: @Html.Raw(Json.Encode(ViewBag.PriorityVerified)),
+        };
+        var taskListManager = new TaskListManager();
+        var priorityRequestHandler = new PriorityRequestHandler();
+        var priorityManager = new PriorityManager(priorityConfig, taskListManager, priorityRequestHandler, myApp.Utils);
+
+        // Initialize
+        priorityManager.init();
+
+        $(".infoButton").on( "click", function() {
+            if($(this).hasClass('selected')) {
+                deselect($(this));               
+            } else {
+                $(this).addClass('selected');
+                $('.infoPop').slideFadeToggle();
+            }
+            return false;
+        });
+
+        $(".infoPop").on( "click", function() {
+            if($('.infoPop').hasClass('selected')) {
+                deselect($(this));            
+            }
+        });
+
+        $('.close').on('click', function() {
+            deselect($('.infoButton'));
+            return false;
+        });
+
+        $(window).on("click", function() {
+            if($('.infoButton').hasClass('selected')) {
+                deselect($('.infoButton'));               
+            } 
+        });
+
+        
+    });
+
+    function deselect(e) {
+        $('.pop').slideFadeToggle(function() {
+            e.removeClass('selected');
+        });    
+    }
+
+    $.fn.slideFadeToggle = function(easing, callback) {
+        return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
+    };
+
+</script>

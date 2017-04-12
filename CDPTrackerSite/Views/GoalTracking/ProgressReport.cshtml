@@ -1,0 +1,199 @@
+﻿@using CDPTrackerSite.RoleManagement
+@using Utils
+@{
+    ViewBag.Title = "Progress Report";
+    string userDomainName = User.Identity.Name.StripDomain();
+
+    const string baseReportUrl = "~/Reporting/ProgressReport.aspx";
+    string defaultReportUrl = baseReportUrl;
+    if (PreprocessingHelper.IsDebug())
+    {
+        userDomainName = "rafael durazo";
+    }
+    else
+    {
+        if (RoleManagementHelper.UserIsInRole(User, Role.Manager) && !RoleManagementHelper.UserIsInRole(User, Role.TalentManagement))
+        {
+            defaultReportUrl += "?mdn=" + userDomainName;
+        }
+    }
+}
+<h2>@ViewBag.Title</h2>
+<style type="text/css">
+    iframe[seamless] {
+        background-color: transparent;
+        border: 0px none transparent;
+        padding: 0px;
+        overflow: hidden;
+    }
+</style>
+<script type="text/javascript">
+    function updateFrame() {
+        var url = '@Url.Content(@baseReportUrl + "?")';
+        
+        @if (ViewBag.IsManager == true)
+        {
+            if (ViewBag.IsTalentManagementResource == true)
+            {
+                <text>
+        var showOnlyMyResourcesCheck = document.getElementById("showOnlyMyResources");
+        if (showOnlyMyResourcesCheck.checked) {
+            url = url + 'mdn=@userDomainName&';
+                }
+                </text>
+            }
+            else
+            {
+                <text>
+        url = url + 'mdn=@userDomainName&';
+                </text>
+            }
+        }
+
+        var yearCombo = document.getElementById('yearCombo');
+        var selectedYearValue = yearCombo.options[yearCombo.selectedIndex].value;
+        var selectedYear;
+        if (typeof selectedYearValue == "string") {
+            selectedYear = parseInt(selectedYearValue);
+        } else {
+            selectedYear = selectedYearValue;
+        }
+        var monthCombo = document.getElementById('monthCombo');
+        var selectedMonthValue = monthCombo.options[monthCombo.selectedIndex].value;
+        var selectedMonth;
+        if (typeof selectedMonthValue == "string") {
+            selectedMonth = parseInt(selectedMonthValue);
+        } else {
+            selectedMonth = selectedMonthValue;
+        }
+        var reportDate = new Date(selectedYear, selectedMonth, 1);
+
+        url = url + 'date=' + encodeURI(reportDate.toISOString());
+
+        @if (ViewBag.IsTalentManagementResource == true)
+        {
+            <text>
+        var useDateRangeCheck = document.getElementById('useDateRange');
+        if (useDateRangeCheck.checked) {
+            var yearComboEnd = document.getElementById('yearComboEnd');
+            var monthComboEnd = document.getElementById('monthComboEnd');
+
+            selectedYearValue = yearComboEnd.options[yearComboEnd.selectedIndex].value;
+            if (typeof selectedYearValue == "string") {
+                selectedYear = parseInt(selectedYearValue);
+            } else {
+                selectedYear = selectedYearValue;
+            }
+
+            selectedMonthValue = monthComboEnd.options[monthComboEnd.selectedIndex].value;
+            if (typeof selectedMonthValue == "string") {
+                selectedMonth = parseInt(selectedMonthValue);
+            } else {
+                selectedMonth = selectedMonthValue;
+            }
+            reportDate = new Date(selectedYear, selectedMonth, 1);
+
+            url = url + '&dateEnd=' + encodeURI(reportDate.toISOString());
+        }
+            </text>
+        }
+
+        $('#progressReportFrame').attr('src', url);
+    };
+    @if (ViewBag.IsTalentManagementResource == true)
+    {
+    <text>
+    function useDateRangeOnChange(useDateRangeCheck) {
+        var yearCombo = document.getElementById('yearComboEnd');
+        var monthCombo = document.getElementById('monthComboEnd');
+        var fromText = document.getElementById('fromText');
+        var toText = document.getElementById('toText');
+
+        var displayValue = '';
+
+        if (useDateRangeCheck.checked) {
+            displayValue = 'block';
+        } else {
+            displayValue = 'none';
+        }
+
+        yearCombo.style.display = displayValue;
+        monthCombo.style.display = displayValue;
+        fromText.style.display = displayValue;
+        toText.style.display = displayValue;
+    };
+    </text>
+    }
+</script>
+<div>
+    @{
+        string[] monthNames = new System.Globalization.DateTimeFormatInfo().MonthNames;
+        int currentMonth = DateTime.Now.Month - 1;
+    }
+    <table>
+        <tr>
+            <td id="fromText" style="display: none"><span >From:</span></td>
+            <td>
+                <select id="yearCombo">
+                    @for (int i = ViewBag.MaxYear; i >= ViewBag.MinYear; i--)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <select id="monthCombo">
+                    @{
+                        for (int i = 0; i < 12; i++)
+                        {
+                            if (i == currentMonth)
+                            {
+                        <option value="@i" selected="Selected">@monthNames[i]</option>
+                                continue;
+                            }
+                
+                        <option value="@i">@monthNames[i]</option>
+                        }
+                    }
+                </select>
+            </td>
+            <td id="toText" style="display: none"><span>To:</span></td>
+            <td>
+                <select id="yearComboEnd" style="display: none">
+                    @for (int i = ViewBag.MaxYear; i >= ViewBag.MinYear; i--)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </td>
+            <td>
+                <select id="monthComboEnd" style="display: none">
+                    @{
+                        for (int i = 0; i < 12; i++)
+                        {
+                            if (i == currentMonth)
+                            {
+                        <option value="@i" selected="Selected">@monthNames[i]</option>
+                                continue;
+                            }
+                
+                        <option value="@i">@monthNames[i]</option>
+                        }
+                    }
+                </select>
+            </td>
+            @if (ViewBag.IsTalentManagementResource == true)
+            {
+                <td>
+                    <input type="checkbox" id="useDateRange" value="useDateRange" onchange="useDateRangeOnChange(this)" />Use date range</td>
+            }
+            @if (ViewBag.IsManager == true && ViewBag.IsTalentManagementResource == true)
+            {
+                <td>
+                    <input type="checkbox" id="showOnlyMyResources" value="showOnlyMyResources" /><text>Show only My Resources</text></td>
+            }
+            <td>
+                <input type="button" id="changeframe" value="Change" onclick="updateFrame()"></td>
+        </tr>
+    </table>
+</div>
+
+<IFrame id="progressReportFrame" src="@Url.Content(defaultReportUrl)" width="100%" height="650" seamless="seamless"></iframe>

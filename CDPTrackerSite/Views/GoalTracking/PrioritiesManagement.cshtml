@@ -1,0 +1,180 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            What are your priorities for the upcoming cycle?
+        </h2>
+        <p>
+            In your priorities you can include skills you would like to develop, key goals, activities you want to complete.
+            <br />
+            Think of this as your growth plan for the upcoming cycle. In your priorities you may also include any performance goal.
+            <br /><br />
+            Useful information you can include:<br />
+            What will you do and when. How will you measure your success?
+        </p>
+
+
+
+        <div class="cyclePrioritiesContainer">
+            @if (Model.Count == 0)
+            {
+                <div class="alert alert-warning" role="alert">There are no Priorities for this quarter</div>
+            }
+            @foreach (var item in Model)
+            {
+                <div class="priority">
+                    <div class="priorityHeader">
+                        <div>
+                            <a href="/GoalTracking/Priority?id=@item.priorityId">
+                                @item.priorityDescription
+                            </a>
+                        </div>
+                        <div>
+                            @item.statusTitle
+                        </div>
+                    </div>
+
+                    <div class="fancy-table">
+                        <div class="fancy-header hidden-xs">
+                            <div class="fancy-row form-group">
+                                <div class="form-group col-sm-1">
+                                    &nbsp;
+                                </div>
+                                <div class="form-group col-sm-5">
+                                    Task
+                                </div>
+                                <div class="form-group col-sm-2 text-center">
+                                    TDUs
+                                </div>
+                                <div class="form-group col-sm-2 text-center">
+                                    Finish By
+                                </div>
+                                <div class="form-group col-sm-2 text-center">
+                                    Status <img src="@Url.Content("~/Content/images/question_mark_white.png")" title="Status Info" class="infoButton" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fancy-body">
+                            @if (item.tasks != null && item.tasks.Count >0)
+                            {
+                                foreach (var task in item.tasks)
+                                {
+                                    <div class="fancy-row priority-task-row form-group" data-task-id="@task.taskId" data-task-status="@task.taskProgress">
+                                        <div class="form-group col-sm-1 fancy-column-counter">
+                                            &nbsp;
+                                        </div>
+                                        <div class="form-group col-sm-5">
+                                            <div class="smallLabels visible-xs">
+                                                Task
+                                            </div>
+                                            @task.taskDescription
+                                        </div>
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                TDUs
+                                            </div>
+                                            @task.taskTdu
+                                        </div>
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Finish By
+                                            </div>
+                                            @task.taskFinishDate.ToString("MM/dd/yyyy")
+                                        </div>
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Status <img src="@Url.Content("~/Content/images/question_mark.png")" title="TDUs Info" class="infoButton" />
+                                            </div>
+                                            @if (task.taskVerified)
+                                            {
+                                                <img class="fancy-button task-status-button verifiedTaskButton" src="@Url.Content(task.imgProgress)" title="@task.statusTitle" />
+                                            }
+                                            else if (task.statusTitle != string.Empty)
+                                            {
+                                                <img class="fancy-button task-status-button changeStatusButton" src="@Url.Content(task.imgProgress)" title="@task.statusTitle" />
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="fancy-row form-group">
+                                    <div class="form-group col-sm-12">
+                                        <div>
+                                            No tasks added
+                                        </div>
+                                    </div>
+                                </div>
+                             }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <fieldset class="infoPop pop greyBorder"  style="max-width:250px ; height:auto">
+        <img src="@Url.Content("~/Content/images/taskStatus.jpg")" style="max-width:250px ; height:auto"/>
+    </fieldset>
+</div>
+
+<!-- Footer Button -->
+<a href="@Url.Action("Priority")" class="btn-group footer-button">
+    <span class="icon">
+        <img src="@Url.Content("~/Content/images/add.png")" title="Add Priority" />
+    </span>
+    <span class="text">
+        Add Priority
+    </span>
+</a>
+
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/CyclePriorities/CyclePrioritiesRequestHandler.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/CyclePriorities/CyclePrioritiesManager.js")"></script>
+<script>
+    jQuery(document).ready(function () {
+        var cyclePrioritiesRequestHandler = new CyclePrioritiesRequestHandler();
+        var cyclePrioritiesManager = new CyclePrioritiesManager(cyclePrioritiesRequestHandler);
+
+        // Initialize
+        cyclePrioritiesManager.init();
+
+        $(".infoButton").on("click", function () {
+            if ($(this).hasClass('selected')) {
+                deselect($(this));
+            } else {
+                $(this).addClass('selected');
+                $('.infoPop').slideFadeToggle();
+            }
+            return false;
+        });
+
+        $(".infoPop").on("click", function () {
+            if ($('.infoPop').hasClass('selected')) {
+                deselect($(this));
+            }
+        });
+
+        $('.close').on('click', function () {
+            deselect($('.infoButton'));
+            return false;
+        });
+
+        $(window).on("click", function () {
+            if ($('.infoButton').hasClass('selected')) {
+                deselect($('.infoButton'));
+            }
+        });
+    });
+
+    function deselect(e) {
+        $('.pop').slideFadeToggle(function () {
+            e.removeClass('selected');
+        });
+    }
+
+    $.fn.slideFadeToggle = function (easing, callback) {
+        return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
+    };
+
+</script>

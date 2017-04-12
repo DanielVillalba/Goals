@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Training Program Video";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<link href="http://vjs.zencdn.net/4.10/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/4.10/video.js"></script>
+
+<style type="text/css">
+    #MY_VIDEO_1 {
+        border-radius: 3px;
+        margin: 0 auto;
+    }
+    legend {
+        margin: 20px 0px;
+    }
+</style>
+
+<fieldset>
+    <legend> Training Program : @ViewBag.Training </legend>
+
+    @*<video controls="controls">
+        <source src=//tdg-wks-313/chemay/SLHD.mp4" type="video/mp4" />
+    </video>*@
+    @*<video src="../../SLHD.mp4" controls="controls" />*@
+    <video src="file://tdg-wks-313/chemay/SLHD.mp4" controls="controls" />
+    @*<video src="../../SLHD.mp4" controls="controls" />*@
+  @* <video id="MY_VIDEO_1" class="video-js vjs-default-skin" controls preload="auto" width="100%" height="450" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+        <source src="../../SLHD.mp" type='video/mp4'>
+
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that 
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+    </video>*@
+
+</fieldset>

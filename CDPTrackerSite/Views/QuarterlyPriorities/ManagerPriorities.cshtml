@@ -1,0 +1,13 @@
+﻿@model Models.ManagerPriorities
+@{
+    ViewBag.Title = "ManagerPriorities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pageDescription">
+    <h2>Manager Priorities</h2>
+    <div class="fancy-tables-container">
+        @Html.Partial("Kpis", model)
+        @Html.Partial("_ValuesInfusion")
+    </div>
+</div>

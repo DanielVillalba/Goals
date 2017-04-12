@@ -1,0 +1,34 @@
+﻿@using CDPTrackerSite.RoleManagement
+@using Utils
+@{
+    ViewBag.Title = "KPI Report";
+    ViewBag.IsTalentManagementResource = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string userDomainName = User.Identity.Name.StripDomain();
+
+    const string baseReportUrl = "~/Reporting/KPIReport.aspx";
+    string defaultReportUrl = baseReportUrl;
+    if (PreprocessingHelper.IsDebug())
+    {
+        userDomainName = "eduardo vazquez";
+    }
+    else
+    {
+        if (RoleManagementHelper.UserIsInRole(User, Role.Manager) && !RoleManagementHelper.UserIsInRole(User, Role.TalentManagement))
+        {
+            defaultReportUrl += "?mdn=" + userDomainName;
+        }
+    }
+}
+<h2>@ViewBag.Title</h2>
+<style type="text/css">
+    iframe[seamless] {
+        background-color: transparent;
+        border: 0px none transparent;
+        padding: 0px;
+        overflow: hidden;
+    }
+</style>
+<IFrame id="progressReportFrame" src="@Url.Content(defaultReportUrl)" width="100%" height="650" seamless="seamless"></iframe>
+
+

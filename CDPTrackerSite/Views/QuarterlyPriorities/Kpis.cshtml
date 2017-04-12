@@ -1,0 +1,87 @@
+﻿@model Models.ManagerPriorities
+
+<div id="KPIsList" class="fancy-table fancy-todo-table">
+    <div class="fancy-description">
+        <div>
+            <label class="subtitle">KPIS</label>
+        </div>
+        <div>
+
+        </div>
+    </div>
+
+    <div class="fancy-header fancy-gray">
+        <div class="fancy-row form-group">
+            <div class="form-group col-md-2">KPI Name</div>
+            <div class="form-group col-md-2">% Weight</div>
+            <div class="form-group col-md-4">Tresholds</div>
+            <div class="form-group col-md-3">Type</div>
+            <div class="form-group col-md-1">@model.KpiResultTitle </div>
+            @*<div class="form-group col-md-1">KPI Result</div>
+            <div class="form-group col-md-1">Comments</div>
+            <div class="form-group col-md-1">Rank</div>*@
+            <div class="form-group col-md-1">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="fancy-body input-group input-group-sm">
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <input id="txtKpiName" type="text" class="form-control input-sm" />
+                </div>
+                <div class="form-group col-md-2">
+                    <div class="input-group">
+                        <input id="txtKpiWeight" type="number" min="1" max="100" class="form-control input-sm" />
+                        <span class="input-group-addon">%</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <div class="">
+                        <div class="input-group">
+                            <span class="input-group-addon sameWidth" style="background-color:greenyellow;">Stretch goal</span>
+                            <input id="txtKpiName" type="number" class="form-control input-sm" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon sameWidth" style="background-color:green;">Target goal</span>
+                            <input id="txtKpiName input-group" type="number" class="form-control input-sm" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon sameWidth" style="background-color:yellow;">Below target goal</span>
+                            <input id="txtKpiName" type="number" class="form-control input-sm" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon sameWidth" style="background-color:red;">Minimum accepted goal</span>
+                            <input id="txtKpiName" type="number" class="form-control input-sm" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-3">
+                    <select id="Select1" class="form-control">
+                        <option>$</option>
+                        <option>$ MRR</option>
+                        <option>SQL</option>
+                        <option>Growth</option>
+                        <option>People</option>
+                        <option>Clients</option>
+                        <option>EBITDA</option>
+                        <option>Net Income</option>
+                        <option>Owner's equity</option>
+                        <option>Total Assets</option>
+                        <option>Percentage</option>
+                    </select>
+                </div>
+                @*<div class="form-group col-md-1">
+                    <input id="txtKpiResult" type="text" class="form-control" />
+                </div>
+                <div class="form-group col-md-1">
+                    <input id="txtKpiComments" type="text" class="form-control" />
+                </div>
+                <div class="form-group col-md-1">
+                    <input id="txtKpiRank" type="text" class="form-control" />
+                </div>*@
+                <div class="form-group col-md-2">&nbsp;</div>
+        </div>
+    </div>
+</div>

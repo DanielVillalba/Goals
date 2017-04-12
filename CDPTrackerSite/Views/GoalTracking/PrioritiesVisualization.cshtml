@@ -1,0 +1,148 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>Priorities Visualization</h2>
+        <div>
+            <p>
+                Based on your current responsibilities and those demanded by the role that you may chose to grow into the future,
+                list the Knowledge, Skills and/or abilities. List all those skills that you consider are critical to your development. In the
+                short term area include the information related to your current position, and in the mid/long term area include the
+                information about your desired future position.
+            </p>
+        </div>
+        <div>
+            <p class="definition">
+                <b style="color:#5E991A">SHORT TERM:  </b>
+                Short term is current 0-6 months
+            </p>
+            <p class="definition">
+                <b style="color:#5E991A">MIDDLE TERM:  </b>
+                Middle Term is 6-18 months
+            </p>
+            <p class="definition">
+                <b style="color:#5E991A">LONG TERM:  </b>
+                Long term is 18 months and beyond
+            </p>
+        </div>
+
+
+        @helper createBody(DataSource.Objective priority) {
+            <div class="fancy-row form-group">
+                <div class="form-group col-sm-1 fancy-column-counter">
+                    &nbsp;
+                </div>
+                <div class="form-group col-sm-9">
+                    <div class="smallLabels visible-xs">
+                        Priority
+                    </div>
+                    @priority.Objective1
+                </div>
+                <div class="form-group col-sm-2 text-center">
+                    <div class="smallLabels visible-xs">
+                        Status
+                    </div>
+                    @switch(priority.Progress)
+                    {
+                        case 0:
+                            <img class="smallIcon verifiedTaskButton" src="@Url.Content("~/Content/images/notStarted.png")"/>
+                            break;
+                        case 1:
+                            <img class="smallIcon verifiedTaskButton" src="@Url.Content("~/Content/images/inProgress.png")"/>
+                            break;
+                        case 2:
+                            <img class="smallIcon verifiedTaskButton" src="@Url.Content("~/Content/images/done.png")"/>
+                            break;
+                    }
+                </div>
+
+            </div>
+            }
+
+
+                    @helper createTable(string ObjectiveCategory, int idCategory, IEnumerable<DataSource.Objective> list)
+                    {
+            <div class="fancy-table">
+
+                <div class="fancy-title text-center">
+                    <div class="fancy-row">
+                        <h4> @ObjectiveCategory </h4>
+                    </div>
+                </div>
+
+                <div class="fancy-header hidden-xs">
+                    <div class="fancy-row form-group">
+                        <div class="form-group col-sm-1">
+                            &nbsp;
+                        </div>
+                        <div class="form-group col-sm-9">
+                            Priority
+                        </div>
+                        <div class="form-group col-sm-2 text-center">
+                            Status
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fancy-body">
+                    @{ var flag = false; }
+                    @foreach (DataSource.Objective assessment in list)
+                    {
+                        if (assessment.CategoryId == idCategory){
+                            flag = true;
+                            @createBody(assessment)
+                        }
+                        else if (idCategory == 5 && assessment.CategoryId >= 1 && assessment.CategoryId <= 3) // If Category is an old one will be shown in Growth
+                        {
+                            flag = true;
+                            @createBody(assessment)
+                        }
+                    }
+                    @if(flag == false){
+                        <div class="fancy-row form-group">
+                            <div class="form-group col-sm-12">
+                                <div>
+                                    No priorities assigned
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            <div id="prioritiesVisualizationContainer" >
+
+                <div id="tab-1" class="tab">
+                    <h5>SHORT TERM</h5>
+                    <div class="tabContent">
+                        @createTable("Growth", 5, @Model.Item1)
+                        @createTable("Perfomance", 6, Model.Item1)
+                        @createTable("Quarterly Action", 7, Model.Item1)
+                    </div>
+                </div>
+
+                <div id="tab-2" class="tab">
+                    <h5>MIDDLE TERM</h5>
+                    <div class="tabContent">
+                        @createTable("Growth", 5, Model.Item2)
+                        @createTable("Perfomance", 6, Model.Item2)
+                        @createTable("Quarterly Action", 7, Model.Item2)
+                    </div>
+                </div>
+
+                <div id="tab-3" class="tab">
+                    <h5>LONG TERM</h5>
+                    <div class="tabContent">
+                        @createTable("Growth", 5, Model.Item3)
+                        @createTable("Perfomance", 6, Model.Item3)
+                        @createTable("Quarterly Action", 7, Model.Item3)
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

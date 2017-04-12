@@ -1,0 +1,325 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            By projects from all sites.
+        </h2>
+
+        <p>
+            One bar for each Project, the bar will be representing the average from each project in a specific Qrtr.
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Quarter :
+                </p>
+                <select id="combo1" class="cbCoreValue form-control">
+                    <option value="-1"> Please select.... </option>
+
+                    @foreach (var quarter in Model)
+                    {
+                        <option data-value='{"quarter":@quarter.Item1,"year":@quarter.Item2}'> Q@(quarter.Item1)  @quarter.Item2 </option>
+                    }
+
+                </select>
+            </div>
+        </div>
+        <p>
+
+        </p>
+
+        <div class="fancy-tables-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <p>
+
+        </p>
+
+
+
+        <div class="fancy-tables-container">
+
+            <div>
+                <div id="barchart_material" style="min-height: 450px; height: 100%; width: 95%; margin: auto; background: #fff; text-align: center"></div>
+            </div>
+
+
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+            <div id="Questions">
+
+            </div>
+        </div>
+        <p>
+
+        </p>
+
+        <p>
+
+        </p>
+
+        <div class="fancy-tables-container">
+
+            <div class="fancy-tables-container">
+                <table id="location" class="table table-bordered"></table>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<p>
+
+</p>
+
+
+
+<script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart', 'bar'] });
+
+</script>
+
+<script type="text/javascript">
+
+    $("#btnBuildReport").click(function () {
+
+        // check we have the required data to request the report
+        if ($("#combo1").val() === "-1") {
+            alert('Please select a valid QUARTER in order to build the report');
+            return;
+        }
+
+
+        // retrieving selected quarter
+        var quarterOfTheYearSelection = $('#combo1 :selected').data('value').quarter;
+        var selectedYearSelection = $('#combo1 :selected').data('value').year;
+
+        var selectedQuarterSelection = {
+            quarterOfTheYear: quarterOfTheYearSelection,
+            selectedYear: selectedYearSelection
+        };
+
+
+        // retrieveing selected site
+        var locationIdSelection = 0;
+        var nameLocationSelection = 'All Sites Selected';
+
+        var selectedSiteSelection = {
+            LocationId: locationIdSelection,
+            nameLocation: nameLocationSelection
+        };
+
+        // wrapping up data to send request
+        var data = {
+            selectedQuarter: selectedQuarterSelection,
+            selectedSite: selectedSiteSelection
+        };
+
+
+        $.ajax({
+            type: "post",
+            url: "GetDataResponsesTeamMemberInputByAllProjectsForSpecificQuarter",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                // validating if there are information back otherwise don't fail just return
+                if (sr.length === 0) {
+                    console.log('No data received from DB, the query returned 0 sites found');
+                    return;
+                }
+
+                var availableSiteData = null;
+                var dataMatrix = null;
+                var dataG = new google.visualization.DataTable();
+                dataG.addColumn('string', 'Questions');
+
+
+                // populate matrix to store data from survey
+                for (var col = 0; col < sr.length; col++) {
+                    dataG.addColumn('number', sr[col].Project);
+
+                    // creating the matrix to store the data dinamycally this happens only one time (just need one matrix right)
+                    if (!dataMatrix && sr[col].SurveyResponse.length > 0) {
+                        dataMatrix = matrix(sr[col].SurveyResponse.length, sr.length, 0);
+                    }
+
+                    // validate that there are survey data for the current site
+                    if (sr[col].SurveyResponse.length > 0) {
+                        for (var row = 0; row < sr[col].SurveyResponse.length; row++) {
+                            dataMatrix[row][col] = sr[col].SurveyResponse[row].ResponseId;
+                        }
+                        availableSiteData = sr[col].SurveyResponse;
+                    }
+                }
+
+                if (availableSiteData) {
+                    // now pass survey answers data to google chart data
+                    for (var row = 0 ; row < dataMatrix.length; row++) {
+                        var data = [];
+                        data.push((row + 1).toString());
+                        for (var col = 0; col < dataMatrix[row].length; col++) {
+                            data.push(dataMatrix[row][col]);
+                        }
+                        dataG.addRow(data);
+                    }
+
+                    var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                    var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+                    for (var i = 0; i < availableSiteData.length; i++) {
+                        thHTML += '<th class="helloText">' + availableSiteData[i].Text + '</th>';
+                        questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + availableSiteData[i].Text + '</li>';
+                    }
+
+                    $(".hello").remove();
+                    $(".helloQuestion").remove();
+                    $(".helloul").remove();
+                    $(".helloText").remove();
+                    $(".hellowDarkness").remove();
+                    $(".helloQuestionsText").remove();
+
+                    thHTML += '</tr> </thead>';
+                    questionsHTML += '</ul>';
+
+                    $('#Questions').append(questionsHTML);
+                    $('#location').append(thHTML);
+
+                    for (var col = 0; col < sr.length; col++) {
+                        var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr[col].Project + ' </th>';
+
+                        // need to retrieve data from dataMatrix since it contains the data from survey but also it has initialized to zeros when
+                        // there is no value from survey
+                        for (var row = 0 ; row < dataMatrix.length; row++) {
+                            trHTML += '<th>' + dataMatrix[row][col] + '</th>';
+                        }
+                        trHTML += '</tr>';
+
+                        $('#location').append(trHTML);
+                    }
+                } else {
+                    // since there is no data available, we just need to dinamycally add one column so the chart does not complain
+                    var emptyData = [];
+                    emptyData.push('0');
+                    for (var col = 0; col < sr.length; col++) {
+                        emptyData.push(0);
+                    }
+                    dataG.addRow(emptyData);
+                    $(".hello").remove();
+                    $(".helloQuestion").remove();
+                    $(".helloul").remove();
+                    $(".helloText").remove();
+                    $(".hellowDarkness").remove();
+                    $(".helloQuestionsText").remove();
+                }
+
+
+                // Instantiate and draw our chart, passing in some options
+                var chartOptions = {
+                    //title: 'By all sites',
+                    vAxis: {
+                        ticks: [{ v: 5, f: "Strongly Agree" }, { v: 4, f: "Agree" }, { v: 3, f: "Neutral" }, { v: 2, f: "Disagree" }, { v: 1, f: "Strongly Disagree" }],
+                        viewWindow: {
+                            min: 0,
+                            max: 5
+                        }
+                    },
+                    hAxis: {
+                        viewWindow: {
+                            min: 0,
+                            max: 9
+                        }
+                    },
+                    //colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+                    bars: 'vertical',
+                    chartArea: { height: '90%' },
+                    legend: { textStyle: { fontSize: 13 } }
+                    //legend: { position: 'top' }
+                }
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('barchart_material'));
+                chart.draw(dataG, chartOptions);
+
+                // adding listener to enable ON / OFF feature
+                var columns = [];
+                for (var i = 0; i < dataG.getNumberOfColumns() ; i++) {
+                    columns.push(i);
+                }
+
+                function selectHandler() {
+                    var sel = chart.getSelection();
+                    // if selection length is 0, we deselected an element
+                    if (sel.length > 0) {
+                        // if row is null, we clicked on the legend
+                        if (sel[0].row == null) {
+                            var col = sel[0].column;
+                            if (columns[col] == col) {
+                                // hide the data series
+                                columns[col] = {
+                                    label: '(X) ' + dataG.getColumnLabel(col),
+                                    type: dataG.getColumnType(col),
+                                    calc: function () {
+                                        return null;
+                                    }
+                                };
+                            }
+                            else {
+                                // show the data series
+                                columns[col] = col;
+                            }
+                            var view = new google.visualization.DataView(dataG);
+                            view.setColumns(columns);
+                            chart.draw(view, chartOptions);
+                        }
+                    }
+                }
+
+                // uncomment this line if you want to add toggle ON/OFF by clicking on the legend
+                //google.visualization.events.addListener(chart, 'select', selectHandler);
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        })
+    });
+
+    // this function will create a matrix where we can populate the data from the survey
+    function matrix(rows, cols, defaultValue) {
+
+        var arr = [];
+
+        // Creates all lines:
+        for (var i = 0; i < rows; i++) {
+
+            // Creates an empty line
+            arr.push([]);
+
+            // Adds cols to the empty line:
+            arr[i].push(new Array(cols));
+
+            for (var j = 0; j < cols; j++) {
+                // Initializes:
+                arr[i][j] = defaultValue;
+            }
+        }
+
+        return arr;
+    }
+
+</script>

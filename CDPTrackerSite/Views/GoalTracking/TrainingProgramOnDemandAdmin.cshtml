@@ -1,0 +1,109 @@
+﻿@model List<DataSource.TrainingProgramOnDemand>
+@{
+    ViewBag.Title = "Training Program On Demand Admin";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<style type="text/css">
+    table{
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    }
+    table td{
+    border: 1px solid #ddd;
+    }
+    .test {
+      display: inline;
+      overflow: auto;
+      white-space: nowrap;
+      margin: 0px auto;
+    }
+</style>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#button").click(function () {
+            var IdArea = document.getElementById("Area").value;
+            var IdPosition = document.getElementById("Position").value;
+
+            if (IdArea != "") {
+                window.location.href = '@Url.Action("CreateTrainingProgram", "GoalTracking")' + '?ida=' + IdArea + '&idp=' + IdPosition;
+            }
+            else
+            {
+                window.location.href = '@Url.Action("CreateTrainingProgram", "GoalTracking")';
+            }
+        });
+    })
+</script>
+
+@using (Html.BeginForm())
+{    
+    @Html.ValidationSummary(false)
+    <div class="test">
+        <p>
+            <input type="submit" value="Add New Training Program" style="width: 200px !important;"/>                
+        </p>         
+    </div>
+    <div>
+        <table class="center" ; style="width: 100%;">
+            <tr>
+                <td colspan="7" style="text-align: center; font-size: large; font-family: Cambria; background-color: #4C4D4F; font-weight: 700; color: #fff">
+                    Training Program On Demand
+                </td>
+            </tr>
+            <tr style="background-color:#F7F8FB">
+                <th style="text-align: center; background-color: #F7F8FB; width:50%;">Name</th>                                                    
+                <th style="text-align: center; background-color: #F7F8FB; width:10%;">Start Date</th>
+                <th style="text-align: center; background-color: #F7F8FB; width:10%;">Finish Date</th>
+                @*<th style="text-align: center; background-color: #F7F8FB; width:10%;">Points</th>*@
+                <th style="text-align: center; background-color: #F7F8FB; width:10%;">Link</th>
+                <th style="text-align: center; background-color: #F7F8FB; width:10%;">Actions</th>
+            </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {            
+            <tr>
+                <td style="width: 50%; text-align: center;">@item.Name</td>        
+                <td style="width: 10%; text-align: center;">
+                    @if (item.StartDate != null)
+                    {
+                        @String.Format("{0:d}", item.StartDate)
+                    }
+                </td>
+                <td style="width: 10%; text-align: center;">
+                    @if (item.FinishDate != null)
+                    {
+                        @String.Format("{0:d}", item.FinishDate)
+                    }
+                </td>
+                @*<td style="width: 10%; text-align: center;">@item.Points</td>*@
+                <td style="width: 10%; text-align: center;">                            
+                    @if (item.Link != null)
+                    {
+                    <a href="@item.Link" target="_blank" style="text-decoration: none">
+                        <img src="@Url.Content("~/Content/images/link.png")" height="22" width="22" title="Click Here" style="margin-left: 10px; border: none" />
+                    </a>
+                    }
+                </td>
+                <td style="width: 10%; text-align: center;">
+                    <a href="@Url.Action("EditTrainingProgramOnDemand", new { id = item.IdTrainingProgramOnDemand})" style="text-decoration: none">
+                        <img src="@Url.Content("~/Content/images/EditGoal-icon.png")" height="22" width="22" title="Edit Training Program" style="margin-left: 10px; border: none;" />
+                    </a>
+                    &nbsp &nbsp
+                    <a href="@Url.Action("DeleteTrainingProgramOnDemand", new { id = item.IdTrainingProgramOnDemand })" style="text-decoration:none">
+                        <img src="@Url.Content("~/Content/images/DeleteGoal-icon.png")" height="17" width="17" title="Delete Training Program" style="border: none;" />
+                    </a>
+                </td>                    
+          </tr>      
+        }
+    }   
+        </table>
+    </div>    
+}

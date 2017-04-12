@@ -1,0 +1,186 @@
+﻿
+
+<section id="listContainer">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                Manager's Check List
+            </h4>
+  
+        </div>
+        <div class="panel-body">
+            <div>
+                <p> This table show you if your team members has goals, if they are completed Team Members Input form and if you're evaluated them. Select and click over name or evaluated icon for evaluated one member. </p>
+            </div>
+
+            @if (ViewBag.lstManagerResource != null)
+            {
+                if (ViewBag.SurveyAvailable)
+                {
+                    <div class="fancy-table">
+                        <div class="fancy-header hidden-xs">
+                            <div class="fancy-row form-group">
+                                <div class="form-group col-sm-2">
+                                    Name
+                                </div>
+                                <div class="form-group col-sm-3 text-center">
+                                    Manager's Check Status
+                                </div>
+                                <div class="form-group col-sm-4 text-center">
+                                    Team Members Input @ViewBag.current
+                                </div>
+                                <div class="form-group col-sm-3 text-center">
+                                    Goals for @ViewBag.NextQuarter
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fancy-body">
+                            
+                            @foreach (var oManagerResource in ViewBag.lstManagerResource)
+                            {
+                                <div class="fancy-row form-group" data-employee-id="@oManagerResource.iResourceActiveDirectoryId" >
+                                    <div class="form-group col-sm-3">
+                                        <div class="smallLabels visible-xs">
+                                            Name
+                                        </div>
+                                        <a class="fancy-button managersCheckButton" 
+                                           resourceId="@oManagerResource.iResourceActiveDirectoryId">@oManagerResource.sResourceName</a>
+                                    </div>
+                                    <div class="form-group col-sm-2 text-center">
+                                        <div class="smallLabels visible-xs">
+                                            Status
+                                        </div>
+                                        @if (oManagerResource.bResourceEvaluated)
+                                        {
+                                            
+                                            <a title="Manager's Check">
+                                                <img src="@Url.Content("~/Content/images/verifiedManager.png")" 
+                                                     class="fancy-button statusButton managersCheckButton" 
+                                                     title="Done" 
+                                                     resourceId="@oManagerResource.iResourceActiveDirectoryId" />
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                        
+                                            <a title="Manager's Check" >
+                                                <img src="@Url.Content("~/Content/images/notStarted.png")"
+                                                     class="fancy-button statusButton managersCheckButton"
+                                                     title="Pending"
+                                                     resourceid="@oManagerResource.iResourceActiveDirectoryId" />
+                                            </a>
+                                        }
+                                    </div>
+                                    <!-- col Team Members Input  -->
+                                    <div class="form-group col-sm-4 text-center">
+                                        <div class="smallLabels visible-xs">
+                                            Team Members Input @ViewBag.current
+                                        </div>
+                                        @if (oManagerResource.bResourceTeamMembersInput)
+                                        {
+
+                                            <img src="@Url.Content("~/Content/images/verifiedManager.png")"
+                                                 class="otherButton "
+                                                 title="Done" />
+
+                                        }
+                                        else
+                                        {
+
+
+                                            <img src="@Url.Content("~/Content/images/notStarted.png")"
+                                                 class="otherButton"
+                                                 title="Pending" />
+
+                                        }
+
+                                    </div>
+                                    <!-- col  -->
+                                    <div class="form-group col-sm-3 text-center">
+                                        <div class="smallLabels visible-xs">
+                                            Goals for @ViewBag.NextQuarter
+                                        </div>
+
+                                        @if (oManagerResource.bResourceGoals)
+                                        {
+
+                                            <img src="@Url.Content("~/Content/images/verifiedManager.png")"
+                                                 class=" otherButton "
+                                                 title="Done" />
+
+                                        }
+                                        else
+                                        {
+
+
+                                            <img src="@Url.Content("~/Content/images/notStarted.png")"
+                                                 class="otherButton "
+                                                 title="Pending"
+                                                  />
+
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+                else
+                {
+                        <div class="alert alert-warning" role="alert">There are no Manager's check available for this quarter</div>
+                }
+            }
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/ManagersCheck/ManagersCheckListManager.js")"></script>
+<script>
+    jQuery(document).ready(function () {
+        var team = {
+            members: [
+                {
+                    firstName: "Celeste",
+                    lastName: "Santana Medina",
+                    managersCheck: true
+                },
+                {
+                    firstName: "Cruz Enrique",
+                    lastName: "Perez Rodriguez",
+                    managersCheck: true
+                },
+                {
+                    firstName: "Laura",
+                    lastName: "Lopez",
+                    managersCheck: true
+                },
+                {
+                    firstName: "Leopoldo",
+                    lastName: "Moranchel",
+                    managersCheck: true
+                },
+                {
+                    firstName: "Violetta",
+                    lastName: "Rios",
+                    managersCheck: true
+                }
+            ]
+        };
+
+        var managersCheckListManager = new ManagersCheckListManager();
+
+        // Initialize
+        managersCheckListManager.init(team.members);
+
+        var dict = []; // create an empty array
+
+        dict.push({
+            key: "id",
+            value: "the value"
+        });
+
+    });
+
+   
+</script>

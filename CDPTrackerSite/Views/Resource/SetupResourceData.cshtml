@@ -1,0 +1,38 @@
+﻿@model DataSource.Resource
+
+@{
+    ViewBag.Title = "User Data Setup";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>Is this your data?</legend>
+
+        @Html.HiddenFor(model=>model.Name)
+        @Html.HiddenFor(model=>model.Email)
+        @Html.HiddenFor(model=>model.DomainName)
+        @Html.HiddenFor(model=>model.Employee.CurrentPosition)
+        @Html.HiddenFor(model=>model.Employee.CurrentPositionID)
+        @Html.HiddenFor(model=>model.ActiveDirectoryId)
+
+        <div class="display-field">
+            @Html.LabelFor(model => model.Name): <b>@Html.DisplayFor(model => model.Name)</b>
+        </div>
+
+        <div class="display-field">
+            @Html.LabelFor(model => model.Email): <b>@Html.DisplayFor(model => model.Email)</b>
+        </div>
+
+        <div class="display-field">
+            @Html.LabelFor(model => model.DomainName): <b>@Html.DisplayFor(model => model.DomainName)</b>
+        </div>
+    </fieldset>
+    <p>
+        <input type="submit" value="Yes, this is my data!" /> | @Html.ActionLink("No, this is not my data", "FailedSetup")
+    </p>
+}

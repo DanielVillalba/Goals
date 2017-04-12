@@ -1,0 +1,122 @@
+﻿@model DataSource.GoalTracking
+
+@Html.HiddenFor(model => model.ResourceId)
+@Html.HiddenFor(model => model.GoalId)
+@Html.HiddenFor(model => model.VerifiedByManager)
+
+     @{
+        DataSource.CDPTrackEntities context = new DataSource.CDPTrackEntities();
+        var trainingCategory = context.TrainingCategory.ToList();
+
+
+        
+    }
+<script type="text/javascript">
+    $(function () {
+        $("#Year").val(@DateTime.Now.Year);
+    });
+    $(document).ready(function () {
+        
+
+        $(".trainingCategory").change(function () {
+
+            var dropdown = this
+            var dropdownId = dropdown.id
+            var id = dropdownId.substr(8)
+            var textbox = document.getElementById("TDU"+id)
+            switch (dropdown.value) {
+                case "1":
+                    textbox.max = '@trainingCategory[0].MaxTDU'
+                textbox.value = '@trainingCategory[0].TDU'
+                break;
+            case "2":
+                textbox.max = '@trainingCategory[1].MaxTDU'
+                textbox.value = '@trainingCategory[1].TDU'
+                break;
+            case "3":
+                textbox.max = '@trainingCategory[2].MaxTDU'
+                    textbox.value = '@trainingCategory[2].TDU'
+                    break;
+                case "4":
+                    textbox.max = '@trainingCategory[3].MaxTDU'
+                    textbox.value = '@trainingCategory[3].TDU'
+                    break;
+                case "5":
+                    textbox.max = '@trainingCategory[4].MaxTDU'
+                    textbox.value = '@trainingCategory[4].TDU'
+                    break;
+                case "6":
+                    textbox.max = '@trainingCategory[5].MaxTDU'
+                    textbox.value = '@trainingCategory[5].TDU'
+                    break;
+            }
+        })
+    }
+    );
+</script>
+
+
+@if (!Model.VerifiedByManager)
+{
+    ViewBag.ProgressList = new SelectList(ViewBag.ProgressList, "Value", "Text", Model.Progress);
+    ViewBag.ObjectiveList = new SelectList(ViewBag.ObjectiveList, "Value", "Text", Model.ObjectiveId);
+    ViewBag.CategoriesList = new SelectList(ViewBag.CategoriesList, "Value", "Text", Model.TrainingCategoryId);
+    ViewBag.SourcesList = new SelectList(ViewBag.SourcesList, "Value", "Text", Model.SourceId);
+     
+    <tr>
+        <td style="width: 25%; text-align: center;">
+            @Html.TextBoxFor(model => model.Goal, new { style = "width: 98%;", autocomplete = "off" })
+        </td>
+        <td style="width: 12%; text-align: center;">
+            @Html.DropDownListFor(model => model.ObjectiveId, (SelectList)ViewBag.ObjectiveList, new { style = "width: 98%" })
+        </td>
+        <td style="width: 12%; text-align: center;">
+            @Html.DropDownListFor(model => model.Progress, (SelectList)ViewBag.ProgressList, new { style = "width: 98%" })
+        </td> 
+        <td style="width: 12%; text-align: center;">
+            @Html.DropDownListFor(model => model.TrainingCategoryId,(SelectList)ViewBag.CategoriesList , new { style= "width:98%",id = string.Format("Category{0}",Model.GoalId) , @class = "trainingCategory", @name = "trainingCategory" })
+        </td>              
+        <td style ="width: 6%; text-align:center">
+            @Html.TextBoxFor(model => Model.TDU, new {style = "width:98%", @class = "TDUs", type = "number", id = string.Format("TDU{0}",Model.GoalId), name = "TDUs", min = "0",max = trainingCategory.Where(m=> m.TrainingCategoryId == Model.TrainingCategoryId).FirstOrDefault().MaxTDU})
+              
+        </td>
+        <td style ="width: 15%; text-align: center">
+            @Html.DropDownListFor(model => model.SourceId, (SelectList)ViewBag.SourcesList, new {style = "width:98%"})
+        </td>
+        <td style="width: 10%; text-align: center;">
+            @Html.TextBox("FinishDate", Model.FinishDate.HasValue ? Model.FinishDate.Value.ToShortDateString() : string.Empty, new { @class = "date", @readonly = "readonly", style = "width: 95% !important;" })
+        </td>
+        <td style="width: 10%; text-align: center;">
+            @Html.DisplayFor(modelItem => Model.VerifiedByManager, new { style = "width: 95%;" })
+        </td>
+        <td style="width: 10%; text-align: center;">
+            @Html.Label(Model.LastUpdate.HasValue ? Model.LastUpdate.Value.ToString("MMM dd, yyyy") : string.Empty)
+        </td>        
+    </tr>
+}
+else
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.Goal)
+        </td>
+        <td style="text-align: center;">
+            @Html.DisplayFor(model => model.ProgressEnum.Label)
+        </td>
+        <td style="text-align: center;">
+            @Html.Label(Model.FinishDate.HasValue ? Model.FinishDate.Value.ToShortDateString() : string.Empty)
+        </td>
+        <td style="text-align: center;">
+            @Html.DisplayFor(modelItem => Model.VerifiedByManager)
+        </td>
+        <td style="text-align: center;">
+            @Html.Label(Model.LastUpdate.HasValue ? Model.LastUpdate.Value.ToString("MMM dd, yyyy") : string.Empty)
+        </td>
+        <td style="text-align: center;">
+            @Html.DropDownListFor(model => model.ObjectiveId, (SelectList)ViewBag.ObjectiveList)
+        </td>
+    </tr>
+}
+
+
+

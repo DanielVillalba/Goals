@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>CDPTrackDataBase</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{de6a6979-d780-4b80-90ef-c4be97706f87}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql110DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>CDPTrackDataBase</RootNamespace>
+    <AssemblyName>CDPTrackDataBase</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <GenerateCreateScript>False</GenerateCreateScript>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedure" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\ValuesInfusion.sql" />
+    <Build Include="dbo\Tables\TrainingProgramVisits.sql" />
+    <Build Include="dbo\Tables\TrainingProgramVideo.sql" />
+    <Build Include="dbo\Tables\TrainingProgramOnDemandVisits.sql" />
+    <Build Include="dbo\Tables\TrainingProgramOnDemandDetails.sql" />
+    <Build Include="dbo\Tables\TrainingProgramOnDemand.sql" />
+    <Build Include="dbo\Tables\TrainingProgramDetails.sql" />
+    <Build Include="dbo\Tables\TrainingProgramCategory.sql" />
+    <Build Include="dbo\Tables\TrainingProgram.sql" />
+    <Build Include="dbo\Tables\TrainingCategory.sql" />
+    <Build Include="dbo\Tables\Term.sql" />
+    <Build Include="dbo\Tables\Technologies.sql" />
+    <Build Include="dbo\Tables\TDUReward.sql" />
+    <Build Include="dbo\Tables\TDURedeem.sql" />
+    <Build Include="dbo\Tables\SurveyResponse.sql" />
+    <Build Include="dbo\Tables\SurveyResource.sql" />
+    <Build Include="dbo\Tables\Survey.sql" />
+    <Build Include="dbo\Tables\Suggestions.sql" />
+    <Build Include="dbo\Tables\Sources.sql" />
+    <Build Include="dbo\Tables\SkillCompassGlossary.sql" />
+    <Build Include="dbo\Tables\Response.sql" />
+    <Build Include="dbo\Tables\ResourceGoalsRawData.sql" />
+    <Build Include="dbo\Tables\Resource.sql" />
+    <Build Include="dbo\Tables\QuestionResponse.sql" />
+    <Build Include="dbo\Tables\Question.sql" />
+    <Build Include="dbo\Tables\QuarterlyPriorities.sql" />
+    <Build Include="dbo\Tables\QuarterlyActions.sql" />
+    <Build Include="dbo\Tables\Project.sql" />
+    <Build Include="dbo\Tables\ProgressEnum.sql" />
+    <Build Include="dbo\Tables\PositionsHierarchy.sql" />
+    <Build Include="dbo\Tables\Position.sql" />
+    <Build Include="dbo\Tables\PersonalDevelopment.sql" />
+    <Build Include="dbo\Tables\OnePagePlan.sql" />
+    <Build Include="dbo\Tables\Objective.sql" />
+    <Build Include="dbo\Tables\Location.sql" />
+    <Build Include="dbo\Tables\Level.sql" />
+    <Build Include="dbo\Tables\KPI.sql" />
+    <Build Include="dbo\Tables\KeyThrusts.sql" />
+    <Build Include="dbo\Tables\Groups.sql" />
+    <Build Include="dbo\Tables\Group_SectionAccess.sql" />
+    <Build Include="dbo\Tables\GoalTracking.sql" />
+    <Build Include="dbo\Tables\GoalEnum.sql" />
+    <Build Include="dbo\Tables\GoalDates.sql" />
+    <Build Include="dbo\Tables\GeneralTrainingProgramVisits.sql" />
+    <Build Include="dbo\Tables\GeneralTrainingProgramVideo.sql" />
+    <Build Include="dbo\Tables\GeneralTrainingProgramDetails.sql" />
+    <Build Include="dbo\Tables\GeneralTrainingProgram.sql" />
+    <Build Include="dbo\Tables\Employee_Groups.sql" />
+    <Build Include="dbo\Tables\Employee.sql" />
+    <Build Include="dbo\Tables\CoreValues.sql" />
+    <Build Include="dbo\Tables\Category.sql" />
+    <Build Include="dbo\Tables\Area.sql" />
+    <Build Include="dbo\Tables\AppError.sql" />
+    <Build Include="dbo\Tables\AnnualPriorities.sql" />
+    <Build Include="dbo\Views\TrainingProgramVisitsView.sql" />
+    <Build Include="dbo\Views\TrainingProgramOnDemandVisitsView.sql" />
+    <Build Include="dbo\Views\ResourceGoals.sql" />
+    <Build Include="dbo\Views\GoalsView.sql" />
+    <Build Include="dbo\Views\GoalsCompletedTotal.sql" />
+    <Build Include="dbo\Views\Goals.sql" />
+    <Build Include="dbo\Views\GeneralTrainingProgramVisitsView.sql" />
+    <Build Include="dbo\Views\CDPView.sql" />
+    <Build Include="Security\NT AUTHORITY_NETWORK SERVICE.sql" />
+    <Build Include="dbo\Functions\udf_ManagersCheck_members_list.sql" />
+    <Build Include="dbo\Functions\SplitString.sql" />
+    <Build Include="dbo\Tables\StrategicPriority.sql" />
+    <Build Include="dbo\Tables\Quarter.sql" />
+    <Build Include="dbo\Tables\RankCatalog.sql" />
+    <Build Include="dbo\Tables\RankTypeCatalog.sql" />
+    <Build Include="dbo\Tables\Threshold.sql" />
+    <Build Include="dbo\Tables\LevelRank.sql" />
+    <Build Include="dbo\Views\VW_MembersInputReport.sql" />
+    <Build Include="dbo\Views\VW_ManagerCheckAnswersReport.sql" />
+    <Build Include="dbo\Functions\udf_Calculate_MangCheck_Comendation.sql" />
+    <Build Include="dbo\Functions\udf_Calculate_team_agreement.sql" />
+    <Build Include="dbo\Functions\udf_CalculateCompletionPercentage.sql" />
+    <Build Include="dbo\Stored Procedure\usp_AddSurvey.sql" />
+    <Build Include="dbo\Functions\udf_Calculate_Promotion_Percentage.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="CDPTrackDataBase.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Local.publish.xml" />
+  </ItemGroup>
+</Project>

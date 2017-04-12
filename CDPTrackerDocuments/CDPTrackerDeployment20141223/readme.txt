@@ -1,0 +1,17 @@
+-Run Technologies Script
+-Run Level Script
+-Run Suggestions Script
+-Run TrainingProgramCategory Script
+-Run TrainingProgram Script
+-Run TrainingProgramDetail Script
+-Run GeneralTrainingProgram Script 
+-Run TrainingProgramAlter Script
+-Run GeneralTrainingProgramAlter Script
+-Run GeneralTrainingProgramDetail Script
+-Run GeneralTrainingProgramDetailAlter Script
+-Run TrainingProgramVideo script
+-Run GeneralTrainingProgramVideo script
+-Run Alter Table Objective script
+-Run Alter Table TrainingProgram
+-Run Alter Table GeneralTrainingProgram
+-Run Alter Table Area

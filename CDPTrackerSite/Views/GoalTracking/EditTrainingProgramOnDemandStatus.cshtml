@@ -1,0 +1,53 @@
+﻿@model DataSource.TrainingProgramOnDemandDetails
+@{
+    ViewBag.Title = "Edit Training Program On Demand";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<style type="text/css">
+    table{
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    }
+    table td{
+    border: 1px solid #ddd;
+    }
+</style>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        @if (Model != null)
+        {
+            @Html.HiddenFor(m => m.IdTrainingProgramOnDemandDetails)
+            @Html.HiddenFor(m => m.IdTrainingProgramOnDemand)
+            @Html.HiddenFor(m => m.ResourceId)
+            <div class="editor-label">
+                @Html.Label("Training Program"): @Html.DisplayFor(m => m.TrainingProgramOnDemand.Name)
+            </div>
+            <div class="editor-label">
+                @Html.Label("Status"): @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewData["ListOfProgress"])
+            </div>@*
+            <div class="editor-label">
+                @Html.Label("Points"): @Html.DisplayFor(m => m.TrainingProgramOnDemand.Points)
+            </div>*@
+            <div class="editor-label">
+                @Html.Label("Link"): @Html.DisplayFor(m => m.TrainingProgramOnDemand.Link)
+            </div>
+            
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        }
+    </fieldset>
+    <p>
+        <a href="@Url.Action("TrainingProgram", "GoalTracking")">
+            <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to Training Program" style="border: none" />
+        </a>
+    </p>
+}

@@ -1,0 +1,32 @@
+﻿@model DataSource.Objective
+
+@{
+    ViewBag.Title = "Copy Objective to Next Quarter";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Are you sure you want to copy this objective with its goals?</h3>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Details</legend>
+        <div class="display-label">@Html.Label("Objective"): @Html.DisplayFor(model => model.Objective1)</div>
+        <div class="display-label">@Html.Label("Category"): @Html.DisplayFor(model => model.Category.Category1)</div>
+        <br />
+        @foreach (var item in Model.GoalTracking.Where(x => x.Progress != 2 && !x.VerifiedByManager))
+        {
+            <div> &nbsp; @Html.Label("Goal"): @item.Goal</div>
+            <br />
+        }
+        <p>
+                <input type="submit" value="Copy" />
+        </p>
+    </fieldset>
+}
+    <div>
+    <a href="@Url.Action("Index", "GoalTracking")">
+        <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to List" style="border: none" />
+    </a>
+    </div>
+    

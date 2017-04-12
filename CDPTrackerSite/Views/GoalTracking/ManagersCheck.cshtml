@@ -1,0 +1,124 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>Manager's Check</h2> 
+        <p>These questions are a snapshot of this moment. Please answer the following questions based on how you feel regarding the members of your team, taking into consideration highlights and important details.</p> 
+        <div>
+            <br />
+            <p id="managerDiv" style="font-size:16px;margin-bottom:20px;" hidden>
+                <b >Filled out by:  </b> @Model.Item2.managerName
+            </p>
+        </div>
+
+        @if (Model.Item3 == false)
+        {
+            <div class="alert alert-warning" role="alert">The survey was not performed by the manager for the selected quarter.</div>
+        }
+        else
+        {
+            <section id="questionsContainer" class="managersCheck" data-evaluatedid="@ViewBag.evaluatedResourceId"></section>
+        }
+    
+    </div>
+</div>
+
+
+
+<!-- Footer Button -->
+<div id="saveSurvey" class="btn-group footer-button" role="group">
+    <span class="icon">
+        <img src="@Url.Content("~/Content/images/save.png")" title="Submit" />
+    </span>
+    <span class="text">
+        Submit
+    </span>
+</div>
+<div id="returnBtn" class="btn-group footer-button" role="group" onclick="history.back()">
+    <span class="icon">
+        <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" title="Return to List" />
+    </span>
+    <span class="text">
+        Go Back
+    </span>
+</div>
+
+
+<section id="questionsTemplate" style="display: none">
+    <!-- MULTIPLE CHOICE QUESTION -->
+    <section id="questionType1">
+        <div data-question-type="1" class="question panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="answers-container panel-body">
+
+            </div>
+        </div> <!-- question -->
+    </section>
+
+    <section id="answerType1">
+        <div class="answer col-md-6">
+            <div class="input-group">
+                <input type="radio" name="question-radio-1" value="1">
+                <label class="form-control">Answer</label>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPEN ANSWER QUESTION -->
+    <section id="questionType2">
+        <div data-question-type="2" class="question panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"></h3>
+            </div>
+            <div class="answers-container panel-body">
+                <div class="answer col-md-12">
+                    <div class="input-group">
+                        <textarea rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div><!-- question -->
+    </section>
+</section>
+
+
+
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/ManagersCheck/SurveyGenerator.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/ManagersCheck/SurveyAnswers.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/ManagersCheck/ManagersCheckRequestHandler.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/ManagersCheck/ManagersCheckManager.js")"></script>
+<script>
+    jQuery(document).ready(function () {
+        var survey = {
+            questions: JSON.parse('@Html.Raw(Json.Encode(Model.Item1))'),
+            answers: JSON.parse('@Html.Raw(Json.Encode(Model.Item2))'),
+            canConsult: JSON.parse('@Html.Raw(Json.Encode(Model.Item3))')
+        };
+        survey.surveyId = survey.questions[0].surveyId
+
+        var parents = [];
+        $.each(survey.questions, function (pIndex, pEl) {
+            var child = pEl.questionChild;
+            if (child != null) {
+                $.each(survey.questions, function (cIndex, cEl) {
+                    if (cEl.questionId == child) {
+                        cEl.questionParent = pEl.questionId;
+                    }
+                });
+            }
+        });
+
+        var surveyGenerator = new SurveyGenerator();
+        var surveyAnswers = new SurveyAnswers();
+        var managersCheckRequestHandler = new ManagersCheckRequestHandler();
+        var managersCheckManager = new ManagersCheckManager(surveyGenerator, surveyAnswers, managersCheckRequestHandler);
+
+        // Initialize
+        managersCheckManager.init(survey);
+        $(document).find('[data-question-type="2"]').find(".answer").find("textarea").prop({ "placeholder": "Max 500 characters", "maxlength": "500" });
+      
+
+
+    });
+</script>

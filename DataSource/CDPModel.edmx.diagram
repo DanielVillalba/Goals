@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="df74bebd06a54503ac827bbafae621d8" Name="Diagram1" ZoomLevel="100">
+        <EntityTypeShape EntityType="CDPTrackModel.GoalTracking" Width="1.5" PointX="5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDPTrackModel.ProgressEnum" Width="1.5" PointX="5.125" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDPTrackModel.Resource" Width="1.5" PointX="2.875" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="CDPTrackModel.FK__GoalTrack__Resou__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="CDPTrackModel.FK_GoalTracking_ProgressEnum" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CDPTrackModel.Location" Width="2.375" PointX="2.375" PointY="0.75" />
+        <AssociationConnector Association="CDPTrackModel.FK__Resource__Locati__4F7CD00D" />
+        <EntityTypeShape EntityType="CDPTrackModel.Objective" Width="1.5" PointX="8.5" PointY="5.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_GoalTracking_Objective" />
+        <AssociationConnector Association="CDPTrackModel.FK_Objective_Resource" />
+        <EntityTypeShape EntityType="CDPTrackModel.Category" Width="2" PointX="8.875" PointY="3.625" />
+        <AssociationConnector Association="CDPTrackModel.FK_Objective_Category" />
+        <EntityTypeShape EntityType="CDPTrackModel.Area" Width="1.5" PointX="0.5" PointY="5" />
+        <EntityTypeShape EntityType="CDPTrackModel.Employee" Width="1.5" PointX="0.5" PointY="0.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_Employee_Resource" />
+        <AssociationConnector Association="CDPTrackModel.FK_Manager_Resource" />
+        <EntityTypeShape EntityType="CDPTrackModel.Position" Width="2" PointX="0.875" PointY="10.125" />
+        <EntityTypeShape EntityType="CDPTrackModel.PositionsHierarchy" Width="1.875" PointX="4.375" PointY="10.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_Position_Area" />
+        <AssociationConnector Association="CDPTrackModel.FK_Employee_Position" />
+        <AssociationConnector Association="CDPTrackModel.FK_Employee_Position1" />
+        <AssociationConnector Association="CDPTrackModel.FK_PositionsHierarchy_Position" />
+        <AssociationConnector Association="CDPTrackModel.FK_PositionsHierarchy_Position1" />
+        <EntityTypeShape EntityType="CDPTrackModel.Suggestions" Width="1.5" PointX="0.875" PointY="14.25" />
+        <EntityTypeShape EntityType="CDPTrackModel.Technologies" Width="1.5" PointX="4.375" PointY="13.125" />
+        <AssociationConnector Association="CDPTrackModel.FK_Suggestions_Position" />
+        <AssociationConnector Association="CDPTrackModel.FK_Suggestions_Technologies" />
+        <EntityTypeShape EntityType="CDPTrackModel.Level" Width="1.5" PointX="4.375" PointY="16" />
+        <AssociationConnector Association="CDPTrackModel.FK_Suggestions_Level" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgram" Width="2" PointX="6.75" PointY="16.25" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramCategory" Width="2.375" PointX="7.5" PointY="13.625" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramDetails" Width="2.25" PointX="0.625" PointY="20.125" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgram_Position" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgram_TrainingProgramCategory" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramDetails_TrainingProgram" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramDetails_Resource" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramDetails_ProgressEnum" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="CDPTrackModel.GeneralTrainingProgram" Width="2.75" PointX="10.625" PointY="20.5" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgram_TrainingProgramCategory" />
+        <EntityTypeShape EntityType="CDPTrackModel.GeneralTrainingProgramDetails" Width="2.75" PointX="10.625" PointY="17.125" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgramDetails_GeneralTrainingProgram" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgramDetails_Resource" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgramDetails_ProgressEnum" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramOnDemand" Width="2.75" PointX="10.625" PointY="11.375" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramOnDemandDetails" Width="2.75" PointX="10.625" PointY="14.375" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramOnDemandDetails_Resource" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramOnDemandDetails_TrainingProgramOnDemand" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramOnDemandDetails_ProgressEnum" />
+        <EntityTypeShape EntityType="CDPTrackModel.SkillCompassGlossary" Width="2.25" PointX="0.625" PointY="17.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_SkillCompassGlossary_Area" />
+        <EntityTypeShape EntityType="CDPTrackModel.Project" Width="1.5" PointX="7" PointY="0.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_Employee_Project" />
+        <EntityTypeShape EntityType="CDPTrackModel.GoalDates" Width="1.5" PointX="12.125" PointY="5.375" />
+        <EntityTypeShape EntityType="CDPTrackModel.GoalEnum" Width="1.5" PointX="13.875" PointY="6.875" />
+        <EntityTypeShape EntityType="CDPTrackModel.Term" Width="1.5" PointX="15.25" PointY="11" />
+        <AssociationConnector Association="CDPTrackModel.FK_Employee_Area" />
+        <AssociationConnector Association="CDPTrackModel.fk_Progress" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingCategory" Width="2.25" PointX="5.875" PointY="22.5" />
+        <AssociationConnector Association="CDPTrackModel.FK_GoalTracking_TrainingCategory" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingCategory_TrainingCategory" />
+        <EntityTypeShape EntityType="CDPTrackModel.GeneralTrainingProgramVideo" Width="1.5" PointX="4.375" PointY="19.625" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramVideo" Width="2" PointX="8.875" PointY="0.875" />
+        <EntityTypeShape EntityType="CDPTrackModel.GoalsCompletedTotal" Width="1.5" PointX="12.125" PointY="0.75" />
+        <EntityTypeShape EntityType="CDPTrackModel.ResourceGoals" Width="1.5" PointX="12.125" PointY="6.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgramVideo_GeneralTrainingProgram" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgramVideo_Location" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramVideo_Location" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramVideo_TrainingProgram" />
+        <EntityTypeShape EntityType="CDPTrackModel.Sources" Width="1.5" PointX="0.75" PointY="7.875" />
+        <EntityTypeShape EntityType="CDPTrackModel.GoalsView" Width="1.5" PointX="13.875" PointY="2.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_GoalTracking_SourceId" />
+        <AssociationConnector Association="CDPTrackModel.FK_Suggestions_Area" />
+        <EntityTypeShape EntityType="CDPTrackModel.CDPView" Width="1.5" PointX="13.875" PointY="0.75" />
+        <EntityTypeShape EntityType="CDPTrackModel.GeneralTrainingProgramVisits" Width="1.5" PointX="8.5" PointY="21.5" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgramVisits_GeneralTrainingProgram" />
+        <AssociationConnector Association="CDPTrackModel.FK_GeneralTrainingProgramVisits_Resource" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramOnDemandVisits" Width="1.5" PointX="8.5" PointY="10" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramVisits" Width="1.5" PointX="6.75" PointY="10.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramOnDemandVisits_Resource" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramVisits_Resource" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramVisits_TrainingProgram" />
+        <AssociationConnector Association="CDPTrackModel.FK_TrainingProgramOnDemandVisits_TrainingProgramOnDemand" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramOnDemandVisitsView" Width="1.5" PointX="12.125" PointY="3.25" />
+        <EntityTypeShape EntityType="CDPTrackModel.TrainingProgramVisitsView" Width="1.5" PointX="12.125" PointY="9.125" />
+        <EntityTypeShape EntityType="CDPTrackModel.GeneralTrainingProgramVisitsView" Width="1.5" PointX="13.875" PointY="8.375" />
+        <EntityTypeShape EntityType="CDPTrackModel.TDURedeem" Width="1.5" PointX="3.75" PointY="22.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_TDURedeem_ResourceId" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="CDPTrackModel.TDUReward" Width="1.5" PointX="1.375" PointY="22.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_TDUReward_ResourceId" />
+        <AssociationConnector Association="CDPTrackModel.FK_TDURedeem_TDURewardId" />
+        <EntityTypeShape EntityType="CDPTrackModel.Question" Width="1.5" PointX="9.75" PointY="24" />
+        <EntityTypeShape EntityType="CDPTrackModel.QuestionResponse" Width="1.5" PointX="11.875" PointY="24.125" />
+        <EntityTypeShape EntityType="CDPTrackModel.Response" Width="1.5" PointX="11.875" PointY="26.5" />
+        <AssociationConnector Association="CDPTrackModel.FK_QuestionResponse_Response" />
+        <EntityTypeShape EntityType="CDPTrackModel.SurveyResource" Width="1.5" PointX="3.75" PointY="26.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_SurveyResource_Resource" />
+        <EntityTypeShape EntityType="CDPTrackModel.Survey" Width="1.5" PointX="6.375" PointY="25.625" />
+        <EntityTypeShape EntityType="CDPTrackModel.SurveyResponse" Width="2.5" PointX="8.625" PointY="27.625" />
+        <AssociationConnector Association="CDPTrackModel.FK_SurveyResponse_Resource" />
+        <AssociationConnector Association="CDPTrackModel.FK_SurveyResource_Survey" />
+        <AssociationConnector Association="CDPTrackModel.FK_SurveyResponse_SurveyResource" />
+        <EntityTypeShape EntityType="CDPTrackModel.Groups" Width="1.5" PointX="14.375" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CDPTrackModel.Employee_Groups" Width="1.5" PointX="16.25" PointY="14.5" />
+        <EntityTypeShape EntityType="CDPTrackModel.CoreValues" Width="1.5" PointX="16.375" PointY="1.375" />
+        <EntityTypeShape EntityType="CDPTrackModel.KeyThrusts" Width="1.5" PointX="7.875" PointY="34" />
+        <EntityTypeShape EntityType="CDPTrackModel.OnePagePlan" Width="1.5" PointX="5.625" PointY="31.75" />
+        <AssociationConnector Association="CDPTrackModel.FK_OnePagePlanId" />
+        <AssociationConnector Association="CDPTrackModel.FK__Resource__ResourceId" />
+        <EntityTypeShape EntityType="CDPTrackModel.AnnualPriorities" Width="1.5" PointX="7.875" PointY="36.625" />
+        <AssociationConnector Association="CDPTrackModel.FK_AnnualPriorities_OnePagePlanId" />
+        <EntityTypeShape EntityType="CDPTrackModel.QuarterlyActions" Width="1.5" PointX="10.125" PointY="48.75" />
+        <EntityTypeShape EntityType="CDPTrackModel.AppError" Width="1.5" PointX="16.375" PointY="3.75" />
+        <EntityTypeShape EntityType="CDPTrackModel.Group_SectionAccess" Width="1.5" PointX="16.875" PointY="17.25" />
+        <AssociationConnector Association="CDPTrackModel.FK_Group_SectionAccess_Groups" />
+        <EntityTypeShape EntityType="CDPTrackModel.ValuesInfusion" Width="1.5" PointX="12.125" PointY="46.25" />
+        <EntityTypeShape EntityType="CDPTrackModel.QuarterlyPriorities" Width="1.5" PointX="7.875" PointY="39.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_QuarterlyPriorities_OnePagePlan" />
+        <AssociationConnector Association="CDPTrackModel.FK_QuarterlyActions_QuarterlyPriorities" />
+        <AssociationConnector Association="CDPTrackModel.FK_ValuesInfusion_QuarterlyPriorities" />
+        <EntityTypeShape EntityType="CDPTrackModel.PersonalDevelopment" Width="1.5" PointX="10.125" PointY="40.625" />
+        <AssociationConnector Association="CDPTrackModel.FK_PersonalDevelopment_QuarterlyPriorities" />
+        <EntityTypeShape EntityType="CDPTrackModel.RankCatalog" Width="1.5" PointX="18.75" PointY="10.375" />
+        <AssociationConnector Association="CDPTrackModel.FK_RankCatalog_Groups" />
+        <EntityTypeShape EntityType="CDPTrackModel.RankTypeCatalog" Width="1.5" PointX="16.375" PointY="6.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_RankCatalog_TypeCatalog" />
+        <EntityTypeShape EntityType="CDPTrackModel.Quarter" Width="1.5" PointX="3.375" PointY="32.75" />
+        <EntityTypeShape EntityType="CDPTrackModel.StrategicPriority" Width="1.5" PointX="10.125" PointY="35.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_StrategicPriority_AnnualPriorities" />
+        <AssociationConnector Association="CDPTrackModel.FK__Resource__QuarterId" />
+        <AssociationConnector Association="CDPTrackModel.FK_QuarterlyPriorities_Quarter" />
+        <AssociationConnector Association="CDPTrackModel.FK_StrategicPriority_QuarterlyPriorities" />
+        <EntityTypeShape EntityType="CDPTrackModel.LevelRank" Width="1.5" PointX="18.5" PointY="3.875" />
+        <AssociationConnector Association="CDPTrackModel.FK_RankCatalog_LevelRank" />
+        <EntityTypeShape EntityType="CDPTrackModel.KPI" Width="1.5" PointX="21" PointY="26.375" />
+        <AssociationConnector Association="CDPTrackModel.FK_KPI_QuarterlyPriorities" />
+        <AssociationConnector Association="CDPTrackModel.FK_KPI_RankCatalog" />
+        <AssociationConnector Association="CDPTrackModel.FK_StrategicPriority_RankCatalog" />
+        <EntityTypeShape EntityType="CDPTrackModel.Threshold" Width="1.5" PointX="21" PointY="11.25" />
+        <AssociationConnector Association="CDPTrackModel.FK_Threshold_RankCatalog" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

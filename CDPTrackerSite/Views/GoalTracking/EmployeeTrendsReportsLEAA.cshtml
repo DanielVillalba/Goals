@@ -1,0 +1,361 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Mannager's check trend report
+        </h2>
+        <p>
+            Trend report for: @ViewBag.nameUser
+        </p>
+        <p>
+            Position :@ViewBag.currentPosition
+        </p>
+        <p>
+            Manager :@ViewBag.managerID
+        </p>
+
+        <div class="fancy-tables-container">
+            <div id="warning" class="row">
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="barchart_material" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="barchart_material2" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="barchart_material3" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                    @*<div id="test_dataview" ></div>*@
+                </div>
+                <div class="col-md-6">
+                    <div id="barchart_material4" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<p>
+
+</p>
+
+    @* --------------------------- Mannager's comemts --------------------------- *@
+    <div id="cycleCommentsContainer" class="fancy-table fancy-todo-table">
+        <div class="fancy-description">
+            <div>
+                <label class="subtitle"> Manager's comments </label>
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="fancy-body">
+            <div class="fancy-row form-group">
+                <div class="form-group">
+                    <textarea class="form-control txtCycleComments" id="txtManagerComment" rows="4" readonly> </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    google.charts.load("current", { packages: ["corechart", "table"] });
+
+    google.charts.setOnLoadCallback(drawChart);
+   
+
+    function drawChart() {
+
+        var dataToController = {};
+        dataToController.ResourceId = @ViewBag.idUser
+        dataToController.Name = '@ViewBag.managerID';
+
+        $.ajax({
+            type: "post",
+            url: "GetDataManagerCheck",
+            data: { data: JSON.stringify(dataToController) },
+            success: function (sr) {
+                    
+                    // need to check if there is information returned from server regardless of the quarter, otherwise display the warning !
+                    if (!sr.Q1 && !sr.Q2 && !sr.Q3 && !sr.Q4) {
+                        displayWarning();
+                        return;
+                    }
+
+                    var dataAux = [];
+                    var Header = ['Quarter', 'Response'];
+                    dataAux.push(Header);
+                    
+                    if (sr.Q1 != null) {
+                        var temp = [];
+                        temp.push(sr.Q1[0].Quarter);
+                        temp.push(sr.Q1[0].ResponseId);
+                        dataAux.push(temp);
+                    }
+
+                    if (sr.Q2 != null)
+                    {
+                        var temp = [];
+                        temp.push(sr.Q2[0].Quarter);
+                        temp.push(sr.Q2[0].ResponseId);
+                        dataAux.push(temp);
+
+                    }
+                    
+                    if (sr.Q3 != null)
+                    {
+                        var temp = [];
+                        temp.push(sr.Q3[0].Quarter);
+                        temp.push(sr.Q3[0].ResponseId);
+                        dataAux.push(temp);
+                    }
+
+                    if (sr.Q4 != null)
+                    {
+                        var temp = [];
+                        temp.push(sr.Q4[0].Quarter);
+                        temp.push(sr.Q4[0].ResponseId);
+                        dataAux.push(temp);
+                    }
+
+                    // we are displaying the first not null / empty manager's comment found regardless the quarter it belongs to
+                    var ta = document.getElementById('txtManagerComment');
+                    if (sr.Q1 != null && sr.Q1[5].ResponseText) {
+                        ta.value = sr.Q1[5].ResponseText;
+                    } else if (sr.Q2 != null && sr.Q2[5].ResponseText) {
+                        ta.value = sr.Q2[5].ResponseText;
+                    } else if (sr.Q3 != null && sr.Q3[5].ResponseText) {
+                        ta.value = sr.Q3[5].ResponseText;
+                    } else if (sr.Q4 != null && sr.Q4.ResponseText) {
+                        ta.value = sr.Q4[5].ResponseText;
+                    } else {
+                        ta.value = 'No Data';
+                    }
+
+                    var data = google.visualization.arrayToDataTable(dataAux);
+                    var options = {
+                        title: 'Great Results',
+                        legend: { position: 'top', maxLines: 3 },
+                        pointSize: 10,
+                        pointColor: '#b1FFFF',
+                        vAxis: { title: "Response", ticks: [{ v: 1, f: "Strongly Disagree" }, { v: 2, f: "Disagree" }, { v: 3, f: "Neutral" }, { v: 4, f: "Agree" }, { v: 5, f: "Strongly agree" }] },
+                        series: {
+                            0: { color: '#b1d787' }
+                        },
+                        tooltip: { trigger: "none" }
+                    };
+
+                    var chart = new google.visualization.LineChart(document.getElementById('barchart_material'));
+                    chart.draw(data, options);
+
+                    google.charts.setOnLoadCallback(drawChart2(sr));
+                    google.charts.setOnLoadCallback(drawChart3(sr));
+                    google.charts.setOnLoadCallback(drawChart4(sr));
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+       
+    }
+
+    function drawChart2(sr) {
+
+            var dataAux = [];
+            var Header = ['Quarter', 'Response'];
+            dataAux.push(Header);
+
+            if (sr.Q1 != null) {
+                var temp = [];
+                temp.push(sr.Q1[1].Quarter);
+                temp.push(sr.Q1[1].ResponseId);
+                dataAux.push(temp);
+            }
+
+            if (sr.Q2 != null) {
+                var temp = [];
+                temp.push(sr.Q2[1].Quarter);
+                temp.push(sr.Q2[1].ResponseId);
+                dataAux.push(temp);
+            }
+
+            if (sr.Q3 != null) {
+                var temp = [];
+                temp.push(sr.Q3[1].Quarter);
+                temp.push(sr.Q3[1].ResponseId);
+                dataAux.push(temp);
+            }
+
+            if (sr.Q4 != null) {
+                var temp = [];
+                temp.push(sr.Q4[1].Quarter);
+                temp.push(sr.Q4[1].ResponseId);
+                dataAux.push(temp);
+            }
+
+            var data = google.visualization.arrayToDataTable(dataAux);
+
+            var options = {
+                title: 'Choose to work with',
+                legend: { position: 'top', maxLines: 3 },
+                pointSize: 10,
+                pointColor: '#b1FFFF',
+                vAxis: { title: "Response", ticks: [{ v: 7, f: "No" }, { v: 6, f: "Yes" }, { v: 5, f: " " }, { v: 8, f: " " }] },
+                series: {
+                    0: { color: '#b1d787' }
+                },
+                tooltip: { trigger: "none" }
+            };
+
+            var chart2 = new google.visualization.LineChart(document.getElementById('barchart_material2'));
+            chart2.draw(data, options);
+    }
+
+    function drawChart3(sr) {
+     
+            var dataAux = [];
+            var Header = ['Quarter', 'Response'];
+            dataAux.push(Header);
+
+            if (sr.Q1 != null) {
+                var dataQ1 = unifyAnswer(sr.Q1[2].ResponseId, sr.Q1[3].ResponseId, sr.Q1[2].Quarter);
+                dataAux.push(dataQ1);
+            }
+
+            if (sr.Q2 != null) {
+                var dataQ2 = unifyAnswer(sr.Q2[2].ResponseId, sr.Q2[3].ResponseId, sr.Q2[2].Quarter);
+                dataAux.push(dataQ2);
+            }
+
+            if (sr.Q3 != null) {
+                var dataQ3 = unifyAnswer(sr.Q3[2].ResponseId, sr.Q3[3].ResponseId, sr.Q3[2].Quarter);
+                dataAux.push(dataQ3);
+            }
+
+            if (sr.Q4 != null) {
+                var dataQ4 = unifyAnswer(sr.Q4[2].ResponseId, sr.Q4[3].ResponseId, sr.Q4[2].Quarter);
+                dataAux.push(dataQ4);
+            }
+
+            var data = google.visualization.arrayToDataTable(dataAux);
+
+            // this code shows how to add a table to visualize the data that will be sent to a Google graphic
+
+            //var table = new google.visualization.Table(document.getElementById('test_dataview'));
+            //table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+
+
+            var options = {
+                title: 'Promotion ready / Performance problem',
+                legend: { position: 'top', maxLines: 3 },
+                pointSize: 10,
+                pointColor: '#b1FFFF',
+                vAxis: { title: "Response", ticks: [{ v: 7, f: "Performance Problem" }, { v: 6, f: "Promotion ready" }, { v: 6.5, f: " Not Promotion ready, no performance problem " }, { v: 7.5, f: " " }, { v: 5.5, f: " " }] },
+                series: {
+                    0: { color: '#b1d787' }
+                },
+                tooltip: { trigger: "none" }
+            };
+
+            var chart3 = new google.visualization.LineChart(document.getElementById('barchart_material3'));
+            chart3.draw(data, options);
+    }
+
+    function drawChart4(sr) {
+  
+            var dataAux = [];
+            var Header = ['Quarter', 'Response'];
+            dataAux.push(Header);
+
+            if (sr.Q1 != null) {
+                var temp = [];
+                temp.push(sr.Q1[4].Quarter);
+                temp.push(sr.Q1[4].ResponseId);
+                dataAux.push(temp);
+            }
+
+            if (sr.Q2 != null) {
+                var temp = [];
+                temp.push(sr.Q2[4].Quarter);
+                temp.push(sr.Q2[4].ResponseId);
+                dataAux.push(temp);
+            }
+
+            if (sr.Q3 != null) {
+                var temp = [];
+                temp.push(sr.Q3[4].Quarter);
+                temp.push(sr.Q3[4].ResponseId);
+                dataAux.push(temp);
+            }
+
+            if (sr.Q4 != null) {
+                var temp = [];
+                temp.push(sr.Q4[4].Quarter);
+                temp.push(sr.Q4[4].ResponseId);
+                dataAux.push(temp);
+            }
+
+            var data = google.visualization.arrayToDataTable(dataAux);
+            var options = {
+                title: 'Category ',
+                legend: { position: 'top', maxLines: 3 },
+                pointSize: 10,
+                pointColor: '#b1FFFF',
+                vAxis: { title: "Response", ticks: [{ v: 8, f: "A" }, { v: 9, f: "B" }, { v: 10, f: "C" }, { v: 11, f: "N/A" }] },
+                series: {
+                    0: { color: '#b1d787' }
+                },
+                tooltip: { trigger: "none" }
+            };
+
+            var chart4 = new google.visualization.LineChart(document.getElementById('barchart_material4'));
+            chart4.draw(data, options);
+    }
+
+
+        // This function will provide a handler mechanism for the qustions:
+        // - I would promote this person today if I could
+        // - This person has a performance problem that I need to address inmediately
+        // The logic to handle this questions is being graphed in grap # 3
+    function unifyAnswer(isPromote, isPerformanceProblem, Quarter) {
+        var temp = [];
+
+        if (isPromote == 7 && isPerformanceProblem == 7) {
+            temp.push(Quarter);
+            temp.push(6.5);
+        }
+        else {
+            if (isPromote == 7 && isPerformanceProblem == 6) {
+                temp.push(Quarter);
+                temp.push(isPerformanceProblem);
+            }
+            if (isPromote == 6 && isPerformanceProblem == 7) {
+                temp.push(Quarter);
+                temp.push(isPromote);
+            }
+        }
+        return temp;
+    }
+
+    function displayWarning() {
+        var ta = document.getElementById('txtManagerComment');
+        ta.value = 'No Data';
+        var warningMessage = '<div class="alert alert-warning">' +
+                             '<strong>No data available !</strong>' + 
+                             '<br/>@ViewBag.managerID has not provide any feedback to @ViewBag.nameUser ' +
+                             '<br/>Please provide feedback prior to check this report.' +
+                             '<br/> Thank you !'
+                             '</div>';
+        $('#warning').append(warningMessage);
+    }
+
+
+    </script>

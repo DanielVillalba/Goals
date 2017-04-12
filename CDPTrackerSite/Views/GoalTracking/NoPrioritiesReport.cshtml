@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    const string baseReportUrl = "~/Reporting/NoPrioritiesReport.aspx";
+    string defaultReportUrl = baseReportUrl;
+}
+
+<style type="text/css">
+    iframe[seamless] {
+        background-color: transparent;
+        border: 0px none transparent;
+        padding: 0px;
+        overflow: hidden;
+    }
+</style>
+<script>
+    function updateFrame() {
+
+        var year = $("#yearFilter").val();
+        var quarter = $("#quarterFilter").val();
+
+        var url = '@Url.Content(@baseReportUrl + "?")';
+        url = url + "year=" + year + "&quarter=" + quarter;
+
+        $('#progressReportFrame').attr('src', url);
+
+        $("#yearFilter").change(function () {
+            $("#_year").val($("#yearFilter").val());
+        });
+
+        $("#quarterFilter").change(function () {
+            $("#_quarter").val($("#quarterFilter").val());
+        });
+    }
+
+</script>
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>
+            No Priorities Report
+        </h2>
+
+        <br />
+
+        <form id="reportForm" class="form-horizontal reportForm">
+            <div class="col-sm-3 form-horizontal">
+                <label>
+                    By year:
+                </label>
+                @Html.DropDownList("Year", (IEnumerable<SelectListItem>)ViewData["ListOfYears"], new { style = "width: 80px;", id = "yearFilter" })
+            </div>
+            <div class="col-sm-4 form-horizontal">
+                <label>
+                    and quarter:
+                </label>
+                @Html.DropDownList("Quarter", (IEnumerable<SelectListItem>)ViewData["ListOfQuarters"], new { style = "width: 100px;", id = "quarterFilter" })
+            </div>
+            <div class="col-sm-1 form-horizontal">
+                <input type="button" value="Find" onclick="updateFrame()" style="width: 80px;">
+            </div>
+        </form>
+
+        <IFrame id="progressReportFrame" src="@Url.Content(defaultReportUrl)" width="100%" height="650" seamless="seamless"></IFrame>
+        @using (Html.BeginForm("SendMailToEmployeesWithNoPriorities", "GoalTracking", null, FormMethod.Post, new { id = "submitformNoPriorities", name = "submitform" }))
+            {
+            <p class="centerText">
+                @Html.Hidden("_year", null, new { @Id = "_year" })
+                @Html.Hidden("_quarter", null, new { @Id = "_quarter" })
+                <input type="button" value="Send Email Notification" onclick="return alerts('submitformNoPriorities');" />
+            </p>
+
+
+        }
+    </div>
+</div>

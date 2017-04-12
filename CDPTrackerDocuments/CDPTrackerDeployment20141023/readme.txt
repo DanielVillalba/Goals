@@ -1,0 +1,8 @@
+-Run AssessmentCategory Script
+-Run AssessmentCategoryData Script
+-Run Term Script
+-Run TermData Script
+-Run Assessment Script
+-Delete all data of Assessment Table
+-Run AssessmentAlter Script
+-Run PositionFix Script

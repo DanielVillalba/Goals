@@ -1,0 +1,138 @@
+﻿<div class="employeeGoalsButtonMenu">
+    @if (Model != null)
+    {
+        <button type="button" class="btn btn-default btn-sm toggleSmallButton col-md-2">
+            <img id="imgToggleAll" src="~/Content/images/collapse.png"  title="Collapse all" />
+            <label id="labelToggle" style="font-weight:normal">
+                Collapse All
+            </label>
+        </button>
+    }
+</div>
+
+
+
+<div class="employeeGoalsContainer panel-group">
+    @if (Model != null)
+    {
+        foreach (var employee in Model)
+        {
+            <div class="employeeGoals panel panel-default" data-resource-id="@employee.resourceId">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="@("#collapse" + employee.resourceId)">
+                            @employee.resourceName
+                        </a>
+                    </h4>
+                </div>
+                <div id="@("collapse" + employee.resourceId)" class="panel-collapse collapse in">
+                    <div class="panel-body cyclePrioritiesContainer">
+                        @if (employee.priorities != null)
+                        {
+                            foreach (var priority in employee.priorities)
+                            {
+                                <div class="priority" data-priority-id="@priority.priorityId">
+                                    <div id="tasksListHeader" style="font-style:italic;">
+                                        <div class="task-row">
+                                            @priority.priorityDescription
+                                        </div>
+                                    </div>
+
+                                    <div class="fancy-table">
+                                        <div class="fancy-header hidden-xs">
+                                            <div class="fancy-row form-group">
+                                                <div class="form-group col-sm-1">
+                                                    &nbsp;
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    Task
+                                                </div>
+                                                <div class="form-group col-sm-1 text-center">
+                                                    TDUs
+                                                </div>
+                                                <div class="form-group col-sm-2 text-center">
+                                                    Finish By
+                                                </div>
+                                                <div class="form-group col-sm-2 text-center">
+                                                    Status
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="fancy-body">
+                                            @if (priority.tasks != null)
+                                            {
+                                                foreach (var task in priority.tasks)
+                                                {
+                                                    <div class="fancy-row priority-task-row form-group" data-task-id="@task.taskId" data-task-status="@task.taskProgress">
+                                                        <div class="form-group col-sm-1 fancy-column-counter">
+                                                            &nbsp;
+                                                        </div>
+                                                        <div class="form-group col-sm-6">
+                                                            <div class="smallLabels visible-xs">
+                                                                Task
+                                                            </div>
+                                                            @task.taskDescription
+                                                        </div>
+                                                        <div class="form-group col-sm-1 text-center">
+                                                            <div class="smallLabels visible-xs">
+                                                                TDUs
+                                                            </div>
+                                                            @task.taskTdu
+                                                        </div>
+                                                        <div class="form-group col-sm-2 text-center">
+                                                            <div class="smallLabels visible-xs">
+                                                                Finish By
+                                                            </div>
+                                                            @task.taskFinishDate.ToString("MM/dd/yyyy")
+                                                        </div>
+                                                        <div class="form-group col-sm-2 text-center">
+                                                            <div class="smallLabels visible-xs">
+                                                                Status
+                                                            </div>
+                                                            @if (task.taskProgress == 2)
+                                                            {
+                                                                <img src="@Url.Content(task.imgProgress)" class="fancy-button task-status-button changeStatusButton" title="@task.statusTitle" />
+                                                            }
+                                                            else if (task.statusTitle != string.Empty)
+                                                            {
+                                                                <img src="@Url.Content(task.imgProgress)" class="smallIcon verifiedTaskButton" title="@task.statusTitle" />
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+@if (Model == null)
+{
+    <h3>No Model received!</h3>
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/ToggleManager.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/EmployeeGoals/EmployeeGoalsRequestHandler.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/EmployeeGoals/EmployeeGoalsManager.js")"></script>
+<script>
+    jQuery(document).ready(function () {
+        var employeeGoalsRequestHandler = new EmployeeGoalsRequestHandler();
+        var employeeGoalsManager = new EmployeeGoalsManager(employeeGoalsRequestHandler);
+        var toggleManager = new ToggleManager();
+
+        // Initialize
+        toggleManager.init();
+
+        // Initialize
+        employeeGoalsManager.init();
+    });
+</script>

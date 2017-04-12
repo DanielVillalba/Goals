@@ -1,0 +1,909 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Team member input - Master report tool
+        </h2>
+
+        <p>
+            Choose from the radio button the options and information filter required in order to execute the query.
+        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Please select the report type:
+                </p>
+                <form>
+                    <input type="radio" name="reportType" value="historical"> Historical report<br>
+                    <input type="radio" name="reportType" value="benchmark"> Benchmark report<br>
+                </form> 
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <!-- individual filter selection area-->
+        <div id="reportArea">
+            <hr />
+            <p class="lead">
+                Individual selection
+            </p>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>
+                        Site :
+                    </p>
+                    <select id="individualSite" class="cbCoreValue form-control">
+                        <option value="0"> Please select.... </option>
+                        @foreach (var site in Model[0])
+                        {
+                            <option value="@site.ID"> @site.Name </option>
+                        }
+                    </select>
+
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        Manager :
+                    </p>
+                    <select id="individualManager" class="cbCoreValue form-control">
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        Project :
+                    </p>
+                    <select id="individualProject" class="cbCoreValue form-control">
+                    </select>
+                </div>
+            </div>
+            <p>
+
+            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>
+                        Team Member :
+                    </p>
+                    <select id="individualTeamMember" class="cbCoreValue form-control">
+                    </select>
+
+                </div>
+                <div class="col-md-6">
+                    <p>
+                        Choose quarter to retrieve historical from:
+                    </p>
+                    <select id="quarterHistorical" class="cbCoreValue form-control">
+                        @foreach (var quarter in Model[1])
+                        {
+                            <option data-value='{"quarter":@quarter.Item1,"year":@quarter.Item2}'> Q@(quarter.Item1)  @quarter.Item2 </option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <!-- bench mark filter selection area-->
+            <div id="benchmarkSelection" >
+                <hr />
+                <p class="lead">
+                    Benchmark selection
+                </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            Comparison quarter :
+                        </p>
+                        <select id="quarter" class="cbCoreValue form-control">
+                            <option data-value='{"quarter":0,"year":0}'> Please select ... </option>
+
+                            @foreach (var quarter in Model[1])
+                            {
+                                <option data-value='{"quarter":@quarter.Item1,"year":@quarter.Item2}'> Q@(quarter.Item1)  @quarter.Item2 </option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>
+                            Manager :
+                        </p>
+                        <select id="benchmarkManager" class="cbCoreValue form-control">
+                            <option value="0"> Please select ... </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            Project :
+                        </p>
+                        <select id="benchmarkProject" class="cbCoreValue form-control">
+                            <option value="0"> Please select ... </option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            Site :
+                        </p>
+                        <select id="benchmarkSite" class="cbCoreValue form-control">
+                            <option value="-1"> All values </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>
+                            Team Member :
+                        </p>
+                        <select id="benchmarkTeamMember" class="cbCoreValue form-control">
+                            <option value="-1"> All values </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <p>
+
+            </p>
+            <div class="fancy-tables-container">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+
+                    </div>
+
+                </div>
+            </div>
+            <p>
+
+            </p>
+            <div id="warning" class="row">
+                <div class="alert alert-warning">
+                    <strong>No data available !</strong>
+                    <br> Thank you ! 
+                </div>
+            </div>
+            <div id="displayReport">
+                <div class="fancy-tables-container">
+                    <div>
+                        <div id="barchart_material" style="min-height: 450px; height: 100%; width: 95%; margin: auto; background: #fff; text-align: center"></div>
+                    </div>
+
+
+                </div>
+                <p>
+
+                </p>
+                <div class="fancy-tables-container">
+                    <div id="Questions">
+
+                    </div>
+                </div>
+                <p>
+
+                </p>
+                <div class="fancy-tables-container">
+
+                    <div class="fancy-tables-container">
+                        <table id="location" class="table table-bordered"></table>
+                    </div>
+
+
+                    @* --------------------------- Mannager's comments --------------------------- *@
+                    <div id="cycleCommentsContainer" class="fancy-table fancy-todo-table">
+                        <div class="fancy-description">
+                            <div>
+                                <label class="subtitle"> Manager's comments </label>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                        <div class="fancy-body">
+                            <div class="fancy-row form-group">
+                                <div class="form-group">
+                                    <textarea class="form-control txtCycleComments" id="txtManagerComment" rows="4" readonly> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fancy-tables-container">
+
+                    <div class="fancy-tables-container">
+                        <table id="location" class="table table-bordered"></table>
+                    </div>
+
+
+                    @* --------------------------- Employee's comments --------------------------- *@
+                    <div id="cycleCommentsEmployeeContainer" class="fancy-table fancy-todo-table">
+                        <div class="fancy-description">
+                            <div>
+                                <label class="subtitle"> Employee's comments </label>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                        <div class="fancy-body">
+                            <div class="fancy-row form-group">
+                                <div class="form-group">
+                                    <textarea class="form-control txtCycleComments" id="txtEmployeeComments" rows="4" readonly> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+
+                </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="btnEmployeeTrends" type="button" class="btn btn-success">Employee trends</button>
+                    </div>
+                    <ul class="btnLinks"></ul>
+                </div>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <button id="btnDownloadAnualReport" type="button" class="btn btn-success">Download individual reports</button>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+
+</p>
+
+
+
+<script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart', 'bar'] });
+
+</script>
+
+<script type="text/javascript">
+
+    var selectedReportType;     // identifier for the selected type of report
+    $(document).ready(function () {
+        // initialize the DOM by hiding the some of the elements, this will be displayed accordingly to the user's actions
+        $('#reportArea').hide();
+        $('#warning').hide();
+    });
+
+    $("input[name='reportType']").change(function () {
+        displayClean();
+        selectedReportType = $(this).val(); 
+        if (selectedReportType === 'historical') {
+            $('#reportArea').show(); // the select individual filter area is required for both types of reports
+            $('#benchmarkSelection').hide();
+          
+        } else if (selectedReportType === 'benchmark') {
+            $('#reportArea').show(); // the select individual filter area is required for both types of reports
+            $('#benchmarkSelection').show();
+        }
+    });
+
+    // when select a location find the managers
+    $("#individualSite").change(function () {
+        var id = $(this).val();
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        $.ajax({
+            type: "post",
+            url: "GetManagerFromLocation",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#individualManager').find('option').remove().end();
+                $('#benchmarkManager').find('option').remove().end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("individualManager");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("individualManager");
+                    select.appendChild(option);
+                }
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("benchmarkManager");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("benchmarkManager");
+                    select.appendChild(option);
+                }
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+    });
+
+    // when select the manager find the projects
+    $("#individualManager").change(function () {
+        var id = $("#individualManager").val();
+
+        if (selectedReportType === 'benchmark') {
+            $('#benchmarkManager option').filter(function () {
+                return ($(this).text() == $("#individualManager :selected").text());
+            }).prop('selected', true);
+        }
+        
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        $.ajax({
+            type: "post",
+            url: "GetProjectFromManager",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#individualProject').find('option').remove().end();
+                $('#benchmarkProject').find('option').remove().end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("individualProject");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Project;
+                    option.value = sr[i].ProjectId;
+                    var select = document.getElementById("individualProject");
+                    select.appendChild(option);
+                    if(select.length >1)
+                        select.selectedIndex = 1;
+                    $('#individualProject').trigger('change');
+                }
+
+                var option = document.createElement("option");
+                option.text = ' Please select ...';
+                option.value = '0';
+                var select = document.getElementById("benchmarkProject");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Project;
+                    option.value = sr[i].ProjectId;
+                    var select = document.getElementById("benchmarkProject");
+                    select.appendChild(option);
+                }
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+    });
+
+    // when select the project find the individuals 
+    $("#individualProject").change(function () {
+        var id = $(this).val();
+
+        //if (selectedReportType === 'benchmark') {
+         //   $('#benchmarkProject option').filter(function () {
+         //       return ($(this).text() == $("#individualProject :selected").text());
+         //   }).prop('selected', true);
+         //   $('#benchmarkProject').change();
+        //}
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        $.ajax({
+            type: "post",
+            url: "GetEmployeeFromProject",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#individualTeamMember')
+                             .find('option')
+                             .remove()
+                             .end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("individualTeamMember");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("individualTeamMember");
+                    select.appendChild(option);
+                }
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+    });
+
+    // selecting benchmark manager
+    $('#benchmarkManager').change(function () {
+
+         
+        if (selectedReportType === 'historical')
+            return;
+
+        var id = $("#benchmarkManager").val();
+
+        // the rest of the benchmark filters need to be set to All Values
+        $('#benchmarkSite option').filter(function () {
+            return ($(this).text() === ' All values ');
+        }).prop('selected', true);
+
+        $('#benchmarkTeamMember option').filter(function () {
+            return ($(this).text() === ' All values ');
+        }).prop('selected', true);
+
+        $('#quarter option').filter(function () {
+            return ($(this).text() === ' All values ');
+        }).prop('selected', true);
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        $.ajax({
+            type: "post",
+            url: "GetProjectFromManager",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#benchmarkProject').find('option').remove().end();
+
+                var option = document.createElement("option");
+                option.text = ' Please select ...';
+                option.value = '0';
+                var select = document.getElementById("benchmarkProject");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Project;
+                    option.value = sr[i].ProjectId;
+                    var select = document.getElementById("benchmarkProject");
+                    select.appendChild(option);
+                }
+
+                if (select.length > 1)
+                    select.selectedIndex = 1;
+                $('#benchmarkProject').trigger('change');
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+    });
+
+    // selecting benchmark project
+    $('#benchmarkProject').change(function () {
+        var id = $(this).val();
+        var data = {};
+        data.ProjectId = id;
+
+        $.ajax({
+            type: "post",
+            url: "GetSiteFromProject",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#benchmarkSite').find('option').remove().end();
+
+                var option = document.createElement("option");
+                option.text = ' All values ';
+                option.value = '-1';
+                var select = document.getElementById("benchmarkSite");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].nameLocation;
+                    option.value = sr[i].LocationId;
+                    var select = document.getElementById("benchmarkSite");
+                    select.appendChild(option);
+                }
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+    });
+
+    // select the bench markSite
+    $('#benchmarkSite').change(function () {
+        var _locadtionId = $(this).val();
+        var _ProjectId = $('#benchmarkProject').val();
+
+        var data = {};
+        data.LocationId = _locadtionId;
+        data.ProjectId = _ProjectId;
+
+        $.ajax({
+            type: "post",
+            url: "GetEmployeeFromProjectAndSite",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#benchmarkTeamMember').find('option').remove().end();
+
+                var option = document.createElement("option");
+                option.text = ' All values ';
+                option.value = '-1';
+                var select = document.getElementById("benchmarkTeamMember");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("benchmarkTeamMember");
+                    select.appendChild(option);
+                }
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+    });
+
+    // build report
+    $("#btnBuildReport").click(function () {
+
+        var idUser = $("#individualTeamMember").val();
+        var nameUser = $("#individualTeamMember :selected").text();
+        var idProject = $("#individualSite").val();
+        
+        var quarterOfTheYear = $('#quarter :selected').data('value').quarter;
+        var selectedYear = $('#quarter :selected').data('value').year;
+
+        // based on the selected report type we set the proper controller's action to invoke
+        var data = {};
+        var urlChoosenReport;
+
+        // set the proper AJAX request based on the user' selection
+        if (selectedReportType === 'historical') {
+            urlChoosenReport = 'GetDataResponsesTeamMemberInputHistorical';
+
+            // get the quarter selection for the hisrotical report.
+            var quarterOfTheYearHistorical = $('#quarterHistorical :selected').data('value').quarter;
+            var selectedYearHistorical = $('#quarterHistorical :selected').data('value').year;
+	    
+            if (!idUser || idUser === '0') {
+                alert('Please select the all the values to continue.');
+                return;
+            }
+
+            data = {
+                ResourceId: idUser,
+                Name:       nameUser,
+                ProjectId: idProject,
+                Quarter: quarterOfTheYearHistorical,
+                Year: selectedYearHistorical
+            }
+        } else if (selectedReportType === 'benchmark') {
+            var _ManagerId = $("#benchmarkManager").val();
+            var _ProjectId = $("#benchmarkProject").val();
+            if (_ManagerId === '0' || _ProjectId === '0') {
+                alert('Please fill the individual filter area to continue.');
+                return;
+            }
+            if (quarterOfTheYear === 0 && selectedYear === 0) {
+                alert('Please select a comparison quarter to continue.');
+                return;
+            }
+            
+            var _LocationId = $("#benchmarkSite").val();
+            var _ResourceId = $("#benchmarkTeamMember").val();
+
+            urlChoosenReport = 'GetDataResponsesTeamMemberInputBenchmark';
+            data = {
+                employeeProjectData: {
+                    ResourceId: idUser,
+                    Name:       nameUser,
+                    ProjectId:  idProject
+                },
+                ProjectId: _ProjectId,
+                LocationId: _LocationId,
+                ResourceId: _ResourceId,
+                quarter: quarterOfTheYear,
+                year: selectedYear
+            }
+        }
+
+        // retrieving managers comments, this is common for both report types
+        getManagerComments(idUser, nameUser);
+
+        getEmployeeComments(idUser, nameUser, idProject, quarterOfTheYear, selectedYear);
+
+        $.ajax({
+            type: "post",
+            url: urlChoosenReport,
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                // validating if there are information back otherwise don't fail just return
+                if (sr.length === 0) {
+                    console.log('No data received from DB, the query returned 0 records found');
+                    displayWarning();
+                    return;
+                }
+
+                // there is information to be displayed
+                displayReport();
+
+                var availableSiteData = null;
+                var dataMatrix = null;
+                var dataG = new google.visualization.DataTable();
+                dataG.addColumn('string', 'Questions');
+
+
+                // populate matrix to store data from survey
+                for (var col = 0; col < sr.length; col++) {
+                    dataG.addColumn('number', sr[col].Identifier);
+
+                    // creating the matrix to store the data dinamycally this happens only one time (just need one matrix right)
+                    if (!dataMatrix && sr[col].SurveyResponse.length > 0) {
+                        dataMatrix = matrix(sr[col].SurveyResponse.length, sr.length, 0);
+                    }
+
+                    // validate that there are survey data for the current site
+                    if (sr[col].SurveyResponse.length > 0) {
+                        for (var row = 0; row < sr[col].SurveyResponse.length; row++) {
+                            dataMatrix[row][col] = sr[col].SurveyResponse[row].ResponseId;
+                        }
+                        availableSiteData = sr[col].SurveyResponse;
+                    }
+                }
+
+                if (availableSiteData) {
+                    // now pass survey answers data to google chart data
+                    for (var row = 0 ; row < dataMatrix.length; row++) {
+                        var data = [];
+                        data.push((row + 1).toString());
+                        for (var col = 0; col < dataMatrix[row].length; col++) {
+                            data.push(dataMatrix[row][col]);
+                        }
+                        dataG.addRow(data);
+                    }
+
+                    var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                    var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+                    for (var i = 0; i < availableSiteData.length; i++) {
+                        thHTML += '<th class="helloText">' + availableSiteData[i].Text + '</th>';
+                        questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + availableSiteData[i].Text + '</li>';
+                    }
+
+                    $(".hello").remove();
+                    $(".helloQuestion").remove();
+                    $(".helloul").remove();
+                    $(".helloText").remove();
+                    $(".hellowDarkness").remove();
+                    $(".helloQuestionsText").remove();
+
+                    thHTML += '</tr> </thead>';
+                    questionsHTML += '</ul>';
+
+                    $('#Questions').append(questionsHTML);
+                    $('#location').append(thHTML);
+
+                    for (var col = 0; col < sr.length; col++) {
+                        var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr[col].Identifier + ' </th>';
+
+                        // need to retrieve data from dataMatrix since it contains the data from survey but also it has initialized to zeros when
+                        // there is no value from survey
+                        for (var row = 0 ; row < dataMatrix.length; row++) {
+                            trHTML += '<th>' + dataMatrix[row][col] + '</th>';
+                        }
+                        trHTML += '</tr>';
+
+                        $('#location').append(trHTML);
+                    }
+                } else {
+                    dataG.addRow(['0', 0, 0, 0, 0]);
+                    $(".hello").remove();
+                    $(".helloQuestion").remove();
+                    $(".helloul").remove();
+                    $(".helloText").remove();
+                    $(".hellowDarkness").remove();
+                    $(".helloQuestionsText").remove();
+                }
+
+
+                // Instantiate and draw our chart, passing in some options
+                var chartOptions = {
+                    //title: 'By all sites',
+                    vAxis: {
+                        ticks: [{ v: 5, f: "Strongly Agree" }, { v: 4, f: "Agree" }, { v: 3, f: "Neutral" }, { v: 2, f: "Disagree" }, { v: 1, f: "Strongly Disagree" }],
+                        viewWindow: {
+                            min: 0,
+                            max: 5
+                        }
+                    },
+                    hAxis: {
+                        viewWindow: {
+                            min: 0,
+                            max: 9
+                        }
+                    },
+                    colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+                    bars: 'vertical',
+                    chartArea: { height: '90%' },
+                    legend: { textStyle: { fontSize: 13 } }
+                    //legend: { position: 'top' }
+                }
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('barchart_material'));
+                chart.draw(dataG, chartOptions);
+
+                // adding listener to enable ON / OFF feature
+                var columns = [];
+                for (var i = 0; i < dataG.getNumberOfColumns() ; i++) {
+                    columns.push(i);
+                }
+
+                function selectHandler() {
+                    var sel = chart.getSelection();
+                    // if selection length is 0, we deselected an element
+                    if (sel.length > 0) {
+                        // if row is null, we clicked on the legend
+                        if (sel[0].row == null) {
+                            var col = sel[0].column;
+                            if (columns[col] == col) {
+                                // hide the data series
+                                columns[col] = {
+                                    label: '(X) ' + dataG.getColumnLabel(col),
+                                    type: dataG.getColumnType(col),
+                                    calc: function () {
+                                        return null;
+                                    }
+                                };
+                            }
+                            else {
+                                // show the data series
+                                columns[col] = col;
+                            }
+                            var view = new google.visualization.DataView(dataG);
+                            view.setColumns(columns);
+                            chart.draw(view, chartOptions);
+                        }
+                    }
+                }
+
+                google.visualization.events.addListener(chart, 'select', selectHandler);
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        })
+    });
+
+    // this function will create a matrix where we can populate the data from the survey
+    function matrix(rows, cols, defaultValue) {
+
+        var arr = [];
+
+        // Creates all lines:
+        for (var i = 0; i < rows; i++) {
+
+            // Creates an empty line
+            arr.push([]);
+
+            // Adds cols to the empty line:
+            arr[i].push(new Array(cols));
+
+            for (var j = 0; j < cols; j++) {
+                // Initializes:
+                arr[i][j] = defaultValue;
+            }
+        }
+
+        return arr;
+    }
+
+    function getManagerComments(id, name) {
+        var data = {};
+        data.ResourceId = id;
+        data.Name = name;
+
+        $.ajax({
+            type: "post",
+            url: "GetManagerComment",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#cycleCommentsContainer').show();
+                if (sr == null) {
+                    var ta = document.getElementById('txtManagerComment');
+                    ta.value = '';
+                }
+                else {
+                    var ta = document.getElementById('txtManagerComment');
+                    ta.value = sr[0].ResponseText;
+                    managerCommentsHtml = sr[0].ResponseText;
+                }
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        })
+        return 0;
+    };
+
+    function getEmployeeComments(id, name, projectId, quarter, year) {
+        var data = {};
+        data.ResourceId = id;
+        data.Name = name;
+        data.ProjectId = projectId;
+        data.Quarter = quarter;
+        data.Year = year;
+
+
+        $.ajax({
+            type: "post",
+            url: "GetEmployeeLastComment",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+                $('#cycleCommentsEmployeeContainer').show();
+                if (sr == null) {
+                    var ta = document.getElementById('txtEmployeeComments');
+                    ta.value = '';
+                }
+                else {
+                    var ta = document.getElementById('txtEmployeeComments');
+                    ta.value = sr[0].ResponseText;
+                    managerCommentsHtml = sr[0].ResponseText;
+                }
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        })
+        return 0;
+    };
+
+    $("#btnEmployeeTrends").click(function () {
+        var idUserr = $("#individualTeamMember").val();
+        window.location.href = "/GoalTracking/EmployeeTrendsReportsLEAA?ID=" + idUserr;
+    });
+
+    $('#btnDownloadAnualReport').click(function () {
+        window.location.href = '/GoalTracking/getZip';
+    });
+
+    function displayWarning() {
+        $('#warning').show();
+        $('#displayReport').hide();
+    }
+
+    function displayReport() {
+        $('#warning').hide();
+        $('#displayReport').show();
+    }
+
+    function displayClean() {
+        $('#warning').hide();
+        $('#displayReport').hide();
+    }
+</script>

@@ -1,0 +1,93 @@
+﻿@using CDPTrackerSite.RoleManagement
+@using Utils
+@{
+    ViewBag.Title = "Trend By Level Report";
+    string userDomainName = User.Identity.Name.StripDomain();
+
+    const string baseReportUrl = "~/Reporting/TrendByLevelReport.aspx";
+    string defaultReportUrl = baseReportUrl;
+    if (PreprocessingHelper.IsDebug())
+    {
+        userDomainName = "rafael durazo";
+    }
+    else
+    {
+        if (RoleManagementHelper.UserIsInRole(User, Role.Manager) && !RoleManagementHelper.UserIsInRole(User, Role.TalentManagement))
+        {
+            defaultReportUrl += "?mdn=" + userDomainName;
+        }
+    }
+}
+<h2>@ViewBag.Title</h2>
+<style type="text/css">
+    iframe[seamless] {
+        background-color: transparent;
+        border: 0px none transparent;
+        padding: 0px;
+        overflow: hidden;
+    }
+</style>
+<script type="text/javascript">
+    function updateFrame() {
+        var url = '@Url.Content(@baseReportUrl + "?")';
+        var yearCombo = document.getElementById('yearCombo');
+        var selectedYearValue = yearCombo.options[yearCombo.selectedIndex].value;
+        var selectedYear;
+        if (typeof selectedYearValue == "string") {
+            selectedYear = parseInt(selectedYearValue);
+        } else {
+            selectedYear = selectedYearValue;
+        }
+        var monthCombo = document.getElementById('monthCombo');
+        var selectedMonthValue = monthCombo.options[monthCombo.selectedIndex].value;
+        var selectedMonth;
+        if (typeof selectedMonthValue == "string") {
+            selectedMonth = parseInt(selectedMonthValue);
+        } else {
+            selectedMonth = selectedMonthValue;
+        }
+        var reportDate = new Date(selectedYear, selectedMonth, 1);
+
+        url = url + 'date=' + encodeURI(reportDate.toISOString());
+        $('#progressReportFrame').attr('src', url);
+    };
+</script>
+<div>
+    @{
+        string[] monthNames = new System.Globalization.DateTimeFormatInfo().MonthNames;
+        int currentMonth = DateTime.Now.Month - 1;
+    }
+    <table>
+        <tr>
+            <td id="fromText" style="display: none"><span >From:</span></td>
+            <td>
+                <select id="yearCombo">
+                    @for (int i = ViewBag.MaxYear; i >= ViewBag.MinYear; i--)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <select id="monthCombo">
+                    @{
+                        for (int i = 0; i < 12; i++)
+                        {
+                            if (i == currentMonth)
+                            {
+                        <option value="@i" selected="Selected">@monthNames[i]</option>
+                                continue;
+                            }
+                
+                        <option value="@i">@monthNames[i]</option>
+                        }
+                    }
+                </select>
+            </td>
+            <td>
+                <input type="button" id="changeframe" value="Change" onclick="updateFrame()">
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<IFrame id="progressReportFrame" src="@Url.Content(defaultReportUrl)" width="100%" height="650" seamless="seamless"></iframe>

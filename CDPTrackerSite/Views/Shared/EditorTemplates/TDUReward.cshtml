@@ -1,0 +1,35 @@
+﻿@model DataSource.TDUReward
+
+    <tr>
+        @switch (Model.TotalTDUReward)
+        {
+            case 15:
+            <td>$0.00D lls</td>
+                            break;
+            case 30:
+            <td>$150.00 Dlls</td>
+                            break;
+            case 45:
+            <td>$150.00 Dlls</td>
+                            break;
+            case 60:
+            <td>$300.00 Dlls</td>
+                            break;
+            default:
+            <td>Unknown</td>
+                            break;
+        }
+        <td>@Html.HiddenFor(m => m.TDURewardId)</td>
+        <td>@Html.DisplayFor(m => m.TotalTDUReward)</td>
+        <td>@Html.DisplayFor(m => m.StartingQuarter)</td>
+        <td>@Html.DisplayFor(m => m.StartingYear)</td>
+        <td>@Html.DisplayFor(m => m.EndingQuarter)</td>
+        <td>@Html.DisplayFor(m => m.EndingYear)</td>
+        <td>@Html.DisplayFor(m => m.Redeemed)</td>
+        <td>@Html.DisplayFor(m => m.DateRedeemed)</td>
+        <td>@Html.DisplayFor(m => m.DatetoLoseValidity)</td>
+        <td>@Html.EditorFor(m => m.Paid)</td>
+        <td>@Html.EditorFor(m => m.DatePaid, new { htmlAttributes = new { @class = "datepicker" } })</td>   
+    </tr>
+
+@Html.EditorFor(m =>  m.ValidRewards[y]);

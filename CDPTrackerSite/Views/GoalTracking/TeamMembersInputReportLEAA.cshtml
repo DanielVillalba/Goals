@@ -1,0 +1,378 @@
+﻿
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Individual
+        </h2>
+
+        <p>
+            The following report shows the answered survey, up to 4 different bars, one for each Qrtr.
+        </p>
+
+        <div class="fancy-tables-container">
+
+            <div>
+                <div id="barchart_material" style="min-height: 450px; height: 100%; width: 80%; margin: auto; background: #fff; text-align: center"></div>
+            </div>
+
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+            <div id="Questions">
+
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+
+            <div class="fancy-tables-container">
+                <table id="location" class="table table-bordered"></table>
+            </div>
+
+            @* --------------------------- Employee's comemts --------------------------- *@
+            <div id="cycleCommentsContainer" class="fancy-table fancy-todo-table">
+                <div class="fancy-description">
+                    <div>
+                        <label class="subtitle"> My comments </label>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="fancy-body">
+                    <div class="fancy-row form-group">
+                        <div class="form-group">
+                            <textarea class="form-control txtCycleEmpComments" id="txtManagerEmpComment" rows="4" readonly> </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @* --------------------------- Mannager's comemts --------------------------- *@
+            <div id="cycleCommentsContainer" class="fancy-table fancy-todo-table">
+                <div class="fancy-description">
+                    <div>
+                        <label class="subtitle"> Manager's comments </label>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="fancy-body">
+                    <div class="fancy-row form-group">
+                        <div class="form-group">
+                            <textarea class="form-control txtCycleComments" id="txtManagerComment" rows="4" readonly> </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/MyResponses/MyResponsesScripts.js")"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart', 'bar'] });
+    </script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            var lastAnswerQ = "";
+            var data = {};
+            data.ResourceId = '@ViewBag.ResourceId';
+            data.Name = '@ViewBag.Name';
+
+            var quarter = $("#ListOfQuarters").val();            
+            var year = $("#ListOfYears").val();
+            if ($.urlParam('quarter') != undefined)
+                quarter = $.urlParam('quarter');
+            if ($.urlParam('year') != undefined)
+                year = $.urlParam('year');
+
+            data.quarter = quarter;
+            data.year = year;
+
+            getManagerComments(data.ResourceId, data.Name, quarter, year);
+            getEmployeeComments(data.ResourceId, data.Name, quarter, year);
+
+
+            $.ajax({
+                type: "post",
+                url: "GetDataSurveysFromSelected",
+                data: { data: JSON.stringify(data) },
+                success: function (sr) {
+
+                    var availableQuarterData = null;   // get the first available quarter data set and use it to handle the form
+                    var data = new google.visualization.DataTable();
+
+                    data.addColumn('string', 'Questions');
+                    if (sr.Q1 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q1[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q1;
+                    }
+
+                    if (sr.Q2 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q2[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q2;
+                    }
+
+                    if (sr.Q3 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q3[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q3;
+                    }
+
+                    if (sr.Q4 == null)
+                        data.addColumn('number', 'No data');
+                    else {
+                        data.addColumn('number', sr.Q4[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q4;
+                    }
+
+
+
+
+                    var value1 = 0;
+                    var value2 = 0;
+                    var value3 = 0;
+                    var value4 = 0;
+
+
+                    if (availableQuarterData) {
+                        // retrieving data and populate 'data' object
+                        for (var i = 0; i < availableQuarterData.length; i++) {
+                            if (sr.Q1 == null)
+                                value1 = 0;
+                            else
+                                value1 = sr.Q1[i].ResponseId;
+
+                            if (sr.Q2 == null)
+                                value2 = 0;
+                            else
+                                value2 = sr.Q2[i].ResponseId;
+
+                            if (sr.Q3 == null)
+                                value3 = 0;
+                            else
+                                value3 = sr.Q3[i].ResponseId;
+
+                            if (sr.Q4 == null)
+                                value4 = 0;
+                            else
+                                value4 = sr.Q4[i].ResponseId;
+
+                            data.addRow([(i + 1).toString(), value1, value2, value3, value4]);
+                        }
+
+                        var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                        var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+
+                        for (var i = 0; i < availableQuarterData.length; i++) {
+                            thHTML += '<th class="helloText">' + availableQuarterData[i].Text + '</th>';
+                            questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + availableQuarterData[i].Text + '</li>';
+                        }
+
+                        $(".hello").remove();
+                        $(".helloQuestion").remove();
+                        $(".helloul").remove();
+                        $(".helloText").remove();
+                        $(".hellowDarkness").remove();
+                        $(".helloQuestionsText").remove();
+
+                        thHTML += '</tr> </thead>';
+                        questionsHTML += '</ul>';
+
+                        $('#Questions').append(questionsHTML);
+                        $('#location').append(thHTML);
+
+                        // Data about  acutual Quarter
+                        if (sr.Q1 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            $(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q2 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q2[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q2[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q3 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q3[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q3[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q4 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q4[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q4[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+
+                    } else {
+                        data.addRow(['0', 0, 0, 0, 0]);
+                        $(".hello").remove();
+                        $(".helloQuestion").remove();
+                        $(".helloul").remove();
+                        $(".helloText").remove();
+                        $(".hellowDarkness").remove();
+                        $(".helloQuestionsText").remove();
+
+                    }
+
+
+                    // Instantiate and draw our chart, passing in some options
+                    var chartOptions = {
+                        vAxis: {
+                            ticks: [{ v: 5, f: "Strongly Agree" }, { v: 4, f: "Agree" }, { v: 3, f: "Neutral" }, { v: 2, f: "Disagree" }, { v: 1, f: "Strongly Disagree" }],
+                            viewWindow: {
+                                min: 0,
+                                max: 5
+                            }
+                        },
+                        hAxis: {
+                            viewWindow: {
+                                min: 0,
+                                max: 9
+                            }
+                        },
+                        colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+                        bars: 'vertical',
+                        chartArea: { height: '90%' },
+                        legend: { textStyle: { fontSize: 13 } }
+                    }
+
+                    var chart = new google.visualization.ColumnChart(document.getElementById('barchart_material'));
+
+                    chart.draw(data, chartOptions);
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            })
+
+
+
+
+        });
+
+        function getManagerComments(id, name, quarter, year) {
+            var data = {};
+            data.ResourceId = id;
+            data.Name = name;
+            data.Quarter = quarter;
+            data.Year = year;
+
+            $.ajax({
+                type: "post",
+                url: "GetManagerCommentIndv",
+                data: { data: JSON.stringify(data) },
+                success: function (sr) {
+                    var ta = document.getElementById('txtManagerComment');
+                    if (sr == null) {
+                        ta.value = 'No Data';
+                    }
+                    else {
+                        ta.value = sr[0].ResponseText;
+                    }
+                },
+                error: function () {
+                    alert("Error loading Manager comment! Please try again.");
+                }
+            })
+            return 0;
+        };
+
+        function getEmployeeComments(id, name, quarter, year) {
+            var data = {};
+            data.ResourceId = id;
+            data.Name = name;
+            data.Quarter = quarter;
+            data.Year = year;
+
+            $.ajax({
+                type: "post",
+                url: "GetEmployeeComment",
+                data: { data: JSON.stringify(data) },
+                success: function (sr) {
+                    var ta = document.getElementById('txtManagerEmpComment');
+                    if (sr == null) {
+                        ta.value = 'No Data';
+                    }
+                    else {
+                        ta.value = sr[0].ResponseText;
+                    }
+                },
+                error: function () {
+                    alert("Error loading Employee comment! Please try again.");
+                }
+            })
+            return 0;
+        };
+
+        $.urlParam = function (name) {
+            var testStr = window.location.href;
+
+            if (testStr.includes("?")) {
+                if (testStr.includes(name)) {
+                    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                    return results[1] || 0;
+                }
+            }
+        }
+
+    </script>
+
+    <script>
+        jQuery(document).ready(function () {
+            var employeeGoalsManager = new MyResponsesScripts();
+
+            // Initialize
+            employeeGoalsManager.init();
+        });
+    </script>
+</div>

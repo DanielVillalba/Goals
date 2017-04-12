@@ -1,0 +1,86 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewBag.Title = "Managers with pending goals to verify";
+}
+
+@if (Model == null)
+{
+    <p>The data could not be found.</p>
+}
+else
+{
+    <script type="text/javascript">
+        function submitForm() {
+            var answer = confirm("Are you sure you want to proceed?. This action cannot be reverted.");
+            return answer;
+        }
+    </script>
+
+    <div class="pageDescription">
+        <div class="description">
+            <h2>@ViewBag.Title</h2>
+            <br />
+            @if (Model.Any())
+            {
+                <table class="simpleCustomTable">
+                    <tr>
+                        <td>Manager</td>
+                        <td>Direct Report</td>
+                        <td>Goals Pending Verification</td>
+                    </tr>
+                    @foreach (var manager in Model)
+                    {
+                        <tr>
+                            <th>
+                                @(manager.GetType().GetProperty("ManagerName").GetValue(manager, null))
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        foreach (var item in manager.GetType().GetProperty("DirectReport").GetValue(manager, null))
+                        {
+                            <tr>
+                                <td class="blank"></td>
+                                <td class="blank">
+                                    @(item.GetType().GetProperty("DomainName").GetValue(item, null))
+                                </td>
+                                <td class="blank">
+                                    @(item.GetType().GetProperty("PendingGoalCount").GetValue(item, null))
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td class="blank"></td>
+                            <td class="blank"></td>
+                            <td class="blank bold">
+                                @(manager.GetType().GetProperty("GoalsPendingVerificationCount").GetValue(manager, null))                                
+                            </td>
+                        </tr>
+                    }
+                </table> 
+
+                if (ViewBag.IsManager || ViewBag.IsTalentManagementResource)
+                {
+                    using (Html.BeginForm("ForceGoalVerification", "GoalTracking", null, FormMethod.Post))
+                    {
+                        @Html.Hidden("IsManager", (bool)ViewBag.IsManager);
+                        @Html.Hidden("IsTalentManagement", (bool)ViewBag.IsTalentManagementResource);
+                        @Html.Hidden("Name", (string)ViewBag.Name);
+                        <br />
+                        <p class="centerText">
+                            <input type="submit" id="btnForce" value="Force goal verification" onclick="return submitForm();" />
+                        </p>
+                    }
+
+                    <p class="centerText"> NOTE: If you are from TM the force goal verification button will set <b>ALL GOALS</b> as verify.</p>
+                    <p class="centerText"> If you are a manager then you will set <b>ALL GOALS FROM YOUR TEAM</b> as verify.</p>
+                }
+            }
+            else
+            {
+                <span><b>There are no pending goals to verify.</b></span>
+            }
+            </div>
+        </div>        
+    }

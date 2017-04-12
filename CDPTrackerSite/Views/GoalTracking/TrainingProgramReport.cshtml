@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "TrainingProgramReport";
+}
+
+<style type="text/css">
+    iframe[seamless] {
+        background-color: transparent;
+        border: 0px none transparent;
+        padding: 0px;
+        overflow: hidden;
+    }
+</style>
+<h2>Training Program Report</h2>
+
+<IFrame id="progressReportFrame" src="@Url.Content("~/Reporting/TrainingProgramReport.aspx")" width="100%" height="650" seamless="seamless"></iframe>

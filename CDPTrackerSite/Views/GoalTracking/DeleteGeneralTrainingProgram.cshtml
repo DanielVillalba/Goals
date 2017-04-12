@@ -1,0 +1,44 @@
+﻿@model DataSource.GeneralTrainingProgram
+@{
+    ViewBag.Title = "Training Program";
+}
+
+<style type="text/css">
+    /*table {
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+    }
+        table td {
+            border: 1px solid #ddd;
+        }*/
+</style>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>@ViewBag.Title</h2>
+        <br />
+        <h4>Are you sure you want to delete this training program?</h4>
+        @using (Html.BeginForm())
+        {
+            <fieldset>                
+                @Html.HiddenFor(model => model.IdGeneralTrainingProgram)
+                <div class="display-label">@Html.Label("Name") : @Html.DisplayFor(model => model.Name)</div>
+                <div class="display-label">@Html.Label("Category") : @Html.DisplayFor(model => model.TrainingProgramCategory.Name)</div>
+                <div class="display-label">@Html.Label("Link") : @Html.DisplayFor(model => model.Link)</div>                
+
+                @if (ViewBag.error != "")
+                {
+                    <p style="color: #FF0000; font-size: medium;"><strong>@ViewBag.error</strong></p>
+                }
+
+                <div class="buttons-div">
+                    <input type="submit" value="Delete" />
+                </div>
+            </fieldset>
+        }
+        
+    </div>
+</div>

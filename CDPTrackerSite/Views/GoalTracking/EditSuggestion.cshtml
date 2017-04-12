@@ -1,0 +1,228 @@
+﻿@model DataSource.Suggestions
+@{
+    ViewBag.Title = "Edit Suggestion";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<style type="text/css">
+    table{
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    }
+    table td{
+    border: 1px solid #ddd;
+    }
+    .field-validation-error {
+        color: #444 !important;
+    }
+    .field-validation-valid {
+        display: none;
+    }
+    .input-validation-error {
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+</style>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var AreaId = '@ViewBag.AreaId';
+    var PositionId = '@ViewBag.PositionId';
+    var error = '@ViewBag.error';
+
+    $(document).ready(function () {
+        $("#Area").change(function () {
+            $("#Position").append('<option value="272">Please select a position</option>');
+            document.getElementById("Position").value = 272
+            if (document.getElementById("Area").selectedIndex == 0) {
+                document.getElementById("area").innerHTML = "The Area field is required";                
+            }
+            else {
+                document.getElementById("area").innerHTML = "";                
+            }
+        })
+
+        $("#Technology").change(function () {
+            if (document.getElementById("Technology").selectedIndex == 0) {
+                document.getElementById("technology").innerHTML = "The Technology field is required";                
+            }
+            else {
+                document.getElementById("technology").innerHTML = "";                
+            }
+        })
+
+        $("#Level").change(function () {
+            if (document.getElementById("Level").selectedIndex == 0) {                
+                document.getElementById("level").innerHTML = "The Level field is required";                
+            }
+            else {
+                document.getElementById("level").innerHTML = "";                
+            }
+        })
+
+        $("#Topic").keyup(function () {
+            if ($('#Topic').val() == "") {
+                document.getElementById("topic").innerHTML = "The Topic field cannot be empty";                
+            }
+            else {
+                document.getElementById("topic").innerHTML = "";                
+            }
+        });
+
+        $("#Source").keyup(function () {
+            if ($('#Source').val() == "") {
+                document.getElementById("source").innerHTML = "The Source field cannot be empty";                
+            }
+            else {
+                document.getElementById("source").innerHTML = "";                
+            }
+        });
+
+        $("#Area").change(function () {
+            $("#Position").empty();
+            $("#Position").append('<option value="272">Please select a position</option>');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("JsonGetPosition")',
+                    dataType: 'json',
+                    data: { id: $("#Area").val() },
+                    success: function (position) {
+                        $.each(position, function (i, position) {
+                            $("#Position").append('<option value="' + position.Value + '">' + position.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve positions.' + ex);
+                    }
+                });
+            return false;
+        })
+
+        if (PositionId != 0) {
+            $("#Position").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("JsonGetPosition")',
+                dataType: 'json',
+                data: { id: AreaId },
+                success: function (position) {
+                    $.each(position, function (i, position) {
+                        $("#Position").append('<option value="' + position.Value + '">' + position.Text + '</option>');
+                    });
+
+                    document.getElementById("Area").value = AreaId;
+                    document.getElementById("Position").value = PositionId;
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve positions.' + ex);
+                }
+            });
+            return false;
+        }
+        else
+        {
+            window.onload = function () { fillDropDown('@Model.PositionId'); };
+        }
+
+        function fillDropDown(x) {
+            $("#Position").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("JsonGetPosition")',
+                dataType: 'json',
+                data: { id: $("#Area").val() },
+                success: function (position) {                  
+                    $.each(position, function (i, position) {
+                        $("#Position").append('<option value="' + position.Value + '">' + position.Text + '</option>');
+                    });
+                    document.getElementById("Position").value = x;
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve positions.' + ex);
+                }
+            });
+            return false;
+        }     
+    });
+</script>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Suggestion</legend>
+
+        <br />        
+
+        @Html.HiddenFor(model => model.SuggestionId)
+        <div class="editor-label">
+            <span><strong>Area:</strong></span>
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Area", (IEnumerable<SelectListItem>)ViewData["ListOfAreas"], "Please select an area", new { required = "required" })
+            <label id="area" style="color: red;"></label>
+        </div>        
+        <div class="editor-label">
+            <span><strong>Position:</strong></span>
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Position", new SelectList(string.Empty, "Value", "Text"), "Please select a position")
+        </div>
+        <div class="editor-label">
+            <span><strong>Technology:</strong></span>
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Technology", (IEnumerable<SelectListItem>)ViewData["ListOfTechnologies"], "Please select a technology", new { required = "required" })
+            <label id="technology" style="color: red;"></label>
+        </div>
+        <div class="editor-label">
+            <span><strong>Level:</strong></span>
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("Level", (IEnumerable<SelectListItem>)ViewData["ListOfLevels"], "Please select a level", new { required = "required" })
+            <label id="level" style="color: red;"></label>
+        </div>
+        <div class="editor-label">
+            <span><strong>Topic:</strong></span>
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Topic, new { style = "width:500px", required = "required", autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Topic)            
+        </div>
+        <div>
+            <label id="topic" style="color: red;"></label>
+        </div>
+        <div class="editor-label">
+            <span><strong>Source:</strong></span>
+        </div>        
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Source, new { style = "width:500px", required = "required", autocomplete = "off" })
+            @Html.ValidationMessageFor(model => model.Source)                      
+        </div>
+        <div>
+            <label id="source" style="color: red;"></label>
+        </div>
+
+        <br />
+
+        <div>
+            <input type="submit" id="btnSave" value="Save">            
+        </div>
+
+        <br />
+
+        @if (ViewBag.error != "")
+        {
+            <label style="color: red; font-size: medium"><strong>@ViewBag.error</strong></label>
+        }
+    </fieldset>
+    <p>
+        <a href="@Url.Action("SuggestionsAdmin", "GoalTracking")">
+            <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to Suggestion" style="border: none" />
+        </a>
+    </p>
+}
+

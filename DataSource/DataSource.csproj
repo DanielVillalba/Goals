@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B32EAB93-A596-40B5-889C-F072F21AF885}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataSource</RootNamespace>
+    <AssemblyName>DataSource</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug email|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug email\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug report|AnyCPU'">
+    <OutputPath>bin\Debug report\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Update|AnyCPU'">
+    <OutputPath>bin\Debug Update\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnnualPriorities.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppError.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Area.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Category.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CDPModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CDPModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CDPModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CDPModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CDPModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CDPView.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CoreValues.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data_Annotations\TDURewardDataAnnotations.cs" />
+    <Compile Include="Employee.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data_Annotations\EmployeeDataAnnotations.cs" />
+    <Compile Include="Employee_Groups.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralTrainingProgram.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralTrainingProgramDetails.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralTrainingProgramVideo.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralTrainingProgramVisits.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralTrainingProgramVisitsView.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoalDates.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoalEnum.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoalsCompletedTotal.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoalsView.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GoalTracking.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data_Annotations\GoalTrackingDataAnnotations.cs" />
+    <Compile Include="Groups.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Group_SectionAccess.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KeyThrusts.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KPI.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Level.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LevelRank.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Objective.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data_Annotations\ObjectiveDataAnnotations.cs" />
+    <Compile Include="OnePagePlan.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonalDevelopment.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Position.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PositionsHierarchy.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressEnum.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quarter.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuarterlyActions.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuarterlyPriorities.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Question.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionResponse.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankCatalog.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RankTypeCatalog.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Resource.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data_Annotations\ResourceDataAnnotations.cs" />
+    <Compile Include="ResourceGoals.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Response.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SkillCompassGlossary.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sources.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StrategicPriority.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Suggestions.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Survey.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SurveyResource.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SurveyResponse.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TDURedeem.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TDUReward.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Technologies.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Term.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Threshold.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingCategory.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgram.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramCategory.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramDetails.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramOnDemand.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramOnDemandDetails.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramOnDemandVisits.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramOnDemandVisitsView.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramVideo.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramVisits.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramVisitsView.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="udf_ManagersCheck_members_list_Result.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ValuesInfusion.cs">
+      <DependentUpon>CDPModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="CDPModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CDPModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CDPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CDPModel.edmx</DependentUpon>
+      <LastGenOutput>CDPModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="CDPModel.edmx.diagram">
+      <DependentUpon>CDPModel.edmx</DependentUpon>
+    </None>
+    <None Include="CDPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CDPModel.edmx</DependentUpon>
+      <LastGenOutput>CDPModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="scripts\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

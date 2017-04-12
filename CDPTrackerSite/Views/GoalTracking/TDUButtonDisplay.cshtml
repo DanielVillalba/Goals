@@ -1,0 +1,26 @@
+﻿@model DataSource.TDUReward
+
+
+@if (Model!=null)
+{
+    if (Model.TotalTDUReward!=15)
+    {
+        
+        <fieldset>
+        <h5 style ="text-align:center;">You have a reward ready to be Redeemed!</h5> 
+        <a href=@Url.Action("RedeemTDUReward", "GoalTracking", new { id = Model.TDURewardId })>
+        @if (Model.TotalTDUReward == 45)
+        {
+        <img src="@Url.Content("~/Content/images/buttons/"+30+"TDUButton.gif")" width="80%" title="Redeem Reward"
+         style = "-ms-align-content:center;-webkit-align-content:center; align-content:center; padding-top:10%; padding-left: 10%; border : none" />
+        }
+        else{
+        <img src="@Url.Content("~/Content/images/buttons/"+Model.TotalTDUReward+"TDUButton.gif")" width="80%" title="Redeem Reward"
+         style = "-ms-align-content:center;-webkit-align-content:center; align-content:center; padding-top:10%; padding-left: 10%; border : none" />
+        }
+        <h5 style ="text-align:center;">CLICK HERE</h5>
+        </a>
+        </fieldset>
+    }
+    
+}

@@ -1,0 +1,35 @@
+﻿@*<div class="currentCycle">Quarter: @ViewBag.CurrentCycle</div>*@
+
+<div class="objectivesContainer">
+    <ul class="objectivesLink">
+
+        @*@if (((IQueryable<CDPTrackerSite.RoleManagement.RolePermissionObject>)ViewBag.QueryPermissions).Where(a => a.Section == "TMI-SAVE" && a.Allow).Any())
+        {
+            <div class="item">
+                true
+            </div>
+        }*@
+
+        <li>@Html.ActionLink("Priorities Management", "PrioritiesManagement", "GoalTracking", null, new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>
+        @*@if (false)*@
+        @if (ViewBag.TeamMembersInputSurveyAvailability == 0)
+        {
+            <li>@Html.ActionLink("Team Member's Input", "TeamMembersInput", "GoalTracking", null, new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>
+        }
+        @*@if (false)*@
+        @if (ViewBag.canCheck == 1)
+        {
+            <li>@Html.ActionLink("Manager's Check", "ManagersCheckList", "GoalTracking", null, new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>
+        }
+
+        @*<li >@Html.ActionLink("Quarterly Priorities", "QuarterlyPriorities", "GoalTracking", null, new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>
+            <li >@Html.ActionLink("Quarterly Priorities (End of Quarter)", "QuarterlyPrioritiesEndOfQuarter", "GoalTracking", null, new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>*@
+
+
+        <li>@Html.ActionLink("Team Quarterly Goals", "GridManagerEmployee", "GoalTracking", new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>
+        <li>@Html.ActionLink("One Page Plan", "OnePagePlan", "GoalTracking", new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>
+        <li>@Html.ActionLink((string)ViewBag.QuartelyGoalsTime, "QuarterlyPrioritiesEndOfQuarter", "GoalTracking", new { @class = "btn btn-lg btn-success btn-block green-tiempo" })</li>
+
+
+    </ul>
+</div>

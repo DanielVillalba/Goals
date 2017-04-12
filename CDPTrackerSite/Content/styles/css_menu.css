@@ -1,0 +1,250 @@
+﻿/* Menu CSS
+------------------------------------------------------------------------*/
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+
+#cssmenu,
+#cssmenu ul,
+#cssmenu ul li,
+#cssmenu ul li a,
+#cssmenu #menu-button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    list-style: none;
+    line-height: 1;
+    display: block;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+    #cssmenu:after,
+    #cssmenu > ul:after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+
+    #cssmenu #menu-button {
+        display: none;
+    }
+
+#cssmenu {
+    /*width: auto;*/
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1;
+    background: #5C5C5C;/*#505050;*/
+    float: left;
+}
+
+#cssmenu img.menu_image_button {
+    cursor: pointer;
+    display: block;
+    max-width: 35px;
+    max-height: 35px;
+    width: auto;
+    height: auto;
+}
+
+#menu-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: #6CB33F; /*#A8FF0F;*/
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    -ms-transition: all 0.25s ease-out;
+    -o-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+}
+
+#cssmenu > ul > li {
+    float: left;
+    height: 40px;
+}
+
+#cssmenu.align-center > ul {
+    font-size: 0;
+    text-align: center;
+}
+
+    #cssmenu.align-center > ul > li {
+        display: inline-block;
+        float: none;
+    }
+
+#cssmenu.align-center ul ul {
+    text-align: left;
+}
+
+#cssmenu.align-right > ul > li {
+    float: right;
+}
+
+#cssmenu.align-right ul ul {
+    text-align: right;
+}
+
+#cssmenu > ul > li > a {
+    padding: 10px;
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #6CB33F; /*#A8FF0F;*/
+    font-weight: bold;
+    -webkit-transition: color .2s ease;
+    -moz-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    -o-transition: color .2s ease;
+    transition: color .2s ease;
+}
+
+#cssmenu > ul > li:hover > a,
+#cssmenu > ul > li.active > a {
+    color: #fff;
+}
+
+/*#cssmenu > ul > li.has-sub > a {
+    padding-right: 25px;
+}*/
+
+    /*#cssmenu > ul > li.has-sub > a::after {
+        position: absolute;
+        top: 21px;
+        right: 10px;
+        width: 4px;
+        height: 4px;
+        border-bottom: 2px solid #A8FF0F;
+        border-right: 2px solid #A8FF0F;
+        content: "";
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        -webkit-transition: border-color 0.2s ease;
+        -moz-transition: border-color 0.2s ease;
+        -ms-transition: border-color 0.2s ease;
+        -o-transition: border-color 0.2s ease;
+        transition: border-color 0.2s ease;
+    }*/
+
+#cssmenu > ul > li.has-sub:hover > a::after {
+    border-color: #fff;
+}
+
+#cssmenu ul ul {
+    position: absolute;
+    left: -9999px;
+}
+
+#cssmenu li:hover > ul {
+    left: auto;
+}
+
+#cssmenu.align-right li:hover > ul {
+    right: 0;
+}
+
+#cssmenu ul ul ul {
+    margin-left: 100%;
+    top: 0;
+}
+
+#cssmenu.align-right ul ul ul {
+    margin-left: 0;
+    margin-right: 100%;
+}
+
+#cssmenu ul ul li {
+    height: 0;
+    -webkit-transition: height .2s ease;
+    -moz-transition: height .2s ease;
+    -ms-transition: height .2s ease;
+    -o-transition: height .2s ease;
+    transition: height .2s ease;
+}
+
+#cssmenu ul li:hover > ul > li {
+    height: 32px;
+}
+
+#cssmenu ul ul li a {
+    padding: 10px 20px;
+    width: 260px;
+    font-size: 14px;
+    background: #5C5C5C;/*#505050;*/
+    text-decoration: none;
+    color: #6CB33F;/*#A8FF0F;*/
+    -webkit-transition: color .2s ease;
+    -moz-transition: color .2s ease;
+    -ms-transition: color .2s ease;
+    -o-transition: color .2s ease;
+    transition: color .2s ease;
+}
+
+    #cssmenu ul ul li:hover > a,
+    #cssmenu ul ul li a:hover {
+        color: #ffffff;
+    }
+
+#cssmenu ul ul li.has-sub > a::after {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    width: 4px;
+    height: 4px;
+    border-bottom: 2px solid #6CB33F;/*#A8FF0F;*/
+    border-right: 2px solid #6CB33F;/*#A8FF0F;*/
+    content: "";
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transition: border-color 0.2s ease;
+    -moz-transition: border-color 0.2s ease;
+    -ms-transition: border-color 0.2s ease;
+    -o-transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease;
+}
+
+#cssmenu.align-right ul ul li.has-sub > a::after {
+    right: auto;
+    left: 10px;
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+}
+
+#cssmenu ul ul li.has-sub:hover > a::after {
+    border-color: #ffffff;
+}
+
+
+#cssmenu.menu_reverse {
+    float: right;
+}
+#cssmenu.menu_reverse > ul {
+    padding-top: 5px;
+}
+#cssmenu.menu_reverse li:hover > ul {
+    left: -170px;
+    border-radius: 10px;
+}
+    #cssmenu.menu_reverse > ul > li > a {
+        height: 50px;        
+    }
+
+#cssmenu:not(.menu_reverse) > ul >li a:hover {
+    background-color: #666666;
+}

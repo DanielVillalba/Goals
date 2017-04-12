@@ -1,0 +1,333 @@
+﻿/* Small devices (tablets, 768px and up) */
+@media all and (max-width: 768px) {
+    #bodyContainer {
+        width: 100%;
+    }
+
+    #bodyContainer > header {
+        height: 70px;
+    }
+
+    header #cssmenu:not(.menu_reverse) li:hover > ul {
+        position: fixed;
+        left: 0px;
+        top: 50px;
+    }   
+    
+    #header-center {
+        top: 30px;
+        left: 10px;
+        position: absolute;
+        width: 100%;
+        text-align: left;
+    }
+
+    #header-center .btn-default {        
+        height: 20px;
+        padding: 0px 10px;
+    }
+
+    header #profilePicture {
+        width: 40px;
+        height: 40px;
+    }
+    
+    header #cssmenu ul,
+    header #cssmenu ul li,
+    header #cssmenu ul li a {
+        line-height: 2;
+    }
+    header #cssmenu > ul > li > a {
+        padding: 10px 5px;
+    }
+    header #cssmenu ul ul li a {
+        font-size: 12px;
+        padding: 5px 20px;
+    }
+
+    header #cssmenu ul li:hover > ul > li {
+        height: 25px;
+    }
+
+    #ListOfQuarters, #ListOfYears {
+        height: 15px;
+    }
+
+    /* Index
+    --------------------------------------------------------------*/
+    .objectivesContainer {
+        padding-top: 20px;
+    }
+
+
+    /* Footer
+    --------------------------------------------------------------*/
+    #bodyContainer > footer img {
+        height: 30px;
+    }
+        #bodyContainer > footer .footer-button .text {
+            display: none;
+        }
+
+
+
+    .pageInformation {
+    }
+        .pageInformation h3 {
+            font-size: 18px;
+        }
+
+
+    .prioritiesContainer {
+        margin-left: -5px;
+    }
+    .prioritiesContainer .priority2 th,
+    .prioritiesContainer .priority2 tbody tr td {
+        padding-left: 0px;
+    }
+
+     .prioritiesContainer .priority2 th:last-child,
+    .prioritiesContainer .priority2 tbody tr td:last-child {
+        padding-right: 0px;
+    }
+
+    /* AddPriority
+    --------------------------------------------------------------*/
+     #addPriorityForm .cycleContainer div:last-child div:last-child {
+        margin-left: -15px;
+    }
+     .task-row {
+         border-top: 1px solid #ccc;
+     }
+     .task-row + .task-row {
+         padding-top: 10px;
+     }
+    .task-row .form-group {
+        border-top: none;
+        padding-left: 0;
+    }
+    .task-row .form-group:first-child,
+    .task-row .form-group:last-child {
+        margin: 0 auto;
+    }
+    #tasksContainer #taskList .task-row {
+        margin-left: -10px;
+        margin-right: -10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+        #tasksContainer #taskList .task-row:last-child {
+            border-bottom: 1px solid #ccc;
+        }
+        #taskList .task-row .form-group:first-child:before {
+            content: "Task #" counter(task_counter);
+        }
+        #taskList .task-row .form-group:first-child {
+            max-width: 100%;
+            text-align: center;
+        }
+    #tasksListHeader {
+        display: none;
+    }
+
+    .smallLabels {
+        font-weight: bold;
+        text-align: left;
+        display: inline-block;
+    }
+
+
+    /* /PrioritiesManagement
+    **********************************************************/
+    .cyclePrioritiesContainer .priority {
+        display: list-item;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        margin-left: -10px;
+        margin-right: -10px;
+        padding: 15px 10px;
+        background-color: #f9f9f9;
+    }
+    .cyclePrioritiesContainer .priority + .priority {
+        margin-top: 20px;
+    }
+    .cyclePrioritiesContainer .priority .priorityHeader {
+        display: initial;
+    }
+    .cyclePrioritiesContainer .fancy-table .fancy-body .fancy-row .fancy-column-counter:before {
+        content: "Task #" counter(fancy_table_counter);
+    }
+    .cyclePrioritiesContainer .fancy-table .fancy-body .fancy-row > div:last-child {
+        text-align: center;        
+    }
+    .cyclePrioritiesContainer .fancy-table .fancy-body .fancy-row > div:first-child {
+        border-bottom: 1px solid #ddd;
+        padding-left: 0;
+        margin-left: -5px;
+    }
+
+
+
+    .pageDescription {
+        padding: 0;
+        margin: 0 -10px;
+        border: none;
+    }
+    .pageDescription .description {
+        border: none;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* ------------- Fancy Table -------------- */
+    .fancy-table .fancy-body .fancy-row .fancy-counter-column:before {
+        content: "Row #" counter(fancy_table_counter);
+    }
+    .fancy-table .fancy-body .fancy-row > div:last-child {
+        text-align: center;
+    }
+    .fancy-table .fancy-body .fancy-row .fancy-counter-column {
+        border-bottom: 1px solid #ddd;
+        padding-left: 0;
+        /*margin-left: -5px;*/
+        max-width: initial;
+        background-color: #f9f9f9;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    .fancy-table .fancy-body .fancy-row .fancy-actions-column {
+        max-width: initial;
+    }
+    .fancy-table.fancy-todo-table .fancy-header {
+        display: none;
+    }
+    .fancy-table.fancy-todo-table .fancy-row .form-group {
+        padding: 8px 10px 8px 10px;
+    }
+
+    .fancy-table .fancy-body .fancy-row {
+        display: block;
+        text-align: left;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 0 0 8px 0px;
+    }
+        .fancy-table .fancy-body .fancy-row > div {
+            text-align: left;
+        }
+        .fancy-table .fancy-body .fancy-row + .fancy-row {
+            border-top: 1px solid #ddd;
+        }
+        .fancy-table .fancy-body .fancy-row + .fancy-row {
+            margin-top: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+    
+
+
+    /*  /EmployeeGoals
+    ******************************************************/
+    .employeeGoalsButtonMenu {
+        margin-top: 10px;
+    }
+    .employeeGoalsButtonMenu button {    
+        width: 100%;
+    }
+    .employeeGoalsContainer {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+        .employeeGoalsContainer .cyclePrioritiesContainer {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .employeeGoalsContainer .employeeGoals {
+            border-left: none;
+            border-right: none;
+            border-radius: 0;
+        }
+        .employeeGoalsContainer .task-row {
+            border-top: none;
+        }
+        .employeeGoalsContainer .priority {
+            margin-left: -15px;
+            margin-right: -15px;        
+        }
+            .employeeGoalsContainer .priority:last-child {
+                border-bottom: none;
+            }
+
+
+
+    /*  /TeamMembersInput
+    ******************************************************/
+    #questionsContainer {
+        margin-top: 10px;
+    }
+    #questionsContainer .question .answer,
+    #questionsContainer .question[data-question-type='1'] .answer {
+        width: 100%;
+        height:auto;
+    }
+
+    /*  /ManagersCheck
+    ******************************************************/
+    #questionsContainer .question .answers-container .answer {
+        margin-top: 10px;
+        width: 100%;
+        height: auto;
+    }
+    
+    #questionsContainer .question.longAns label{
+        /*min-height: 90px;*/
+        height:auto;
+    }
+
+
+    /*  /Priority TDU Info
+    ******************************************************/
+    .infoPop {
+      background-color:#FFFFFF;
+      cursor:default;
+      display:none;
+      width:90%;
+      height: auto;
+      padding: 3px 3px 3px 3px;
+      position: fixed;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+
+    .infoPop img {
+      width: 100%;
+      height: auto;
+    }
+
+    /*  /PrioritiesVisualization
+******************************************************/
+    #prioritiesVisualizationContainer{
+        margin-left: 0px;
+        margin-right: 15px;
+    }
+    #prioritiesVisualizationContainer .tab .tabContent{
+        margin-left: 15px;
+        margin-right: 5px;
+    }
+
+
+    #cycleCommentsContainer {
+        padding-right: 0;
+    }
+
+    .check_box + label,
+    .check_box:checked + label {
+        display: inline-block;
+        position: relative;
+        top: 0;
+    }
+}
+
+

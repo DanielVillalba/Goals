@@ -1,0 +1,17 @@
+﻿@model CDPTrackerSite.Models.TDUPointsDisplayModel
+
+<fieldset>
+    <h5>Total TDUs earned in current Quarter: </h5>
+    <p><b>@Model.verifiedPoints</b></p>
+    <h5>Potential Points: </h5>
+    <p><b>@Model.potentialPoints</b></p>
+    <h5>Missing Points to Goal: </h5>
+    <p><b>@Model.missingPoints</b></p>
+    @{
+       if (@Model.TDURewards != null)
+       {
+           <h5>Total Acumulated TDUs: </h5>
+           <p><b>@Model.TDURewards.TotalTDUReward</b></p>
+       }
+    }
+</fieldset>

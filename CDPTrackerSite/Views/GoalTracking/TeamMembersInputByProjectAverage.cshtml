@@ -1,0 +1,283 @@
+﻿
+<div class="pageDescription">
+    <div class="description">
+        <h2>
+            By project average.
+        </h2>
+
+        <p>
+            Average of the members from a team, up to 4 bars one for each Qrtr.
+        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <select id="combo1" class="cbCoreValue form-control">
+                    <option value="0"> Please select project.... </option>
+
+                    @foreach (var project in Model)
+                    {
+                        <option value="@project.ProjectId"> @project.Project1 </option>
+                    }
+
+                </select>
+
+            </div>
+        </div>
+        <p>
+
+        </p>
+
+        <div class="fancy-tables-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+
+                </div>
+
+            </div>
+        </div>
+        <p>
+
+        </p>
+
+        <div class="fancy-tables-container">
+
+            <div>
+                <div id="barchart_material" style="min-height: 450px; height: 100%; width: 80%; margin: auto; background: #fff; text-align: center"></div>
+            </div>
+
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+            <div id="Questions">
+
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+
+            <div class="fancy-tables-container">
+                <table id="location" class="table table-bordered"></table>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["bar"] });
+    </script>
+
+    <script type="text/javascript">
+
+        $("#btnBuildReport").click(function () {
+
+            var projectID = $("#combo1").val();
+            var project = $("#combo1  :selected").text();
+
+            var data = {};
+            data.ProjectId = projectID;
+            data.Project = project;
+
+            $.ajax({
+                type: "post",
+                url: "GetDataSurveysByProjectOnlyAverage",
+                data: { data: JSON.stringify(data) },
+                success: function (sr) {
+
+                    var availableQuarterData = null;   // get the first available quarter data set and use it to handle the form
+                    var dataG = new google.visualization.DataTable();
+                    dataG.addColumn('string', 'Questions');
+
+                    if (sr.Q1 == null)
+                        dataG.addColumn('number', 'No data');
+                    else {
+                        dataG.addColumn('number', sr.Q1[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q1;
+                    }
+
+                    if (sr.Q2 == null)
+                        dataG.addColumn('number', 'No data');
+                    else {
+                        dataG.addColumn('number', sr.Q2[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q2;
+                    }
+
+                    if (sr.Q3 == null)
+                        dataG.addColumn('number', 'No data');
+                    else {
+                        dataG.addColumn('number', sr.Q3[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q3;
+                    }
+
+                    if (sr.Q4 == null)
+                        dataG.addColumn('number', 'No data');
+                    else {
+                        dataG.addColumn('number', sr.Q4[0].Quarter);
+                        if (availableQuarterData == null)
+                            availableQuarterData = sr.Q4;
+                    }
+
+                    var value1 = 0;
+                    var value2 = 0;
+                    var value3 = 0;
+                    var value4 = 0;
+
+                    if (availableQuarterData) {
+                        // retrieving data and populate 'data' object
+                        for (var i = 0; i < availableQuarterData.length; i++) {
+                            if (sr.Q1 == null)
+                                value1 = 0;
+                            else
+                                value1 = sr.Q1[i].ResponseId;
+
+                            if (sr.Q2 == null)
+                                value2 = 0;
+                            else
+                                value2 = sr.Q2[i].ResponseId;
+
+                            if (sr.Q3 == null)
+                                value3 = 0;
+                            else
+                                value3 = sr.Q3[i].ResponseId;
+
+                            if (sr.Q4 == null)
+                                value4 = 0;
+                            else
+                                value4 = sr.Q4[i].ResponseId;
+
+                            dataG.addRow([(i + 1).toString(), value1, value2, value3, value4]);
+                        }
+
+                        var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                        var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+
+                        for (var i = 0; i < availableQuarterData.length; i++) {
+                            thHTML += '<th class="helloText">' + availableQuarterData[i].Text + '</th>';
+                            questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + availableQuarterData[i].Text + '</li>';
+                        }
+
+
+                        $(".hello").remove();
+                        $(".helloQuestion").remove();
+                        $(".helloul").remove();
+                        $(".helloText").remove();
+                        $(".hellowDarkness").remove();
+                        $(".helloQuestionsText").remove();
+
+                        thHTML += '</tr> </thead>';
+                        questionsHTML += '</ul>';
+
+                        $('#Questions').append(questionsHTML);
+                        $('#location').append(thHTML);
+
+                        // Data about  acutual Quarter
+                        if (sr.Q1 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            $(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q2 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q2[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q2[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q3 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q3[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q3[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+                        if (sr.Q4 != null) {
+                            var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q4[0].Quarter + ' </th>';
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                trHTML += '<th>' + sr.Q4[i].ResponseId + '</th>';
+                            }
+                            trHTML += '</tr>';
+
+                            //$(".hellowDarkness").remove();
+                            $('#location').append(trHTML);
+
+                        }
+
+
+                    } else {
+                        dataG.addRow(['0', 0, 0, 0, 0]);
+                        $(".hello").remove();
+                        $(".helloQuestion").remove();
+                        $(".helloul").remove();
+                        $(".helloText").remove();
+                        $(".hellowDarkness").remove();
+                        $(".helloQuestionsText").remove();
+
+                    }
+
+
+                    // Instantiate and draw our chart, passing in some options
+                    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+                    chart.draw(dataG,
+                     {
+                         chart: {
+                             title: 'By project Average',
+                             subtitle: 'All Team members',
+
+                         },
+                         hAxis: {
+                             viewWindow: {
+                                 min: 0,
+                                 max: 6
+                             }
+                         },
+                         hAxis: {
+                             viewWindow: {
+                                 min: 0,
+                                 max: 6
+                             }
+                         },
+                         colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+
+                         bars: 'horizontal'
+
+                     });
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            })
+        });
+
+
+
+
+    </script>

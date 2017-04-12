@@ -1,0 +1,1236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{567A41E2-7908-4120-96C1-718D357BDA60}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CDPTrackerSite</RootNamespace>
+    <AssemblyName>CDPTrackerSite</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DeployIisAppPath>Default Web Site/CDPTrackerSite</DeployIisAppPath>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="CDPTrackEntities-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql" Enabled="False">
+            <PreSource Path="Data Source=TDG-VM-W8-1\SQLEXPRESS%3bInitial Catalog=CDPTrack%3bUser ID=CDPLogin%3bPassword=CDPLogin%3bApplication Name=EntityFramework" ScriptSchema="False" ScriptData="True" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\CDPTrackEntities-Deployment_DataOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="CDPTrackConnectionString-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=TDG-VM-W8-1\SQLEXPRESS%3bInitial Catalog=CDPTrack%3bUser ID=sa%3bPassword=Tiempo.vm%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\CDPTrackConnectionString-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.0.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.10.1.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.10.1\lib\net20\DotNetZip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf">
+      <HintPath>..\packages\Select.HtmlToPdf.2.4.0.1\lib\net40\Select.HtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.DirectoryServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CDPTrackDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CDPTrackDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GoalTrackingController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuarterlyPrioritiesController.cs" />
+    <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Controllers\SkillCompassController.cs" />
+    <Compile Include="Controllers\SurveyController.cs" />
+    <Compile Include="DataAccessor\ResourceDataAccessor.cs" />
+    <Compile Include="GeneralTrainingDataSet.cs">
+      <DependentUpon>GeneralTrainingDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralTrainingDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GeneralTrainingDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\GraphicHelper.cs" />
+    <Compile Include="Helpers\GraphicsServerController.cs" />
+    <Compile Include="Helpers\html2pdf.cs" />
+    <Compile Include="Helpers\TranslateManagerCheckListToSeries.cs" />
+    <Compile Include="Helpers\TranslateSurveyResponseToSeries.cs" />
+    <Compile Include="Helpers\zipCreatorOutOfHtmlCode.cs" />
+    <Compile Include="KPIDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KPIDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BenchmarkReportDataModel.cs" />
+    <Compile Include="Models\CategoriesModel.cs" />
+    <Compile Include="Models\EmployeeProjectWithQuarter.cs" />
+    <Compile Include="Models\EmployeeProject.cs" />
+    <Compile Include="Models\GoalTracking\ManagerResource.cs" />
+    <Compile Include="Models\Html2PdfModel.cs" />
+    <Compile Include="Models\ManagerCheck.cs" />
+    <Compile Include="Models\ManagerCheckReportModel.cs" />
+    <Compile Include="Models\EmployeeComment.cs" />
+    <Compile Include="Models\ManagerComment.cs" />
+    <Compile Include="Models\ManagersCheckSurveyPercentagesModel.cs" />
+    <Compile Include="Models\MultipleManagerCheckData.cs" />
+    <Compile Include="Models\multipleModelsOnePagecs.cs" />
+    <Compile Include="Models\MultipleSurveyData.cs" />
+    <Compile Include="Models\NewSurveyModel.cs" />
+    <Compile Include="Models\OnePagePlan.cs" />
+    <Compile Include="Models\ProjectAndLocationModel.cs" />
+    <Compile Include="Models\ProjectAndQuarter.cs" />
+    <Compile Include="Models\Projects.cs" />
+    <Compile Include="Models\QuartelyPriorities.cs" />
+    <Compile Include="Models\QuarterlyPriorities\KpiModel.cs" />
+    <Compile Include="Models\QuarterlyPriorities\PersonalDevelopmentModel.cs" />
+    <Compile Include="Models\QuarterlyPriorities\QuarterlyPrioritiesModel.cs" />
+    <Compile Include="Models\QuarterlyPriorities\RankModel.cs" />
+    <Compile Include="Models\QuarterlyPriorities\StrategicPrioritiesModel.cs" />
+    <Compile Include="Models\QuarterlyPriorities\ThresholdModel.cs" />
+    <Compile Include="Models\QuarterlyPriorities\ValuesInfusionModel.cs" />
+    <Compile Include="Models\QuarterSiteAndEmployeeTypeModel.cs" />
+    <Compile Include="Models\SelectedQuarter.cs" />
+    <Compile Include="Models\SiteAndQuarter.cs" />
+    <Compile Include="Models\SiteLocation.cs" />
+    <Compile Include="Models\SiteQuarterAndSequenceQuestionModel.cs" />
+    <Compile Include="Models\SurveyAnsweredModel.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\SurveyCompletedPercentageModel.cs" />
+    <Compile Include="Models\SurveyResponseAndManagerModel.cs" />
+    <Compile Include="Models\SurveyResponseAndProjectModel.cs" />
+    <Compile Include="Models\SurveyResponseAndIdentifierModel.cs" />
+    <Compile Include="Models\SurveyResponseProjectVsAllProjectsModel.cs" />
+    <Compile Include="Models\SurveyResponseReport.cs" />
+    <Compile Include="Models\SurveyResponseModel.cs" />
+    <Compile Include="Models\SurveyResourceModel.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
+    <Compile Include="Models\Custom Attributes\ValidateCSVFileAttribute .cs" />
+    <Compile Include="Models\QuestionModel.cs" />
+    <Compile Include="Models\CyclePrioritiesModel.cs" />
+    <Compile Include="Models\ErrorModel.cs" />
+    <Compile Include="Models\KPIReportModel.cs" />
+    <Compile Include="Models\NoPrioritiesReportModel.cs" />
+    <Compile Include="Models\ResourceModel.cs" />
+    <Compile Include="Models\RewardsVerificationModel.cs" />
+    <Compile Include="Models\TasksModel.cs" />
+    <Compile Include="Models\TDUDetailsModel.cs" />
+    <Compile Include="Models\TDUReportModel.cs" />
+    <Compile Include="Models\TeamMemberInputReportModel.cs" />
+    <Compile Include="Models\TeamMembersInputSurveyPercentagesModel.cs" />
+    <Compile Include="Models\TiempoConnectSyncModel.cs" />
+    <Compile Include="Models\TMIResponses.cs" />
+    <Compile Include="Models\TrainingProgramReportModel.cs" />
+    <Compile Include="ProfileManager\ProfileManager.cs" />
+    <Compile Include="Reporting\KPIReport.aspx.cs">
+      <DependentUpon>KPIReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\KPIReport.aspx.designer.cs">
+      <DependentUpon>KPIReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\MonthlyReport.aspx.cs">
+      <DependentUpon>MonthlyReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\MonthlyReport.aspx.designer.cs">
+      <DependentUpon>MonthlyReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\ManagersCheckReport.aspx.cs">
+      <DependentUpon>ManagersCheckReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\ManagersCheckReport.aspx.designer.cs">
+      <DependentUpon>ManagersCheckReport.aspx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\TeamMembersInputReport.aspx.cs">
+      <DependentUpon>TeamMembersInputReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\TeamMembersInputReport.aspx.designer.cs">
+      <DependentUpon>TeamMembersInputReport.aspx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\NoPrioritiesReport.aspx.cs">
+      <DependentUpon>NoPrioritiesReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\NoPrioritiesReport.aspx.designer.cs">
+      <DependentUpon>NoPrioritiesReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\ProgressByProjectReport.aspx.cs">
+      <DependentUpon>ProgressByProjectReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\ProgressByProjectReport.aspx.designer.cs">
+      <DependentUpon>ProgressByProjectReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\ProgressReportBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\ProgressReportWithArea.aspx.cs">
+      <DependentUpon>ProgressReportWithArea.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\ProgressReportWithArea.aspx.designer.cs">
+      <DependentUpon>ProgressReportWithArea.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\ProgressReport.aspx.cs">
+      <DependentUpon>ProgressReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\ProgressReport.aspx.designer.cs">
+      <DependentUpon>ProgressReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting\TDUDetailsReport.aspx.cs">
+      <DependentUpon>TDUDetailsReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\TDUDetailsReport.aspx.designer.cs">
+      <DependentUpon>TDUDetailsReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\TDUReport.aspx.cs">
+      <DependentUpon>TDUReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\TDUReport.aspx.designer.cs">
+      <DependentUpon>TDUReport.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\TrainingProgramReport.aspx.cs">
+      <DependentUpon>TrainingProgramReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\TrainingProgramReport.aspx.designer.cs">
+      <DependentUpon>TrainingProgramReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\TrainingProgramVisitsReport.aspx.cs">
+      <DependentUpon>TrainingProgramVisitsReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\TrendByLevelReport.aspx.cs">
+      <DependentUpon>TrendByLevelReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\TrendByLevelReport.aspx.designer.cs">
+      <DependentUpon>TrendByLevelReport.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reporting\UnassignObjectiveReport.aspx.cs">
+      <DependentUpon>UnassignObjectiveReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reporting\UnassignObjectiveReport.aspx.designer.cs">
+      <DependentUpon>UnassignObjectiveReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports.Master.cs">
+      <DependentUpon>Reports.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports.Master.designer.cs">
+      <DependentUpon>Reports.Master</DependentUpon>
+    </Compile>
+    <Compile Include="RoleManagement\ComplexRoleAuthorization.cs" />
+    <Compile Include="RoleManagement\RoleAuthorizationAttribute.cs" />
+    <Compile Include="RoleManagement\RoleManagementHelper.cs" />
+    <Compile Include="RoleManagement\RolePermissionObject.cs" />
+    <Compile Include="Services\QuaterlyPrioritiesService.cs" />
+    <Compile Include="TBLDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TBLDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainingProgramDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingProgramOnDemandDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainingProgramOnDemandDataSet.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap-addon.css" />
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap.css" />
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-3.3.6\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap-3.3.6\js\bootstrap.js" />
+    <Content Include="Content\bootstrap-3.3.6\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-3.3.6\js\npm.js" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\fontawesome-webfont.svg" />
+    <Content Include="Content\images\1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\add.png" />
+    <Content Include="Content\images\admin_catalogs.png" />
+    <Content Include="Content\images\arrow_collapse.png" />
+    <Content Include="Content\images\arrow_expand.png" />
+    <Content Include="Content\images\background.png" />
+    <Content Include="Content\images\buttons\15TDUButton.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\3-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\3-2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\buttons\30TDUButton.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\buttons\45TDUButton.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\buttons\60TDUButton.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\Add-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\AddGoal-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\AddTiempoButtonWB.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\BackTiempoButtonWB.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\CareerPath\Administration.jpg" />
+    <Content Include="Content\images\CareerPath\CoreDev.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\CareerPath\default.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\CareerPath\Finance.JPG" />
+    <Content Include="Content\images\CareerPath\Human Capital.JPG" />
+    <Content Include="Content\images\CareerPath\IT.jpg" />
+    <Content Include="Content\images\CareerPath\Marketing.JPG" />
+    <Content Include="Content\images\CareerPath\Operations.JPG" />
+    <Content Include="Content\images\CareerPath\Quality.JPG" />
+    <Content Include="Content\images\CareerPath\Recruitment.jpg" />
+    <Content Include="Content\images\CareerPath\Recruitment.png" />
+    <Content Include="Content\images\CareerPath\Sales.JPG" />
+    <Content Include="Content\images\CareerPath\Talent Mangement.JPG" />
+    <Content Include="Content\images\career_development_guidelines.png" />
+    <Content Include="Content\images\collapse.png" />
+    <Content Include="Content\images\completed.png" />
+    <Content Include="Content\images\copyButton.png" />
+    <Content Include="Content\images\Delete-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\DeleteGoal-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\DeleteTiempoButton.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\done.png" />
+    <Content Include="Content\images\Edit-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\EditGoal-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\EditTiempoButtonWB.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\AddTiempoButtonGB.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\EditTiempoButtonGB.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\expand.png" />
+    <Content Include="Content\images\favicon.ico" />
+    <Content Include="Content\images\Find-icon.png" />
+    <Content Include="Content\images\goals_training.png" />
+    <Content Include="Content\images\icon-search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\inProgress.png" />
+    <Content Include="Content\images\link.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\missing.png" />
+    <Content Include="Content\images\needHelp.jpg" />
+    <Content Include="Content\images\needsVerification.png" />
+    <Content Include="Content\images\notStarted.png" />
+    <Content Include="Content\images\pbarLightBlue.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\pbarOrange.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\pbarGreen.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\question_mark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\question_mark_white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\reports.png" />
+    <Content Include="Content\images\review_goals.png" />
+    <Content Include="Content\images\save.png" />
+    <Content Include="Content\images\save_gray.png" />
+    <Content Include="Content\images\SkillCompass\Administration Skils Compass.jpg" />
+    <Content Include="Content\images\SkillCompass\Administration.jpg" />
+    <Content Include="Content\images\SkillCompass\default.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\SkillCompass\Developer Skills Compass.jpg" />
+    <Content Include="Content\images\SkillCompass\Developer.jpg" />
+    <Content Include="Content\images\SkillCompass\Executive.jpg" />
+    <Content Include="Content\images\SkillCompass\Finance.jpg" />
+    <Content Include="Content\images\SkillCompass\Human Capital.jpg" />
+    <Content Include="Content\images\SkillCompass\IT Skills Compass.jpg" />
+    <Content Include="Content\images\SkillCompass\IT.jpg" />
+    <Content Include="Content\images\SkillCompass\Marketing.jpg" />
+    <Content Include="Content\images\SkillCompass\Operations.png" />
+    <Content Include="Content\images\SkillCompass\PM Skills Compass.jpg" />
+    <Content Include="Content\images\SkillCompass\PM.jpg" />
+    <Content Include="Content\images\SkillCompass\QA &amp; App Support Skils Compass.jpg" />
+    <Content Include="Content\images\SkillCompass\Quality.jpg" />
+    <Content Include="Content\images\SkillCompass\Recruitment.png" />
+    <Content Include="Content\images\SkillCompass\Sales.jpg" />
+    <Content Include="Content\images\SkillCompass\Talent Management Skils Compass.jpg" />
+    <Content Include="Content\images\SkillCompass\Talent Management.jpg" />
+    <Content Include="Content\images\SkillCompass\Tester Skills Compass.jpg" />
+    <Content Include="Content\images\SkillCompass\Tester.jpg" />
+    <Content Include="Content\images\Started.png" />
+    <Content Include="Content\images\taskStatus.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\TDUsInfo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\TDUTrophies\15TDUs.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\TDUTrophies\30TDUs.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\TDUTrophies\45TDUs.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\TDUTrophies\60TDUs.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\images\tiempo-goals.png" />
+    <Content Include="Content\images\Trash_Can.png" />
+    <Content Include="Content\images\Trash_Can_Gray.png" />
+    <Content Include="Content\images\verifiedManager.png" />
+    <Content Include="Content\jquery.bootgrid.css" />
+    <Content Include="Content\jquery.bootgrid.min.css" />
+    <Content Include="Content\SiteSmall.css" />
+    <Content Include="Content\SiteMedium.css" />
+    <Content Include="Content\styles\css_menu.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery-ui.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.accordion.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.all.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.base.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.button.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.core.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.dialog.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.resizable.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.selectable.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.slider.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.tabs.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\jquery.ui.theme.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="KPIDataSet.xsc">
+      <DependentUpon>KPIDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="CDPTrackDataSet.xsc">
+      <DependentUpon>CDPTrackDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="CDPTrackDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CDPTrackDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="CDPTrackDataSet.xss">
+      <DependentUpon>CDPTrackDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="GeneralTrainingDataSet.xsc">
+      <DependentUpon>GeneralTrainingDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-3.3.6\css\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.6\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-3.3.6\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap-3.3.6\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap-3.3.6\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\font-awesome.css.map" />
+    <Content Include="Content\fontawesome-webfont.eot" />
+    <Content Include="Content\fontawesome-webfont.ttf" />
+    <Content Include="Content\fontawesome-webfont.woff" />
+    <Content Include="Content\fontawesome-webfont.woff2" />
+    <Content Include="Content\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <None Include="GeneralTrainingDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>GeneralTrainingDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="GeneralTrainingDataSet.xss">
+      <DependentUpon>GeneralTrainingDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="KPIDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>KPIDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="KPIDataSet.xss">
+      <DependentUpon>KPIDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="packages.config" />
+    <Compile Include="Models\TDUPointsDisplayModel.cs" />
+    <None Include="Properties\PublishProfiles\CDPTrackerSitePublishProfile.pubxml" />
+    <Content Include="Reporting\KPIReport.aspx" />
+    <Content Include="Reporting\MonthlyReport.aspx" />
+    <Content Include="Reporting\ManagersCheckReport.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TeamMembersInputReport.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\NoPrioritiesReport.aspx" />
+    <Content Include="Reporting\ProgressByProjectReport.aspx" />
+    <Content Include="Reporting\ProgressReportWithArea.aspx" />
+    <Content Include="Reporting\TDUDetailsReport.aspx" />
+    <Content Include="Reporting\TDUReport.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TrainingProgramReport.aspx" />
+    <Content Include="Reporting\TrainingProgramVisitsReport.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TrendByLevelReport.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\UnassignObjectiveReport.aspx" />
+    <Content Include="Reports.Master" />
+    <None Include="Properties\PublishProfiles\CDPTrackerSiteStagingPublishProfile.pubxml" />
+    <Content Include="Reporting\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Properties\PublishProfiles\CDPTrackerSiteTestingPublishProfile.pubxml" />
+    <None Include="Scripts\jquery-1.11.1.intellisense.js" />
+    <Content Include="Scripts\GoalTracking\MyResponses\MyResponsesScripts.js" />
+    <Content Include="Scripts\jquery-1.11.1.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.map" />
+    <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Reporting\ProgressReport.aspx" />
+    <Content Include="Scripts\GoalTracking\FancyTableManager.js" />
+    <Content Include="Scripts\GoalTracking\OnePagePlan\AnnualPrioritiesList.js" />
+    <Content Include="Scripts\GoalTracking\OnePagePlan\CoreValuesList.js" />
+    <Content Include="Scripts\GoalTracking\OnePagePlan\CriticalNumbersList.js" />
+    <Content Include="Scripts\GoalTracking\OnePagePlan\KeyThrustsList.js" />
+    <Content Include="Scripts\GoalTracking\OnePagePlan\OnePagePlanManager.js" />
+    <Content Include="Scripts\GoalTracking\OnePagePlan\OnePagePlanRequestsHandler.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPrioritiesEndOfQuarter\CycleComments.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPrioritiesEndOfQuarter\KpiList.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPrioritiesEndOfQuarter\PersonalDevelopmentList.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPrioritiesEndOfQuarter\QuarterlyActionsList.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPrioritiesEndOfQuarter\QuarterlyPrioritiesManager.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPrioritiesEndOfQuarter\QuarterlyPrioritiesRequestsHandler.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPrioritiesEndOfQuarter\ValuesInfusionList.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPriorities\KpiList.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPriorities\PersonalDevelopmentList.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPriorities\QuarterlyActionsList.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPriorities\QuarterlyPrioritiesManager.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPriorities\QuarterlyPrioritiesRequestsHandler.js" />
+    <Content Include="Scripts\GoalTracking\QuarterlyPriorities\ValuesInfusionList.js" />
+    <Content Include="Scripts\jquery.bootgrid.fa.js" />
+    <Content Include="Scripts\jquery.bootgrid.fa.min.js" />
+    <Content Include="Scripts\jquery.bootgrid.js" />
+    <Content Include="Scripts\jquery.bootgrid.min.js" />
+    <Content Include="Scripts\jquery.browser.js" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootstrap-3.3.6.min.js" />
+    <Content Include="Scripts\datepicker.js" />
+    <Content Include="Scripts\GoalTracking\CyclePriorities\CyclePrioritiesManager.js" />
+    <Content Include="Scripts\GoalTracking\CyclePriorities\CyclePrioritiesRequestHandler.js" />
+    <Content Include="Scripts\GoalTracking\EmployeeGoals\EmployeeGoalsManager.js" />
+    <Content Include="Scripts\GoalTracking\EmployeeGoals\EmployeeGoalsRequestHandler.js" />
+    <Content Include="Scripts\GoalTracking\ManagersCheck\ManagersCheckListManager.js" />
+    <Content Include="Scripts\GoalTracking\ManagersCheck\ManagersCheckManager.js" />
+    <Content Include="Scripts\GoalTracking\ManagersCheck\ManagersCheckRequestHandler.js" />
+    <Content Include="Scripts\GoalTracking\ManagersCheck\SurveyAnswers.js" />
+    <Content Include="Scripts\GoalTracking\ManagersCheck\SurveyGenerator.js" />
+    <Content Include="Scripts\GoalTracking\Priority\PriorityManager.js" />
+    <Content Include="Scripts\GoalTracking\Priority\PriorityRequestHandler.js" />
+    <Content Include="Scripts\GoalTracking\Priority\TaskListManager.js" />
+    <Content Include="Scripts\GoalTracking\TeamMembersInput\SurveyAnswers.js" />
+    <Content Include="Scripts\GoalTracking\TeamMembersInput\SurveyGenerator.js" />
+    <Content Include="Scripts\GoalTracking\TeamMembersInput\TeamMembersInputManager.js" />
+    <Content Include="Scripts\GoalTracking\TeamMembersInput\TeamMembersInputRequestHandler.js" />
+    <Content Include="Scripts\jquery-1.7.1.js" />
+    <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.js" />
+    <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\methods.js" />
+    <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\table-collapser.js" />
+    <Content Include="Scripts\ToggleManager.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\GoalTracking\Index.cshtml" />
+    <Content Include="Views\GoalTracking\Create.cshtml" />
+    <Content Include="Views\GoalTracking\Edit.cshtml" />
+    <Content Include="Views\GoalTracking\Delete.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GoalTracking.cshtml" />
+    <Content Include="Views\GoalTracking\BulkEdit.cshtml" />
+    <Content Include="Views\GoalTracking\ManagerVerification.cshtml" />
+    <Content Include="Views\Resource\SetupResourceData.cshtml" />
+    <Content Include="Views\Shared\ResourceSetupError.cshtml" />
+    <Content Include="Views\GoalTracking\ProgressReport.cshtml" />
+    <Content Include="Views\GoalTracking\EmployeeGoals.cshtml" />
+    <Content Include="Views\GoalTracking\ProgressReportWithArea.cshtml" />
+    <Content Include="Views\GoalTracking\PendingVerifications.cshtml" />
+    <Content Include="Views\GoalTracking\PositionEdit.cshtml" />
+    <Content Include="Views\GoalTracking\MonthlyReport.cshtml" />
+    <Content Include="Views\GoalTracking\CreateObjective.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteObjective.cshtml" />
+    <Content Include="Views\GoalTracking\NoPrioritiesReport.cshtml" />
+    <Content Include="Views\GoalTracking\UnassignObjectiveReport.cshtml" />
+    <Content Include="Views\GoalTracking\ProgressByProjectReport.cshtml" />
+    <Content Include="Views\GoalTracking\Help.cshtml" />
+    <Content Include="Views\GoalTracking\CareerPath.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteAssessment.cshtml" />
+    <Content Include="Views\GoalTracking\EditAssessment.cshtml" />
+    <Content Include="Views\GoalTracking\JobDescriptionAdmin.cshtml" />
+    <Content Include="Views\GoalTracking\About.cshtml" />
+    <Content Include="Views\GoalTracking\EditLink.cshtml" />
+    <Content Include="Views\GoalTracking\JobDescription.cshtml" />
+    <Content Include="Views\GoalTracking\Suggestions.cshtml" />
+    <Content Include="Views\GoalTracking\SuggestionsAdmin.cshtml" />
+    <Content Include="Views\GoalTracking\CreateTechnology.cshtml" />
+    <Content Include="Views\GoalTracking\Technology.cshtml" />
+    <Content Include="Views\GoalTracking\EditTechnology.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteTechnology.cshtml" />
+    <Content Include="Views\GoalTracking\CreateSuggestion.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteSuggestion.cshtml" />
+    <Content Include="Views\GoalTracking\EditSuggestion.cshtml" />
+    <Content Include="Views\GoalTracking\Level.cshtml" />
+    <Content Include="Views\GoalTracking\CreateLevel.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteLevel.cshtml" />
+    <Content Include="Views\GoalTracking\EditLevel.cshtml" />
+    <Content Include="Views\GoalTracking\CreateTrainingProgram.cshtml" />
+    <Content Include="Views\GoalTracking\TrainingProgramAdmin.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteTrainingProgram.cshtml" />
+    <Content Include="Views\GoalTracking\EditTrainingProgram.cshtml" />
+    <Content Include="Views\GoalTracking\TrainingProgramCategory.cshtml" />
+    <Content Include="Views\GoalTracking\CreateTrainingProgramCategory.cshtml" />
+    <Content Include="Views\GoalTracking\EditTrainingProgramCategory.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteTrainingProgramCategory.cshtml" />
+    <Content Include="Views\GoalTracking\TrainingProgram.cshtml" />
+    <Content Include="Views\GoalTracking\CreateGeneralTrainingProgram.cshtml" />
+    <Content Include="Views\GoalTracking\GeneralTrainingProgramAdmin.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteGeneralTrainingProgram.cshtml" />
+    <Content Include="Views\GoalTracking\EditGeneralTrainingProgram.cshtml" />
+    <Content Include="Views\GoalTracking\EditTraining.cshtml" />
+    <Content Include="Views\GoalTracking\EditGeneralTraining.cshtml" />
+    <Content Include="Views\GoalTracking\Video.cshtml" />
+    <Content Include="Views\GoalTracking\SkillCompass.cshtml" />
+    <Content Include="Views\GoalTracking\TrainingProgramOnDemandAdmin.cshtml" />
+    <Content Include="Views\GoalTracking\CreateTrainingProgramOnDemand.cshtml" />
+    <Content Include="Views\GoalTracking\EditTrainingProgramOnDemand.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteTrainingProgramOnDemand.cshtml" />
+    <Content Include="Views\GoalTracking\TrainingProgramOnDemand.cshtml" />
+    <Content Include="Views\GoalTracking\EditTrainingProgramOnDemandStatus.cshtml" />
+    <Content Include="Views\GoalTracking\SkillCompassGlossary.cshtml" />
+    <Content Include="Views\GoalTracking\CreateSkillCompassGlossary.cshtml" />
+    <Content Include="Views\GoalTracking\DeleteSkillCompassGlossary.cshtml" />
+    <Content Include="Views\GoalTracking\EditSkillCompassGlossary.cshtml" />
+    <Content Include="Views\Resource\Index.cshtml" />
+    <Content Include="Views\GoalTracking\EditObjective.cshtml" />
+    <Content Include="Views\GoalTracking\TrainingProgramReport.cshtml" />
+    <Content Include="Views\GoalTracking\KPIReport.cshtml" />
+    <Content Include="Views\GoalTracking\TDUReport.cshtml" />
+    <Content Include="Views\GoalTracking\CopyObjective.cshtml" />
+    <Content Include="TBLDataSet.xsc">
+      <DependentUpon>TBLDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TBLDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TBLDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="TBLDataSet.xss">
+      <DependentUpon>TBLDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Views\GoalTracking\TrendByLevelReport.cshtml" />
+    <Content Include="Views\GoalTracking\ClickLink.cshtml" />
+    <Content Include="Views\GoalTracking\TrainingProgramVisitsReport.cshtml" />
+    <Content Include="TrainingProgramDataSet.xsc">
+      <DependentUpon>TrainingProgramDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TrainingProgramDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TrainingProgramDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="TrainingProgramDataSet.xss">
+      <DependentUpon>TrainingProgramDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="TrainingProgramOnDemandDataSet.xsc">
+      <DependentUpon>TrainingProgramOnDemandDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TrainingProgramOnDemandDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TrainingProgramOnDemandDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="TrainingProgramOnDemandDataSet.xss">
+      <DependentUpon>TrainingProgramOnDemandDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Views\GoalTracking\TDUDetailsReport.cshtml" />
+    <Content Include="Views\GoalTracking\RewardsVerification.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TDUReward.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\GoalTracking\TDUPointsDisplay.cshtml" />
+    <Content Include="Views\GoalTracking\TDUButtonDisplay.cshtml" />
+    <Content Include="Views\GoalTracking\TDUTrophyDisplay.cshtml" />
+    <Content Include="Views\GoalTracking\TiempoConnectSync.cshtml" />
+    <Content Include="Views\GoalTracking\Priority.cshtml" />
+    <Content Include="Views\SkillCompass\Create.cshtml" />
+    <Content Include="Views\SkillCompass\Delete.cshtml" />
+    <Content Include="Views\SkillCompass\Details.cshtml" />
+    <Content Include="Views\SkillCompass\Edit.cshtml" />
+    <Content Include="Views\SkillCompass\Index.cshtml" />
+    <Content Include="Views\GoalTracking\EditPriority.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInput.cshtml" />
+    <Content Include="Views\GoalTracking\ManagersCheck.cshtml" />
+    <Content Include="Views\GoalTracking\ManagersCheckList.cshtml" />
+    <Content Include="Views\GoalTracking\PrioritiesVisualization.cshtml" />
+    <Content Include="Views\GoalTracking\PrioritiesManagement.cshtml" />
+    <Content Include="Views\GoalTracking\ManagersCheckReport.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputReport.cshtml" />
+    <Content Include="Views\GoalTracking\QuarterlyPriorities.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\GoalTracking\OnePagePlan.cshtml" />
+    <Content Include="Views\GoalTracking\QuarterlyPrioritiesEndOfQuarter.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\Menu.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\GridEmployee.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\ManagerView.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\OwnerView.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\_ownerViewsKPI.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\_ownerViewQuarterlyAction.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\_ownerViewValuesInfusion.cshtml" />
+    <Content Include="Views\GoalTracking\Manager\_ownerViewPersonalDevelopment.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputReportLEAA.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputManagerView.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputByProject.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputTalent.cshtml" />
+    <Content Include="Views\GoalTracking\EmployeeTrendsReportsLEAA.cshtml" />
+    <Content Include="Views\GoalTracking\TrendsReportsDirectorView.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputExecutive.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputExecutives2v.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputByProjectAverage.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputBySite.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputByAllSites.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputByManagersPerSites.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputDirectorView.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputByManagersAllSites.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputByProjectsAllSites.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputByProjectVsAllProjects.cshtml" />
+    <Content Include="Views\GoalTracking\TeamMembersInputMaster.cshtml" />
+    <Content Include="Views\QuarterlyPriorities\ManagerPriorities.cshtml" />
+    <Content Include="Views\QuarterlyPriorities\Kpis.cshtml" />
+    <Content Include="Views\QuarterlyPriorities\_ValuesInfusion.cshtml" />
+    <Content Include="Views\QuarterlyPriorities\_PersonalDevelopment.cshtml" />
+    <Content Include="Views\GoalTracking\ConfigurationOptions.cshtml" />
+    <Content Include="Views\GoalTracking\ConfigurationAddSurvey.cshtml" />
+    <Content Include="Views\GoalTracking\DashboardReport.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\uploads\CSVTiempoConnect\" />
+    <Folder Include="App_Start\" />
+    <Folder Include="temp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataSource\DataSource.csproj">
+      <Project>{b32eab93-a596-40b5-889c-f072f21af885}</Project>
+      <Name>DataSource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{79B50A88-10A3-4876-A6DA-C059278ADC5B}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\ProgressReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\ProgressReportWithArea.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\MonthlyReport.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\NoPrioritiesReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\ProgressByProjectReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\UnassignObjectiveReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\KPIReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TDUReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TDUDetailsReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TrainingProgramReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TrainingProgramVisitsReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Reporting\TrendByLevelReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\ManagersCheckReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reporting\TeamMembersInputReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>52695</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:52696/</IISUrl>
+          <NTLMAuthentication>True</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Select.HtmlToPdf.2.4.0.1\build\Select.HtmlToPdf.targets" Condition="Exists('..\packages\Select.HtmlToPdf.2.4.0.1\build\Select.HtmlToPdf.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

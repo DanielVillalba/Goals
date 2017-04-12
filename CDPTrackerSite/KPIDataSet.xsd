@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="KPIDataSet" targetNamespace="http://tempuri.org/KPIDataSet.xsd" xmlns:mstns="http://tempuri.org/KPIDataSet.xsd" xmlns="http://tempuri.org/KPIDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CDPTrackConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CDPTrackConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CDPTrackConnectionString.ConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="CDPTrackConnectionString1" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CDPTrackConnectionString1 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.CDPTrackConnectionString1.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="KPIDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="KPIDataSet" msprop:Generator_UserDSName="KPIDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="KPIHMO" msprop:Generator_TableClassName="KPIHMODataTable" msprop:Generator_TableVarName="tableKPIHMO" msprop:Generator_TablePropName="KPIHMO" msprop:Generator_RowDeletingName="KPIHMORowDeleting" msprop:Generator_RowChangingName="KPIHMORowChanging" msprop:Generator_RowEvHandlerName="KPIHMORowChangeEventHandler" msprop:Generator_RowDeletedName="KPIHMORowDeleted" msprop:Generator_UserTableName="KPIHMO" msprop:Generator_RowChangedName="KPIHMORowChanged" msprop:Generator_RowEvArgName="KPIHMORowChangeEvent" msprop:Generator_RowClassName="KPIHMORow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="manager" msprop:Generator_ColumnVarNameInTable="columnmanager" msprop:Generator_ColumnPropNameInRow="manager" msprop:Generator_ColumnPropNameInTable="managerColumn" msprop:Generator_UserColumnName="manager" type="xs:string" minOccurs="0" />
+              <xs:element name="members" msprop:Generator_ColumnVarNameInTable="columnmembers" msprop:Generator_ColumnPropNameInRow="members" msprop:Generator_ColumnPropNameInTable="membersColumn" msprop:Generator_UserColumnName="members" type="xs:string" minOccurs="0" />
+              <xs:element name="membersCDP" msprop:Generator_ColumnVarNameInTable="columnmembersCDP" msprop:Generator_ColumnPropNameInRow="membersCDP" msprop:Generator_ColumnPropNameInTable="membersCDPColumn" msprop:Generator_UserColumnName="membersCDP" type="xs:string" minOccurs="0" />
+              <xs:element name="nameCDP" msprop:Generator_ColumnVarNameInTable="columnnameCDP" msprop:Generator_ColumnPropNameInRow="nameCDP" msprop:Generator_ColumnPropNameInTable="nameCDPColumn" msprop:Generator_UserColumnName="nameCDP" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="KPIMTY" msprop:Generator_TableClassName="KPIMTYDataTable" msprop:Generator_TableVarName="tableKPIMTY" msprop:Generator_RowChangedName="KPIMTYRowChanged" msprop:Generator_TablePropName="KPIMTY" msprop:Generator_RowDeletingName="KPIMTYRowDeleting" msprop:Generator_RowChangingName="KPIMTYRowChanging" msprop:Generator_RowEvHandlerName="KPIMTYRowChangeEventHandler" msprop:Generator_RowDeletedName="KPIMTYRowDeleted" msprop:Generator_RowClassName="KPIMTYRow" msprop:Generator_UserTableName="KPIMTY" msprop:Generator_RowEvArgName="KPIMTYRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="manager" msprop:Generator_ColumnVarNameInTable="columnmanager" msprop:Generator_ColumnPropNameInRow="manager" msprop:Generator_ColumnPropNameInTable="managerColumn" msprop:Generator_UserColumnName="manager" type="xs:string" minOccurs="0" />
+              <xs:element name="members" msprop:Generator_ColumnVarNameInTable="columnmembers" msprop:Generator_ColumnPropNameInRow="members" msprop:Generator_ColumnPropNameInTable="membersColumn" msprop:Generator_UserColumnName="members" type="xs:string" minOccurs="0" />
+              <xs:element name="membersCDP" msprop:Generator_ColumnVarNameInTable="columnmembersCDP" msprop:Generator_ColumnPropNameInRow="membersCDP" msprop:Generator_ColumnPropNameInTable="membersCDPColumn" msprop:Generator_UserColumnName="membersCDP" type="xs:string" minOccurs="0" />
+              <xs:element name="nameCDP" msprop:Generator_ColumnVarNameInTable="columnnameCDP" msprop:Generator_ColumnPropNameInRow="nameCDP" msprop:Generator_ColumnPropNameInTable="nameCDPColumn" msprop:Generator_UserColumnName="nameCDP" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="KPIPHX" msprop:Generator_TableClassName="KPIPHXDataTable" msprop:Generator_TableVarName="tableKPIPHX" msprop:Generator_RowChangedName="KPIPHXRowChanged" msprop:Generator_TablePropName="KPIPHX" msprop:Generator_RowDeletingName="KPIPHXRowDeleting" msprop:Generator_RowChangingName="KPIPHXRowChanging" msprop:Generator_RowEvHandlerName="KPIPHXRowChangeEventHandler" msprop:Generator_RowDeletedName="KPIPHXRowDeleted" msprop:Generator_RowClassName="KPIPHXRow" msprop:Generator_UserTableName="KPIPHX" msprop:Generator_RowEvArgName="KPIPHXRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="manager" msprop:Generator_ColumnVarNameInTable="columnmanager" msprop:Generator_ColumnPropNameInRow="manager" msprop:Generator_ColumnPropNameInTable="managerColumn" msprop:Generator_UserColumnName="manager" type="xs:string" minOccurs="0" />
+              <xs:element name="members" msprop:Generator_ColumnVarNameInTable="columnmembers" msprop:Generator_ColumnPropNameInRow="members" msprop:Generator_ColumnPropNameInTable="membersColumn" msprop:Generator_UserColumnName="members" type="xs:string" minOccurs="0" />
+              <xs:element name="membersCDP" msprop:Generator_ColumnVarNameInTable="columnmembersCDP" msprop:Generator_ColumnPropNameInRow="membersCDP" msprop:Generator_ColumnPropNameInTable="membersCDPColumn" msprop:Generator_UserColumnName="membersCDP" type="xs:string" minOccurs="0" />
+              <xs:element name="nameCDP" msprop:Generator_ColumnVarNameInTable="columnnameCDP" msprop:Generator_ColumnPropNameInRow="nameCDP" msprop:Generator_ColumnPropNameInTable="nameCDPColumn" msprop:Generator_UserColumnName="nameCDP" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="KPIGDL" msprop:Generator_TableClassName="KPIGDLDataTable" msprop:Generator_TableVarName="tableKPIGDL" msprop:Generator_RowChangedName="KPIGDLRowChanged" msprop:Generator_TablePropName="KPIGDL" msprop:Generator_RowDeletingName="KPIGDLRowDeleting" msprop:Generator_RowChangingName="KPIGDLRowChanging" msprop:Generator_RowEvHandlerName="KPIGDLRowChangeEventHandler" msprop:Generator_RowDeletedName="KPIGDLRowDeleted" msprop:Generator_RowClassName="KPIGDLRow" msprop:Generator_UserTableName="KPIGDL" msprop:Generator_RowEvArgName="KPIGDLRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="manager" msprop:Generator_ColumnVarNameInTable="columnmanager" msprop:Generator_ColumnPropNameInRow="manager" msprop:Generator_ColumnPropNameInTable="managerColumn" msprop:Generator_UserColumnName="manager" type="xs:string" minOccurs="0" />
+              <xs:element name="members" msprop:Generator_ColumnVarNameInTable="columnmembers" msprop:Generator_ColumnPropNameInRow="members" msprop:Generator_ColumnPropNameInTable="membersColumn" msprop:Generator_UserColumnName="members" type="xs:string" minOccurs="0" />
+              <xs:element name="membersCDP" msprop:Generator_ColumnVarNameInTable="columnmembersCDP" msprop:Generator_ColumnPropNameInRow="membersCDP" msprop:Generator_ColumnPropNameInTable="membersCDPColumn" msprop:Generator_UserColumnName="membersCDP" type="xs:string" minOccurs="0" />
+              <xs:element name="nameCDP" msprop:Generator_ColumnVarNameInTable="columnnameCDP" msprop:Generator_ColumnPropNameInRow="nameCDP" msprop:Generator_ColumnPropNameInTable="nameCDPColumn" msprop:Generator_UserColumnName="nameCDP" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

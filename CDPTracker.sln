@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSource", "DataSource\DataSource.csproj", "{B32EAB93-A596-40B5-889C-F072F21AF885}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDPTrackerSite", "CDPTrackerSite\CDPTrackerSite.csproj", "{567A41E2-7908-4120-96C1-718D357BDA60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{79B50A88-10A3-4876-A6DA-C059278ADC5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTests", "ConsoleTests\ConsoleTests.csproj", "{AA28BA47-2EB3-4B5D-A488-A33BA2445BC1}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CDPTrackDataBase", "CDPTrackDataBase\CDPTrackDataBase.sqlproj", "{DE6A6979-D780-4B80-90EF-C4BE97706F87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B32EAB93-A596-40B5-889C-F072F21AF885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B32EAB93-A596-40B5-889C-F072F21AF885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B32EAB93-A596-40B5-889C-F072F21AF885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B32EAB93-A596-40B5-889C-F072F21AF885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{567A41E2-7908-4120-96C1-718D357BDA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{567A41E2-7908-4120-96C1-718D357BDA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{567A41E2-7908-4120-96C1-718D357BDA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{567A41E2-7908-4120-96C1-718D357BDA60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79B50A88-10A3-4876-A6DA-C059278ADC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B50A88-10A3-4876-A6DA-C059278ADC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B50A88-10A3-4876-A6DA-C059278ADC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B50A88-10A3-4876-A6DA-C059278ADC5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA28BA47-2EB3-4B5D-A488-A33BA2445BC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA28BA47-2EB3-4B5D-A488-A33BA2445BC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA28BA47-2EB3-4B5D-A488-A33BA2445BC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA28BA47-2EB3-4B5D-A488-A33BA2445BC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6A6979-D780-4B80-90EF-C4BE97706F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6A6979-D780-4B80-90EF-C4BE97706F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6A6979-D780-4B80-90EF-C4BE97706F87}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DE6A6979-D780-4B80-90EF-C4BE97706F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6A6979-D780-4B80-90EF-C4BE97706F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6A6979-D780-4B80-90EF-C4BE97706F87}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.tiempodevelopment.com:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CDPTrackerSite\\CDPTrackerSite.csproj
+		SccProjectName1 = CDPTrackerSite
+		SccLocalPath1 = CDPTrackerSite
+		SccProjectUniqueName2 = ConsoleTests\\ConsoleTests.csproj
+		SccProjectName2 = ConsoleTests
+		SccLocalPath2 = ConsoleTests
+		SccProjectUniqueName3 = DataSource\\DataSource.csproj
+		SccProjectName3 = DataSource
+		SccLocalPath3 = DataSource
+		SccProjectUniqueName4 = Utils\\Utils.csproj
+		SccProjectName4 = Utils
+		SccLocalPath4 = Utils
+		SccProjectUniqueName5 = CDPTrackDataBase\\CDPTrackDataBase.sqlproj
+		SccProjectName5 = CDPTrackDataBase
+		SccLocalPath5 = CDPTrackDataBase
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,2 @@
+- Run Abbreviation column to Location Script
+- Run AddNewColumsToTableEmployee Script

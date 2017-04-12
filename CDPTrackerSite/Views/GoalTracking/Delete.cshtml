@@ -1,0 +1,29 @@
+﻿@model DataSource.GoalTracking
+@{
+    ViewBag.Title = "Delete Goal";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>Are you sure you want to delete this Goal?</h3>
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Details</legend>
+        <div class="display-label">@Html.LabelFor(model => model.Goal): @Html.DisplayFor(model => model.Goal)</div>
+        <div class="display-label">@Html.LabelFor(model => model.Progress): @Html.DisplayFor(model => model.ProgressEnum.Label)</div>
+        <div class="display-label">@Html.LabelFor(model => model.FinishDate): @Html.DisplayFor(model => model.FinishDate)</div>
+        <div class="display-label">@Html.LabelFor(model => model.VerifiedByManager): @(Model.VerifiedByManager ? "Yes" : "No")</div>
+        <div class="display-label">@Html.LabelFor(model => model.LastUpdate): @Html.DisplayFor(model => model.LastUpdate)</div>
+        <p>
+            <input type="submit" value="Delete" />
+        </p>
+    </fieldset>
+}
+<div>
+    <a href="@Url.Action("Index", "GoalTracking")">
+        <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to List" style="border: none" />
+    </a>
+</div>
+
+

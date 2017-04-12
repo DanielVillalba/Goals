@@ -1,0 +1,55 @@
+﻿@model DataSource.TrainingProgramDetails
+@{
+    ViewBag.Title = "Edit Status Training";
+}
+
+<style type="text/css">
+    /*table{
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    }
+    table td{
+    border: 1px solid #ddd;
+    }*/
+</style>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>@ViewBag.Title</h2>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                @if (Model != null)
+                {
+                    @Html.HiddenFor(m => m.IdTrainingProgramDetails)
+                    @Html.HiddenFor(m => m.IdTrainingProgram)
+                    @Html.HiddenFor(m => m.ResourceId)
+                    <div class="editor-label">
+                        @Html.Label("Training Program"): @Html.DisplayFor(m => m.TrainingProgram.Name)
+                    </div>
+                    <div class="editor-label">
+                        @Html.Label("Category"): @Html.DisplayFor(m => m.TrainingProgram.TrainingProgramCategory.Name)
+                    </div>
+                    <div class="editor-label">
+                        @Html.Label("Status"): @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewData["ListOfProgress"])
+                    </div>@*
+                        <div class="editor-label">
+                            @Html.Label("Points"): @Html.DisplayFor(m => m.TrainingProgram.Points)
+                        </div>*@
+                    <div class="editor-label">
+                        @Html.Label("Link"): @Html.DisplayFor(m => m.TrainingProgram.Link)
+                    </div>
+
+                    <p>
+                        <input type="submit" value="Save" />
+                    </p>
+                }
+            </fieldset>
+           
+        }
+    </div>
+</div>

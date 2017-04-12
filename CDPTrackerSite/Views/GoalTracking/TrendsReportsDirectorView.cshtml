@@ -1,0 +1,533 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Mannager's check trend report (Director View)
+        </h2>
+
+       
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    Site :
+                </p>
+                <select id="cbSite" class="cbCoreValue form-control">
+                    <option value="0"> Please select.... </option>
+
+                    @foreach (var site in Model)
+                    {
+                        <option value="@site.ID"> @site.Name </option>
+                    }
+
+                </select>
+
+            </div>
+            <div class="col-md-4">
+                <p>
+                    Manager :
+                </p>
+                <select id="cbManager" class="cbCoreValue form-control">
+                    @* @foreach (var coreVal in Model)
+                        {
+                            <option value="@coreVal.CoreValuesId"> @coreVal.coreValue </option>
+                        }
+                    *@
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    Project :
+                </p>
+                <select id="cbProject" class="cbCoreValue form-control">
+                    @* @foreach (var coreVal in Model)
+                        {
+                            <option value="@coreVal.CoreValuesId"> @coreVal.coreValue </option>
+                        }
+                    *@
+                </select>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Team Member :
+                </p>
+                <select id="cbTeamMember" class="cbCoreValue form-control">
+                    @*
+                        @foreach (var project in Model)
+                        {
+                            <option value="@project.ProjectId"> @project.Project1 </option>
+                        }
+                    *@
+                </select>
+
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Cycle :
+                </p>
+                <select id="combo5" class="cbCoreValue form-control">
+                    @* @foreach (var coreVal in Model)
+                        {
+                            <option value="@coreVal.CoreValuesId"> @coreVal.coreValue </option>
+                        }
+                    *@
+                </select>
+            </div>
+        </div>
+        <p>
+
+        </p>
+
+
+        <div class="fancy-tables-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnBuildReportTrend" type="button" class="btn btn-success">Build report</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <p>
+
+        </p>
+
+
+
+        <div class="fancy-tables-container">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="barchart_material" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="barchart_material2" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="barchart_material3" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="barchart_material4" style="min-height: 450px; height: 90%; width: 90%; margin: auto;  text-align: center"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <p>
+
+        </p>
+
+    </div>
+</div>
+
+<p>
+
+</p>
+
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<script type="text/javascript">
+
+
+    google.charts.load("current", { packages: ["corechart"] });
+
+   
+
+    function drawChart() {
+        //  var data = new google.visualization.DataTable();
+
+
+        var data = google.visualization.arrayToDataTable
+            ([['Quarter', 'Response'],
+              ['Q4', 1],
+              ['Q3', 1],
+              ['Q2', 2],
+              ['Q1', 2]
+            ]);
+
+        var options = {
+            title: 'Great Results',
+            legend: { position: 'top', maxLines: 3 },
+            pointSize: 10,
+            pointColor: '#b1FFFF',
+            vAxis: { title: "Response", ticks: [{ v: 0, f: "Strongly Disagree" }, { v: 1, f: "Disagree" }, { v: 2, f: "Neutral" }, { v: 3, f: "Agree" }, { v: 4, f: "Strongly agree" }] },
+            series: {
+                0: { color: '#b1d787' }
+            },
+            tooltip: { trigger: "none" }
+
+
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('barchart_material'));
+        chart.draw(data, options);
+    }
+
+    function drawChart2() {
+        var data = google.visualization.arrayToDataTable
+           ([['Quarter', 'Response'],
+              ['Q4', 1],
+              ['Q3', 1],
+              ['Q2', 2],
+              ['Q1', 2]
+           ]);
+
+        var options = {
+            title: 'Choose to work with',
+            legend: { position: 'top', maxLines: 3 },
+            pointSize: 10,
+            pointColor: '#b1FFFF',
+            vAxis: { title: "Response", ticks: [{ v: 0, f: "No" }, { v: 1, f: "Yes" }] },
+            series: {
+                0: { color: '#b1d787' }
+            },
+            tooltip: { trigger: "none" }
+
+
+        };
+
+
+        var chart2 = new google.visualization.PieChart(document.getElementById('barchart_material2'));
+        chart2.draw(data, options);
+
+    }
+    function drawChart3() {
+        var data = google.visualization.arrayToDataTable
+            ([['Quarter', 'Response'],
+              ['Q4', 1],
+              ['Q3', 1],
+              ['Q2', 2],
+              ['Q1', 2]
+            ]);
+
+        var options = {
+            title: 'Promotion ready / Performance problem',
+            legend: { position: 'top', maxLines: 3 },
+            pointSize: 10,
+            pointColor: '#b1FFFF',
+            vAxis: { title: "Response", ticks: [{ v: 0, f: "Performance Problem" }, { v: 1, f: "Not promotion ready or performance ready" }, { v: 2, f: "Promotion ready" }] },
+            series: {
+                0: { color: '#b1d787' }
+            },
+            tooltip: { trigger: "none" }
+
+
+        };
+
+
+        var chart3 = new google.visualization.PieChart(document.getElementById('barchart_material3'));
+        chart3.draw(data, options);
+    }
+
+    function drawChart4() {
+        var data = google.visualization.arrayToDataTable
+            ([['Quarter', 'Response'],
+              ['Q4', 1],
+              ['Q3', 1],
+              ['Q2', 2],
+              ['Q1', 2]
+            ]);
+
+        var options = {
+            title: 'Category ',
+            legend: { position: 'top', maxLines: 3 },
+            pointSize: 10,
+            pointColor: '#b1FFFF',
+            vAxis: { title: "Response", ticks: [{ v: 0, f: "A" }, { v: 1, f: "B" }, { v: 2, f: "C" }] },
+            series: {
+                0: { color: '#b1d787' }
+            },
+            tooltip: { trigger: "none" }
+
+
+        };
+
+
+        var chart4 = new google.visualization.PieChart(document.getElementById('barchart_material4'));
+        chart4.draw(data, options);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    $("#cbSite").change(function () {
+        var id = $(this).val();
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+         console.debug(data);
+        $.ajax({
+            type: "post",
+            url: "GetManagerFromLocation",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                //   console.debug(sr);
+
+                $('#cbManager')
+                             .find('option')
+                             .remove()
+                             .end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("cbManager");
+                select.appendChild(option);
+
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("cbManager");
+                    select.appendChild(option);
+                }
+
+
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+
+    });
+
+    $("#cbManager").change(function () {
+        var id = $("#cbManager").val();
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        // console.debug(data);
+        $.ajax({
+            type: "post",
+            url: "GetProjectFromManager",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                //   console.debug(sr);
+
+                $('#cbProject')
+                             .find('option')
+                             .remove()
+                             .end();
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("cbProject");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Project;
+                    option.value = sr[i].ProjectId;
+                    var select = document.getElementById("cbProject");
+                    select.appendChild(option);
+                }
+
+
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+
+    });
+
+
+
+    $("#cbProject").change(function () {
+        /* if ($(this).data('options') == undefined) {
+             $(this).data('options', $('#combo2 option').clone());
+         }*/
+
+        var id = $(this).val();
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        // console.debug(data);
+        $.ajax({
+            type: "post",
+            url: "GetEmployeeFromProject",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                //   console.debug(sr);
+
+                $('#cbTeamMember')
+                             .find('option')
+                             .remove()
+                             .end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("cbTeamMember");
+                select.appendChild(option);
+
+
+                for (var i = 0; i < sr.length; i++)
+                {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("cbTeamMember");
+                    select.appendChild(option);
+                }
+
+
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+
+
+    });
+
+  
+
+    $("#btnBuildReportTrend").click(function () {
+
+        var idUser = $("#combo4").val();
+        var nameUser = $("#combo4 :selected").text();
+
+        var data = {};
+        data.ResourceId = idUser;
+        data.Name = nameUser;
+
+
+        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawChart2);
+        google.charts.setOnLoadCallback(drawChart3);
+        google.charts.setOnLoadCallback(drawChart4);
+
+    });
+        /*$.ajax({
+            type: "post",
+            url: "GetDataSurveys",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+                //  console.debug(sr);
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Questions');
+                if (sr.Q1.length==0)
+                    data.addColumn('number', 'not answered yet');
+                else
+                    data.addColumn('number', sr.Q1[0].Quarter);
+
+                // data.addColumn('number', sr[0].Quarter);
+                data.addColumn('number', 'Q2');
+                data.addColumn('number', 'Q3');
+                data.addColumn('number', 'Q4');
+
+                var value2 = 0;
+                for (var i = 0; i < sr.Q1.length; i++) {
+                    if (sr.Q2 == null)
+                        value2 = 0;
+                    else
+                        value2 = sr.Q2[i].ResponseId;
+                    data.addRow([(i + 1).toString(), sr.Q1[i].ResponseId, value2, sr.Q3[i].ResponseId, sr.Q4[i].ResponseId]);
+                }
+
+
+                var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+
+                for (var i = 0; i < sr.Q1.length; i++) {
+                    thHTML += '<th class="helloText">' + sr.Q1[i].Text + '</th>';
+                    questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + sr.Q1[i].Text + '</li>';
+                }
+
+
+                $(".hello").remove();
+                $(".helloQuestion").remove();
+                $(".helloul").remove();
+                $(".helloText").remove();
+                $(".helloQuestionsText").remove();
+
+
+                thHTML += '</tr> </thead>';
+                questionsHTML += '</ul>';
+
+                $('#Questions').append(questionsHTML);
+                $('#location').append(thHTML);
+
+                if (sr.Q1.length > 0)
+                {
+                    // Data about  acutual Quarter
+                    var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                    for (var i = 0; i < sr.Q1.length; i++) {
+                        trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                    }
+                    trHTML += '</tr>';
+                    $(".hellowDarkness").remove();
+                    $('#location').append(trHTML);
+
+                }
+
+
+
+
+
+
+
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+                chart.draw(data,
+                 {
+                     chart: {
+                         title: 'Team members input',
+                         subtitle: nameUser,
+
+                     },
+
+                     colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+
+                     bars: 'horizontal'
+
+                 });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        })
+    });
+    */
+
+
+
+
+</script>

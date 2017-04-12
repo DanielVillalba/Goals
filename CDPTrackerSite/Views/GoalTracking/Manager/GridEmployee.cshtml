@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "GridEmployee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="employeeGoalsContainer panel-group">
+    <div class="employeeGoals panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+            <a data-toggle="collapse" > Team Goals </a></h4>
+        </div>
+        <div class="panel-body cyclePrioritiesContainer">
+
+            <table class="table table-responsive table-hover ">
+                <thead>
+                    <tr>
+                        <th data-column-id="id" data-order="desc">#</th>
+                        <th data-column-id="sender">Name</th>
+                        <th data-column-id="received" data-order="desc">Position</th>
+                        <th data-column-id="commands" data-formatter="commands" data-sortable="false" style="text-align:center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td>Name text text text</td>
+                        <td>Position name text text</td>
+                        <td style="text-align:center">
+                            <a href="#" onclick="openQuarterlyPriorities()"><img src="~/Content/images/completed.png" width="30" height="35" title="Completed"> </a>
+</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Name text text text</td>
+                        <td>Position name text text</td>
+                        <td style="text-align:center">
+                             <a href="#" onclick="openQuarterlyPriorities()" ><img src="~/Content/images/completed.png" width="30" height="35" title="In progress"></a> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Name text text text</td>
+                        <td>Position name text text</td>
+                        <td style="text-align:center">
+                            <a href="#" onclick="openQuarterlyPriorities()">  <img src="~/Content/images/inProgress.png" width="23" height="25"> </a>
+</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Name text text text</td>
+                        <td>Position name text text</td>
+                        <td style="text-align:center">
+                            <a href="#" onclick="openQuarterlyPriorities()"> <img src="~/Content/images/completed.png" width="30" height="35"> </a>
+</td>
+                    </tr>
+                </tbody>
+                </table>
+
+
+</div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+
+   
+
+    function openQuarterlyPriorities()
+    {
+        window.location.href = "/GoalTracking/QuarterlyPrioritiesEndOfQuarter";
+    }
+  
+  
+</script>

@@ -1,0 +1,41 @@
+﻿@model CDPTrackerSite.Models.TiempoConnectSyncModel
+
+@{
+    ViewBag.Title = "Tiempo Connect Objective Syncronization";
+}
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>@ViewBag.Title</h2>
+
+        @if (@Model.InsertedObjectives != null && @Model.InsertedObjectives.Any())
+        {
+            <h4>Success!</h4>
+            <h5>Inserted Objectives: @Model.InsertedObjectives.Count()</h5>
+        }
+        @if (ViewBag.FileExists != null && ViewBag.FileExists == true)
+        {
+            <h4>File has already been uploaded!</h4>
+        }
+        @if (ViewBag.FileEmpty != null && ViewBag.FileEmpty == true)
+        {
+            <h4>0 Size files are not permitted!</h4>
+        }
+        @if (ViewBag.InvalidFile != null && ViewBag.InvalidFile == true)
+        {
+            <h4>File is invalid!</h4>
+            <h4>No valid objectives found.</h4>
+        }
+
+        @using (Html.BeginForm("TiempoConnectSync", "GoalTracking", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationMessageFor(x => x.File)
+            <br />
+            @Html.LabelFor(x => x.File)
+            <input type="file" accept=".csv" name="file" />
+            <div class="buttons-div">
+                <input type="submit" value="Upload" />
+            </div>
+        }
+    </div>
+</div>

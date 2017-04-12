@@ -1,0 +1,27 @@
+﻿@model DataSource.SkillCompassGlossary
+
+@{
+    ViewBag.Title = "Delete Skill Compass Glossary";
+}
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>@ViewBag.Title</h2>
+        <br />
+        <h4>Are you sure you want to delete this?</h4>
+        @using (Html.BeginForm())
+        {
+            <fieldset>
+
+                <div class="display-label">@Html.Label("Area") : @Html.DisplayFor(model => model.Area.Name)</div>
+                <div class="display-label">@Html.Label("Name") : @Html.DisplayFor(model => model.Name)</div>
+                <div class="display-label">@Html.Label("Description") : @Html.DisplayFor(model => model.Description)</div>
+                            
+                <div class="buttons-div">
+                    <input type="submit" value="Delete" />
+                </div>
+
+            </fieldset>
+        }
+    </div>
+</div>

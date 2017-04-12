@@ -1,0 +1,335 @@
+﻿
+<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Team member (Manager's view)
+        </h2>
+
+        <p>
+            The following report shows the answered survey, up to 4 different bars, one for each Qrtr.
+        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Managers :
+                </p>
+                <select id="combo1" class="cbCoreValue form-control">
+                    <option value="0"> Please select.... </option>
+
+                    @foreach (var manager in Model)
+                    {
+                        <option value="@manager.ResourceId"> @manager.Name </option>
+                    }
+
+                </select>
+
+            </div>
+
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <p>
+
+        </p>
+
+
+
+        <div class="fancy-tables-container">
+
+            <div>
+                <div id="barchart_material" style="min-height: 450px; height: 100%; width: 80%; margin: auto; background: #fff; text-align: center"></div>
+            </div>
+
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+            <div id="Questions">
+
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+
+            <div class="fancy-tables-container">
+                <table id="location" class="table table-bordered"></table>
+            </div>
+
+
+            @* --------------------------- Mannager's comemts --------------------------- *@
+            <div id="cycleCommentsContainer" class="fancy-table fancy-todo-table">
+                <div class="fancy-description">
+                    <div>
+                        <label class="subtitle"> Manager's comments </label>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="fancy-body">
+                    <div class="fancy-row form-group">
+                        <div class="form-group">
+                            <textarea class="form-control txtCycleComments" id="txtManagerComment" rows="4" readonly> </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["bar"] });
+    </script>
+
+    <script type="text/javascript">
+
+        $("#btnBuildReport").click(function () {
+
+            var idUser = $("#combo1").val();
+            var nameUser = $("#combo1 :selected").text();
+            
+
+            var data = {};
+
+            if (idUser > 0) {
+                data.ResourceId = idUser;
+                data.Name = nameUser;
+                
+
+                getManagerComments(data.ResourceId, data.Name);
+
+                $.ajax({
+                    type: "post",
+                    url: "GetDataSurveys",
+                    data: { data: JSON.stringify(data) },
+                    success: function (sr) {
+
+                        var availableQuarterData = null;   // get the first available quarter data set and use it to handle the form
+                        var data = new google.visualization.DataTable();
+
+                        data.addColumn('string', 'Questions');
+                        if (sr.Q1 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q1[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q1;
+                        }
+                        if (sr.Q2 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q2[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q2;
+                        }
+                        if (sr.Q3 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q3[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q3;
+                        }
+                        if (sr.Q4 == null)
+                            data.addColumn('number', 'No data');
+                        else {
+                            data.addColumn('number', sr.Q4[0].Quarter);
+                            if (availableQuarterData == null)
+                                availableQuarterData = sr.Q4;
+                        }
+
+
+                        var value1 = 0;
+                        var value2 = 0;
+                        var value3 = 0;
+                        var value4 = 0;
+
+
+                        if (availableQuarterData) {
+
+                            // retrieving data and populate 'data' object
+                            for (var i = 0; i < availableQuarterData.length; i++) {   // change the limit
+                                if (sr.Q1 == null)
+                                    value1 = 0;
+                                else
+                                    value1 = sr.Q1[i].ResponseId;
+
+                                if (sr.Q2 == null)
+                                    value2 = 0;
+                                else
+                                    value2 = sr.Q2[i].ResponseId;
+
+                                if (sr.Q3 == null)
+                                    value3 = 0;
+                                else
+                                    value3 = sr.Q3[i].ResponseId;
+
+                                if (sr.Q4 == null)
+                                    value4 = 0;
+                                else
+                                    value4 = sr.Q4[i].ResponseId;
+
+                                data.addRow([(i + 1).toString(), value1, value2, value3, value4]);
+                            }
+
+
+                            var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                            var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+
+                            for (var i = 0; i < availableQuarterData.length; i++) {
+                                thHTML += '<th class="helloText">' + availableQuarterData[i].Text + '</th>';
+                                questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + availableQuarterData[i].Text + '</li>';
+                            }
+
+                            $(".hello").remove();
+                            $(".helloQuestion").remove();
+                            $(".helloul").remove();
+                            $(".helloText").remove();
+                            $(".hellowDarkness").remove();
+                            $(".helloQuestionsText").remove();
+
+                            thHTML += '</tr> </thead>';
+                            questionsHTML += '</ul>';
+
+                            $('#Questions').append(questionsHTML);
+                            $('#location').append(thHTML);
+
+                            // Data about  acutual Quarter
+                            if (sr.Q1 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                $(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q2 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q2[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q2[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q3 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q3[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q3[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                            if (sr.Q4 != null) {
+                                var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q4[0].Quarter + ' </th>';
+                                for (var i = 0; i < availableQuarterData.length; i++) {
+                                    trHTML += '<th>' + sr.Q4[i].ResponseId + '</th>';
+                                }
+                                trHTML += '</tr>';
+
+                                //$(".hellowDarkness").remove();
+                                $('#location').append(trHTML);
+
+                            }
+                        } else {
+                            data.addRow(['0', 0, 0, 0, 0]);
+                            $(".hello").remove();
+                            $(".helloQuestion").remove();
+                            $(".helloul").remove();
+                            $(".helloText").remove();
+                            $(".hellowDarkness").remove();
+                            $(".helloQuestionsText").remove();
+                        }
+
+
+                        // Instantiate and draw our chart, passing in some options
+                        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+                        chart.draw(data,
+                         {
+                             chart: {
+                                 title: 'Team members input',
+                                 subtitle: nameUser,
+
+                             },
+                             hAxis: {
+                                 viewWindowMode: 'explicit',
+                                 viewWindow: {
+                                     max: 5
+                                 }
+                             },
+                             colors: ['#ffcc00', '#808080', '#ff9900', '#0080ff'],
+
+                             bars: 'horizontal'
+
+                         });
+                    },
+                    error: function () {
+                        alert("Error loading data! Please try again.");
+                    }
+                })
+            }
+            else {
+                alert('Please select a manager prior to request the report');
+            }
+        });
+
+        function getManagerComments(id, name) {
+            var data = {};
+            data.ResourceId = id;
+            data.Name = name;
+
+            $.ajax({
+                type: "post",
+                url: "GetManagerComment",
+                data: { data: JSON.stringify(data) },
+                success: function (sr) {
+                    $('#cycleCommentsContainer').show();
+                    if (sr == null) {
+                        var ta = document.getElementById('txtManagerComment');
+                        ta.value = '';
+                    }
+                    else {
+                        var ta = document.getElementById('txtManagerComment');
+                        ta.value = sr[0].ResponseText;
+                    }
+                },
+                error: function () {
+                    alert("Error loading data! Please try again.");
+                }
+            })
+            return 0;
+        };
+
+
+    </script>

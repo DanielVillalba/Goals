@@ -1,0 +1,30 @@
+﻿@model DataSource.SkillCompassGlossary
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>SkillCompassGlossary</legend>
+
+    <div class="display-label">Area</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Area.Name)
+    </div>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SkillCompassGlossaryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,510 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Team member vs Project's average (Talent's view) 
+        </h2>
+
+        <p>
+            The following report shows the answered survey considering the selected individual against project's average, up to 4 different bars, one for each Qrtr.
+        </p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <p>
+                    Site :
+                </p>
+                <select id="combo1" class="cbCoreValue form-control">
+                    <option value="0"> Please select.... </option>
+
+                    @foreach (var site in Model)
+                    {
+                        <option value="@site.ID"> @site.Name </option>
+                    }
+
+                </select>
+
+            </div>
+            <div class="col-md-4">
+                <p>
+                    Manager :
+                </p>
+                <select id="combo2" class="cbCoreValue form-control">
+                    @* @foreach (var coreVal in Model)
+                        {
+                            <option value="@coreVal.CoreValuesId"> @coreVal.coreValue </option>
+                        }
+                    *@
+                </select>
+            </div>
+            <div class="col-md-4">
+                <p>
+                    Project :
+                </p>
+                <select id="combo3" class="cbCoreValue form-control">
+                    @* @foreach (var coreVal in Model)
+                        {
+                            <option value="@coreVal.CoreValuesId"> @coreVal.coreValue </option>
+                        }
+                    *@
+                </select>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Team Member :
+                </p>
+                <select id="combo4" class="cbCoreValue form-control">
+                    @*
+                        @foreach (var project in Model)
+                        {
+                            <option value="@project.ProjectId"> @project.Project1 </option>
+                        }
+                    *@
+                </select>
+
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Cycle :
+                </p>
+                <select id="combo5" class="cbCoreValue form-control">
+                    @* @foreach (var coreVal in Model)
+                        {
+                            <option value="@coreVal.CoreValuesId"> @coreVal.coreValue </option>
+                        }
+                    *@
+                </select>
+            </div>
+        </div>
+        <p>
+
+        </p>
+
+
+        <div class="fancy-tables-container">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <p>
+
+        </p>
+
+
+
+        <div class="fancy-tables-container">
+
+            <div>
+                <div id="barchart_material" style="min-height: 450px; height: 100%; width: 80% "></div>
+            </div>
+
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+            <div id="Questions">
+
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="fancy-tables-container">
+
+            <div class="fancy-tables-container">
+                <table id="location" class="table table-bordered"></table>
+            </div>
+        </div>
+
+      
+
+    </div>
+</div>
+
+<p>
+
+</p>
+
+<div class="fancy-tables-container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <button id="btnEmployeeTrends" type="button" class="btn btn-success">Employee trends</button>
+        </div>
+        <ul class="btnLinks"></ul>
+    </div>
+</div>
+
+
+
+<script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("visualization", "1", { packages: ["bar"] });
+</script>
+
+<script type="text/javascript">
+    $("#combo1").change(function () {
+        var id = $(this).val();
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        // console.debug(data);
+        $.ajax({
+            type: "post",
+            url: "GetManagerFromLocation",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                //   console.debug(sr);
+
+                $('#combo2')
+                             .find('option')
+                             .remove()
+                             .end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("combo2");
+                select.appendChild(option);
+
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("combo2");
+                    select.appendChild(option);
+                }
+
+
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+
+    });
+
+    $("#combo2").change(function () {
+        var id = $("#combo2").val();
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        // console.debug(data);
+        $.ajax({
+            type: "post",
+            url: "GetProjectFromManager",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                //   console.debug(sr);
+
+                $('#combo3')
+                             .find('option')
+                             .remove()
+                             .end();
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("combo3");
+                select.appendChild(option);
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Project;
+                    option.value = sr[i].ProjectId;
+                    var select = document.getElementById("combo3");
+                    select.appendChild(option);
+                }
+
+
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+
+    });
+
+
+
+    $("#combo3").change(function () {
+        /* if ($(this).data('options') == undefined) {
+             $(this).data('options', $('#combo2 option').clone());
+         }*/
+
+        var id = $(this).val();
+
+        var data = {};
+        data.ResourceId = id;
+        data.Name = "";
+        // console.debug(data);
+        $.ajax({
+            type: "post",
+            url: "GetEmployeeFromProject",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                //   console.debug(sr);
+
+                $('#combo4')
+                             .find('option')
+                             .remove()
+                             .end();
+
+                var option = document.createElement("option");
+                option.text = 'Please select...';
+                option.value = '0';
+                var select = document.getElementById("combo4");
+                select.appendChild(option);
+
+
+                for (var i = 0; i < sr.length; i++) {
+                    var option = document.createElement("option");
+                    option.text = sr[i].Name;
+                    option.value = sr[i].ResourceId;
+                    var select = document.getElementById("combo4");
+                    select.appendChild(option);
+                }
+
+
+            },
+            error: function () {
+                alert("Error.");
+            }
+        })
+
+
+    });
+
+    $("#btnEmployeeTrends").click(function () {
+        var idUserr = $("#combo4").val();
+        var nameUser = $("#combo4 :selected").text();
+
+        window.location.href = "/GoalTracking/EmployeeTrendsReportsLEAA?ID=" + idUserr;
+
+        @* $.get("@Url.Action("EmployeeTrendsReports", "GoalTracking")", { idUser: idUserr}); *@
+
+
+    });
+
+
+    function myGraph(idUser, nameUser, projectID) {
+
+        var data = {};
+        data.ResourceId = idUser;
+        data.Name = nameUser;
+        data.projectId = projectID;
+
+        $.ajax({
+            type: "post",
+            url: "GetDataSurveysByProjectAverage",
+            data: { data: JSON.stringify(data) },
+            success: function (sr) {
+
+                // Callback that creates and populates a data table,
+                // instantiates the pie chart, passes in the data and
+                // draws it.
+                //  console.debug(sr);
+
+                var data = new google.visualization.DataTable();
+
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Questions');
+                if (sr.Q1 == null)
+                    data.addColumn('number', 'No data');
+                else
+                    data.addColumn('number', sr.Q1[0].Quarter);
+                if (sr.Q2 == null)
+                    data.addColumn('number', 'No data');
+                else
+                    data.addColumn('number', sr.Q2[0].Quarter);
+             /*   if (sr.Q3 == null)
+                    data.addColumn('number', 'No data');
+                else
+                    data.addColumn('number', sr.Q3[0].Quarter);
+                if (sr.Q4 == null)
+                    data.addColumn('number', 'No data');
+                else
+                    data.addColumn('number', sr.Q4[0].Quarter);
+
+*/
+                var value1 = 0;
+                var value2 = 0;
+                var value3 = 0;
+                var value4 = 0;
+
+                if (sr.Q1 == null) {
+                    data.addRow(['0', 0, 0, 0, 0]);
+                    $(".hello").remove();
+                    $(".helloQuestion").remove();
+                    $(".helloul").remove();
+                    $(".helloText").remove();
+                    $(".hellowDarkness").remove();
+                    $(".helloQuestionsText").remove();
+
+                }
+                else {
+                    for (var i = 0; i < sr.Q1.length; i++) {
+                        if (sr.Q1 == null)
+                            value1 = 0;
+                        else
+                            value1 = sr.Q1[i].ResponseId;
+
+                        if (sr.Q2 == null)
+                            value2 = 0;
+                        else
+                            value2 = sr.Q2[i].ResponseId;
+                        if (sr.Q3 == null)
+                            value3 = 0;
+                        else
+                            value3 = sr.Q3[i].ResponseId;
+                        if (sr.Q4 == null)
+                            value4 = 0;
+                        else
+                            value4 = sr.Q4[i].ResponseId;
+                        //data.addRow([(i + 1).toString(), value1, value2, value3, value4]);
+                        data.addRow([(i + 1).toString(), value1, value2]);
+                    }
+
+
+                    var thHTML = '<thead class="hello"> <tr> <th> </th>';
+                    var questionsHTML = ' <p class="helloQuestion"> Questions :</p> <ul class="helloul"> ';
+
+
+                    for (var i = 0; i < sr.Q1.length; i++) {
+                        thHTML += '<th class="helloText">' + sr.Q1[i].Text + '</th>';
+                        questionsHTML += '<li class="helloQuestionsText"> ' + (i + 1).toString() + ' -- ' + sr.Q1[i].Text + '</li>';
+                    }
+
+
+                    $(".hello").remove();
+                    $(".helloQuestion").remove();
+                    $(".helloul").remove();
+                    $(".helloText").remove();
+                    $(".helloQuestionsText").remove();
+
+                    thHTML += '</tr> </thead>';
+                    questionsHTML += '</ul>';
+
+                    $('#Questions').append(questionsHTML);
+                    $('#location').append(thHTML);
+
+                    // Data about  acutual Quarter
+                    if (sr.Q1 != null) {
+                        var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q1[0].Quarter + ' </th>';
+                        for (var i = 0; i < sr.Q1.length; i++) {
+                            trHTML += '<th>' + sr.Q1[i].ResponseId + '</th>';
+                        }
+                        trHTML += '</tr>';
+
+                        $(".hellowDarkness").remove();
+                        $('#location').append(trHTML);
+
+                    }
+                    if (sr.Q2 != null) {
+                        var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q2[0].Quarter + ' </th>';
+                        for (var i = 0; i < sr.Q2.length; i++) {
+                            trHTML += '<th>' + sr.Q2[i].ResponseId + '</th>';
+                        }
+                        trHTML += '</tr>';
+
+                        //$(".hellowDarkness").remove();
+                        $('#location').append(trHTML);
+
+                    }
+                    if (sr.Q3 != null) {
+                        var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q3[0].Quarter + ' </th>';
+                        for (var i = 0; i < sr.Q3.length; i++) {
+                            trHTML += '<th>' + sr.Q3[i].ResponseId + '</th>';
+                        }
+                        trHTML += '</tr>';
+
+                        //$(".hellowDarkness").remove();
+                        $('#location').append(trHTML);
+
+                    }
+                    if (sr.Q4 != null) {
+                        var trHTML = '<tr class= "hellowDarkness"> <th> ' + sr.Q4[0].Quarter + ' </th>';
+                        for (var i = 0; i < sr.Q4.length; i++) {
+                            trHTML += '<th>' + sr.Q4[i].ResponseId + '</th>';
+                        }
+                        trHTML += '</tr>';
+
+                        //$(".hellowDarkness").remove();
+                        $('#location').append(trHTML);
+
+                    }
+
+
+                }
+
+
+
+
+
+
+                // Instantiate and draw our chart, passing in some options
+                var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+                chart.draw(data,
+                 {
+                     chart: {
+                         title: 'Team member vs project',
+                         subtitle: nameUser,
+
+                     },
+
+                     colors: ['#ffcc00', '#0080ff'],
+
+                     bars: 'horizontal'
+
+                 });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        })
+
+        return null;               
+    }
+
+
+
+
+    $("#btnBuildReport").click(function () {
+
+        var idUser = $("#combo4").val();
+        var nameUser = $("#combo4 :selected").text();
+        var projectID = $("#combo3").val();
+      
+
+        myGraph(idUser, nameUser, projectID);
+
+    });
+
+
+
+
+</script>
+
+

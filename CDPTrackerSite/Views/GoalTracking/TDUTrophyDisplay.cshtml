@@ -1,0 +1,13 @@
+﻿@model DataSource.TDUReward
+
+@if(Model != null)
+{
+    <fieldset>
+        <h5 style ="text-align:center;">Congratulations on reaching @Model.TotalTDUReward TDUs!</h5> 
+    <a>
+        <img src="@Url.Content("~/Content/images/TDUTrophies/"+Model.TotalTDUReward+"TDUs.gif")" width="80%" 
+            title= "@Model.TotalTDUReward TDU Trophy"
+        style = "-ms-align-content:center;-webkit-align-content:center; align-content:center; padding-left:10%; border : none" />
+    </a>
+    </fieldset>
+}

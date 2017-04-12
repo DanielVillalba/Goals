@@ -1,0 +1,215 @@
+﻿@*@model DataSource.Resource*@
+
+@{
+    ViewBag.Title = "Goal Completeness Verification";
+}
+@if (Model == null)
+{
+    <p>The data could not be found.</p>
+}
+else
+{
+    <div class="cyclePrioritiesContainer">
+        @foreach (var item in Model)
+        {
+            <div class="priority resourceParent">
+                <div class="priorityHeader">
+                    <div class="task-row" data-task-id="@item.resourceId" style="float:left;">
+                        @item.resourceName
+                        <div style="float:right; height:25px">
+                            <img src="~/Content/images/arrow_expand.png" class="toggleButton imgToggle" title="Expand" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="taskTemplate" style="display:none">
+                    @if (item.priorities != null)
+                    {
+                        foreach (var priority in item.priorities)
+                        {
+                            <div class="tasksListHeader" style="font-style:italic;">
+                                <div class="task-row">
+                                    <input type="hidden" value="@priority.priorityId" />
+                                    @priority.priorityDescription
+                                </div>
+                            </div>
+
+                                <div class="fancy-table">
+                                    <div class="fancy-header">
+                                        <div class="fancy-row form-group">
+                                            <div class="form-group col-sm-1">
+                                                &nbsp;
+                                            </div>
+                                            <div class="form-group col-sm-5">
+                                                Task
+                                            </div>
+                                            <div class="form-group col-sm-2 text-center">
+                                                Status
+                                            </div>
+                                            <div class="form-group col-sm-2 text-center">
+                                                Training Category
+                                            </div>
+                                            <div class="form-group col-sm-2 text-center">
+                                                TDU
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="fancy-body">
+                                        @if (priority.tasks != null)
+                                        {
+                                            foreach (var task in priority.tasks)
+                                            {
+                                                <div class="fancy-row priority-task-row form-group" data-task-id="@task.taskId" data-task-status="@task.taskProgress">
+                                                    <div class="form-group col-sm-1 fancy-column-counter">
+                                                        &nbsp;
+                                                    </div>
+                                                    <div class="form-group col-sm-5">
+                                                        @task.taskDescription
+                                                    </div>
+                                                    <div class="form-group col-sm-2 text-center">
+                                                        <img src="@Url.Content(task.imgProgress)" class="task-status-button changeStatusButton" title="@task.statusTitle" />
+                                                    </div>
+                                                    <div class="form-group col-sm-2 text-center">
+                                                        @task.trainingCategoryDescription
+                                                    </div>
+                                                    <div class="form-group col-sm-2 text-center">
+                                                        @task.taskTdu
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+<script type="text/javascript" src="@Url.Content("~/Scripts/ToggleManager.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/EmployeeGoals/EmployeeGoalsRequestHandler.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/EmployeeGoals/EmployeeGoalsManager.js")"></script>
+<script>
+    $(document).ready(function () {
+        var employeeGoalsRequestHandler = new EmployeeGoalsRequestHandler();
+        var employeeGoalsManager = new EmployeeGoalsManager(employeeGoalsRequestHandler);
+        var toggleManager = new ToggleManager();
+
+        // Initialize
+        toggleManager.init();
+
+        employeeGoalsManager.init();
+    });
+</script>
+
+
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/table-collapser.js")"></script>
+    <script type="text/javascript">
+        function submitForm() {
+            var answer = confirm("I confirm that I have personally checked that the tasks marked as Verified have been completed.");
+            if (answer) {
+                document.submitform.submit();
+            }
+        }
+    </script>
+    <h2>@ViewBag.Title</h2>
+
+        if (Model == null)
+        {
+    <p>There are no Goals to be verified. </p>
+    <p>
+        <a href="@Url.Action("Index", "GoalTracking")">
+            <img src="../../Content/images/BackTiempoButtonWB.jpg" height="25" width="25" title="Back to My Goals" style="border: none" />
+        </a>
+    </p>
+        }
+        else
+        {
+            using (Html.BeginForm(null, null, null, FormMethod.Post, new { id = "submitform", name = "submitform", @class = "borderForm" }))
+            {
+    <table width="800" align="center" style="border-style: none">
+        <td style="text-align: right; border-style: hidden">
+            <a href="javascript:toggle_visibility_all();" id="toggle_all">[-] Collapse All </a>
+        </td>
+    </table>
+
+    @Html.ValidationSummary(true)
+
+                for (int empI = 0; empI < Model.Employees.Count; empI++)
+                {
+    @Html.HiddenFor(model => model.Employees[empI].Resource.ResourceId)
+
+    <table width="800" border="0" align="center" cellpadding="4" cellspacing="0" id="tbl@(empI)" name="tbl@(empI)">
+        <tr>
+            <td height="1" bgcolor="#727272" colspan="5"></td>
+        </tr>
+        <tr bgcolor="#EEEEEE">
+            <td height="15" colspan="4"><strong>@(Model.Employees[empI].Resource.Name)</strong></td>
+            <td bgcolor="#EEEEEE">
+                <div style="text-align: right"><a href="javascript:toggle_visibility('tbl@(empI)','lnk@(empI)');" id="lnk@(empI)">[-] Collapse </a></div>
+            </td>
+        </tr>
+
+        <tr bgcolor="#EEEEEE">
+            <td width="40%">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().Goal)</td>
+            <td width="10%">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().Progress)</td>
+            <td width="20%">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().VerifiedByManager)</td>
+            <td width="20%">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().TrainingCategory)</td>
+            <td width="10%">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().TDU)</td>
+        </tr>
+        <tr style="display: none">
+            <td colspan="5" bgcolor="#CCCCCC" height="1"></td>
+        </tr>
+
+        @for (int i = 0; i < Model.Employees[empI].Resource.GoalTrackings.Count; i++)
+        {
+            <tr>
+                @Html.HiddenFor(g => g.Employees[empI].Resource.GoalTrackings[i].ResourceId)
+                @Html.HiddenFor(g => g.Employees[empI].Resource.GoalTrackings[i].GoalId)
+                <td>@Model.Employees[empI].Resource.GoalTrackings[i].Goal</td>
+                <td>@Model.Employees[empI].Resource.GoalTrackings[i].ProgressEnum.Label</td>
+                <td>@Html.EditorFor(g => g.Employees[empI].Resource.GoalTrackings[i].VerifiedByManager)</td>
+                @switch (Model.Employees[empI].Resource.GoalTrackings[i].TrainingCategoryId)
+                {
+                    case 1:
+                        <td>Reading and recommending a book</td>
+                        break;
+                    case 2:
+                        <td>Enroll in on-demand training</td>
+                        break;
+                    case 3:
+                        <td>Enroll in course or training</td>
+                        break;
+                    case 4:
+                        <td>Design and Facilitate Tiempo official in house training</td>
+                        break;
+                    case 5:
+                        <td>Technically coach a person</td>
+                        break;
+                    default:
+                        <td>Unknown</td>
+                        break;
+                }
+                <td>@Model.Employees[empI].Resource.GoalTrackings[i].TDU</td>
+            </tr>
+                            <t>
+                                <td colspan="5" bgcolor="#CCCCCC" height="1"></td>
+                            </t>
+        }
+
+    </table>
+                }
+    <p>
+        <input type="submit" value="Save" />
+
+    </p>
+            }
+        }
+    }
+    <div>
+        <a href="@Url.Action("Index", "GoalTracking")">
+            <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to List" style="border: none" />
+        </a>
+    </div>*@

@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "ManagerView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <div class="panel panel-default">
+        <div class="panel-heading">Owner Name - Quarterly Priorities</div>
+        <div class="panel-body">
+
+            <div>
+                <div>
+
+                </div>
+           
+                <div>
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#kpis" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F">KPI's</a></li>
+                            <li role="presentation"><a href="#qa" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F">Quarterly Action</a></li>
+                            <li role="presentation"><a href="#vi" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F">Values Infusion</a></li>
+                            <li role="presentation"><a href="#pd" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F">Personal Development</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="tab-content" style="margin-top:1%">
+                            <div role="tabpanel" class="tab-pane fade" id="kpis"> @Html.Partial("Manager/_ownerViewsKPI")  </div>
+                            <div role="tabpanel" class="tab-pane fade" id="qa"> @Html.Partial("Manager/_ownerViewQuarterlyAction")  </div>
+                            <div role="tabpanel" class="tab-pane fade" id="vi"> @Html.Partial("Manager/_ownerViewValuesInfusion") </div>
+                            <div role="tabpanel" class="tab-pane fade" id="pd"> @Html.Partial("Manager/_ownerViewPersonalDevelopment") </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="margin:5% 2% 0 2%">
+                    <h4 style="color:#6CB33F"> Cosingcomments </h4>
+                    <textarea class="form-control" rows="3" placeholder="Manager Comments"></textarea>
+                </div>
+             
+            </div>
+
+        </div>
+    </div>
+    
+    <div style="clear:both">
+        <div style="float:left">
+            <button id="btn-back-list" type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back
+            </button>
+        </div>
+        <div style="float:right">
+            <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Save
+            </button>
+        </div>
+    </div>
+
+    <div style="clear:both" ></div>
+    
+</div>
+
+
+<script>
+
+    $("#btn-back-list").click(function () {
+        window.location.href = "/GoalTracking/GridManagerEmployee";
+        
+    });
+</script>

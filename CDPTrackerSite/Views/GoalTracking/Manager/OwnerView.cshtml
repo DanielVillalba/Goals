@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "OwnerView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">Owner View - Quarterly Priorities</div>
+    <div class="panel-body">
+        
+        <div>
+            <div>
+
+            </div>
+            <div>
+                
+                <ol class="breadcrumb">
+                    <li><h4 style="color:#6CB33F">Critical Numbers</h4></li>
+                    <li> SG <span class="label label-success">0.90</span></li>
+                    <li> G <span class="label label-success">0.20</span> </li>
+                    <li> R <span class="label label-danger">0.85</span> </li>
+                </ol>
+            </div>
+            <div>
+                <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#kpis" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F" >KPI's</a></li>
+                        <li role="presentation"><a href="#qa" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F">Quarterly Action</a></li>
+                        <li role="presentation"><a href="#vi" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F">Values Infusion</a></li>
+                        <li role="presentation"><a href="#pd" aria-controls="kpis" role="tab" data-toggle="tab" style="color:#6CB33F">Personal Development</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="tab-content" style="margin-top:1%" >
+                        <div role="tabpanel" class="tab-pane fade" id="kpis">@Html.Partial("Manager/_ownerViewsKPI")  </div>
+                        <div role="tabpanel" class="tab-pane fade" id="qa"> @Html.Partial("Manager/_ownerViewQuarterlyAction")  </div>
+                        <div role="tabpanel" class="tab-pane fade" id="vi"> @Html.Partial("Manager/_ownerViewValuesInfusion") </div>
+                        <div role="tabpanel" class="tab-pane fade" id="pd"> @Html.Partial("Manager/_ownerViewPersonalDevelopment") </div>
+                    </div>
+                </div>
+
+            </div>
+            <div style="margin:5% 2% 0 2%">
+                <h4 style="color:#6CB33F" > Key Issues & Closing Comments from Cycle </h4>
+                <textarea class="form-control" rows="3" placeholder="Comments"></textarea>
+            </div>
+            <div style="margin-top:1%">
+                <button type="button" class="btn btn-default btn-sm" style="float:right">
+                    <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span> Save
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

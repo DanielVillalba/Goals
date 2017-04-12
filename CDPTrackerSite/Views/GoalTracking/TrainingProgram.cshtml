@@ -1,0 +1,367 @@
+﻿@model Tuple<IEnumerable<DataSource.TrainingProgramDetails>, IEnumerable<DataSource.GeneralTrainingProgramDetails>, IEnumerable<DataSource.TrainingProgramOnDemandDetails>>
+@{
+    ViewBag.Title = "My Training Programs";
+}
+
+
+
+<style type="text/css">
+    table{
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    }
+    table td{
+    border: 1px solid #ddd;
+    }
+    .test {
+      display: inline;
+      overflow: auto;
+      white-space: nowrap;
+      margin: 0px auto;
+    }
+    .field-validation-error {
+        color: #444 !important;
+    }
+    .field-validation-valid {
+        display: none;
+    }
+    .input-validation-error {
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+</style>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>@ViewBag.Title</h2>
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(false)
+            <br />
+            <br />
+            if (Model != null && Model.Item1 != null )
+            {
+                <div class="fancy-table">
+                    <div class="fancy-title text-center">
+                        <div>
+                            Training Programs
+                        </div>
+                    </div>
+
+                    <div class="fancy-header hidden-xs">
+                        <div class="fancy-row form-group">
+                            <div class="form-group col-sm-2 text-center">
+                                Name
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Category
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Status
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Start Date
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Finish Date
+                            </div>
+                            <div class="form-group col-sm-1 text-center">
+                                Link
+                            </div>
+                            <div class="form-group col-sm-1 text-center">
+                                Actions
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fancy-body">
+                        @if (Model.Item1.Count() <= 0)
+                        {
+                            <div class="fancy-row form-group">
+                                <div class="form-group col-sm-12">
+                                    <div>
+                                        No Data Available
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+
+                            foreach (var item in Model.Item1)
+                            {
+                                if (item.TrainingProgram.FinishDate >= DateTime.Now.AddDays(-1) && item.TrainingProgram.StartDate <= DateTime.Now)
+                                {
+                                    <div class="fancy-row form-group">
+
+                                        <div class="form-group col-sm-2">
+                                            <div class="smallLabels visible-xs">
+                                                Name
+                                            </div>
+                                            @item.TrainingProgram.Name
+                                        </div>
+
+                                        <div class="form-group col-sm-2">
+                                            <div class="smallLabels visible-xs">
+                                                Category
+                                            </div>
+                                           @item.TrainingProgram.TrainingProgramCategory.Name
+                                        </div>
+
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Status
+                                            </div>
+                                            @item.ProgressEnum.Label
+                                        </div>
+
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Start Date
+                                            </div>
+                                            @if (item.TrainingProgram.StartDate != null)
+                                            {
+                                                @String.Format("{0:d}", item.TrainingProgram.StartDate)
+                                            }
+                                        </div>
+
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Finish Date
+                                            </div>
+                                            @if (item.TrainingProgram.FinishDate != null)
+                                            {
+                                                @String.Format("{0:d}", item.TrainingProgram.FinishDate)
+                                            }
+                                        </div>
+
+
+                                        <div class="form-group col-sm-1 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Link
+                                            </div>
+                                            @if (item.TrainingProgram.Link != null)
+                                            {
+                                                <a href="@Url.Action("ClickLink", new { ResourceId = item.ResourceId, id = item.TrainingProgram.IdTrainingProgram, link = item.TrainingProgram.Link, trainingType = "General" })" target="_blank" style="text-decoration: none">
+                                                    <img src="@Url.Content("~/Content/images/link.png")" height="22" width="22" title="Click Here" style="margin-left: 10px; border: none" />
+                                                </a>
+                                            }
+                                        </div>
+
+                                        <div class="form-group col-sm-1 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Actions
+                                            </div>
+                                            <a href="@Url.Action("EditTraining", new { id = item.IdTrainingProgramDetails})" style="text-decoration: none">
+                                                <img src="@Url.Content("~/Content/images/EditGoal-icon.png")" height="22" width="22" title="Edit Training Program" style="margin-left: 10px; border: none;" />
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+
+                <br />
+                <br />
+                <br />
+            }
+
+
+            if (Model != null && Model.Item2 != null)
+            {
+                <div class="fancy-table">
+                    <div class="fancy-title text-center">
+                        <div>
+                            General Training Programs
+                        </div>
+                    </div>
+
+                    <div class="fancy-header hidden-xs">
+                        <div class="fancy-row form-group">
+                            <div class="form-group col-sm-2 text-center">
+                                Name
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Category
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Status
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Start Date
+                            </div>
+                            <div class="form-group col-sm-2 text-center">
+                                Finish Date
+                            </div>
+                            <div class="form-group col-sm-1 text-center">
+                                Link
+                            </div>
+                            <div class="form-group col-sm-1 text-center">
+                                Actions
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fancy-body">
+                        @if (Model.Item2.Count() <= 0)
+                        {
+                            <div class="fancy-row form-group">
+                                <div class="form-group col-sm-12">
+                                    <div>
+                                        No Data Available
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.Item2)
+                            {
+                                if (item.GeneralTrainingProgram.FinishDate >= DateTime.Now.AddDays(-1) && item.GeneralTrainingProgram.StartDate <= DateTime.Now)
+                                {
+                                    <div class="fancy-row form-group">
+
+                                        <div class="form-group col-sm-2">
+                                            <div class="smallLabels visible-xs">
+                                                Name
+                                            </div>
+                                            @item.GeneralTrainingProgram.Name
+                                        </div>
+
+                                        <div class="form-group col-sm-2">
+                                            <div class="smallLabels visible-xs">
+                                                Category
+                                            </div>
+                                            @item.GeneralTrainingProgram.TrainingProgramCategory.Name
+                                        </div>
+
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Status
+                                            </div>
+                                            @item.ProgressEnum.Label
+                                        </div>
+
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Start Date
+                                            </div>
+                                            @if (item.GeneralTrainingProgram.StartDate != null)
+                                            {
+                                                @String.Format("{0:d}", item.GeneralTrainingProgram.StartDate)
+                                            }
+                                        </div>
+
+                                        <div class="form-group col-sm-2 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Finish Date
+                                            </div>
+                                            @if (item.GeneralTrainingProgram.FinishDate != null)
+                                            {
+                                                @String.Format("{0:d}", item.GeneralTrainingProgram.FinishDate)
+                                            }
+                                        </div>
+
+
+                                        <div class="form-group col-sm-1 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Link
+                                            </div>
+                                            @if (item.GeneralTrainingProgram.Link != null)
+                                            {
+                                                <a href="@Url.Action("ClickLink", new { ResourceId = item.ResourceId, id = item.GeneralTrainingProgram.IdGeneralTrainingProgram, link = item.GeneralTrainingProgram.Link, trainingType = "General" })" target="_blank" style="text-decoration: none">
+                                                    <img src="@Url.Content("~/Content/images/link.png")" height="22" width="22" title="Click Here" style="margin-left: 10px; border: none" />
+                                                </a>
+                                            }
+                                        </div>
+
+                                        <div class="form-group col-sm-1 text-center">
+                                            <div class="smallLabels visible-xs">
+                                                Actions
+                                            </div>
+                                            <a href="@Url.Action("EditGeneralTraining", new { id = item.IdGeneralTrainingProgramDetails})" style="text-decoration: none">
+                                                <img src="@Url.Content("~/Content/images/EditGoal-icon.png")" height="22" width="22" title="Edit General Training Program" style="margin-left: 10px; border: none;" />
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                              
+                <br />
+                <br />
+                <br />
+            }
+
+            @*
+                <table class="center" ; style="width: 100%;">
+                    <tr>
+                        <td colspan="8" style="text-align: center; font-size: large; font-family: Cambria; background-color: #4C4D4F; font-weight: 700; color: #fff">
+                            Training Program On Demand
+                        </td>
+                    </tr>
+                    <tr style="background-color:#F7F8FB">
+                        <th style="text-align: center; background-color: #F7F8FB; width:40%;">Name</th>
+                        <th style="text-align: center; background-color: #F7F8FB; width:10%;">Status</th>
+                        <th style="text-align: center; background-color: #F7F8FB; width:10%;">Start Date</th>
+                        <th style="text-align: center; background-color: #F7F8FB; width:10%;">Finish Date</th>
+                        <th style="text-align: center; background-color: #F7F8FB; width:10%;">Link</th>
+                        <th style="text-align: center; background-color: #F7F8FB; width:10%;">Actions</th>
+                    </tr>
+
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model.Item3)
+                        {
+                            if (item.TrainingProgramOnDemand.FinishDate >= DateTime.Now.AddDays(-1) && item.TrainingProgramOnDemand.StartDate <= DateTime.Now)
+                            {
+                            <tr>
+                                <td style="width: 40%; text-align: center;">@item.TrainingProgramOnDemand.Name</td>
+                                <td style="width: 10%; text-align: center;">@item.ProgressEnum.Label</td>
+                                <td style="width: 10%; text-align: center;">
+                                    @if (item.TrainingProgramOnDemand.StartDate != null)
+                                    {
+                                        @String.Format("{0:d}", item.TrainingProgramOnDemand.StartDate)
+                                    }
+                                </td>
+                                <td style="width: 10%; text-align: center;">
+                                    @if (item.TrainingProgramOnDemand.FinishDate != null)
+                                    {
+                                        @String.Format("{0:d}", item.TrainingProgramOnDemand.FinishDate)
+                                    }
+                                </td>
+                                <td style="width: 10%; text-align: center;">
+                                    @if (item.TrainingProgramOnDemand.Link != null)
+                                    {
+                                    <a href="@Url.Action("ClickLink", new { ResourceId = item.ResourceId, id = item.TrainingProgramOnDemand.IdTrainingProgramOnDemand, link = item.TrainingProgramOnDemand.Link, trainingType = "On Demand" })" target="_blank" style="text-decoration: none">
+                                        <img src="@Url.Content("~/Content/images/link.png")" height="22" width="22" title="Click Here" style="margin-left: 10px; border: none" />
+                                    </a>
+                                    }
+                                </td>
+                                <td style="width: 10%; text-align: center;">
+                                    <a href="@Url.Action("EditTrainingProgramOnDemandStatus", new { id = item.IdTrainingProgramOnDemandDetails })" style="text-decoration: none">
+                                        <img src="@Url.Content("~/Content/images/EditGoal-icon.png")" height="22" width="22" title="Edit Training Program" style="margin-left: 10px; border: none;" />
+                                    </a>
+                                </td>
+                          </tr>
+                            }
+                        }
+                    }
+                </table>*@
+        }
+    </div>
+</div>
+  

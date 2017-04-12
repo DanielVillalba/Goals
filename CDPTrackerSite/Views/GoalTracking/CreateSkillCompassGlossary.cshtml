@@ -1,0 +1,58 @@
+﻿@model  DataSource.SkillCompassGlossary
+
+@{
+    ViewBag.Title = "Add Skill to Glossary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>@ViewBag.Title</h2>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <div>
+                    @Html.LabelFor(model => model.AreaId, "Area")
+                </div>
+                <div>
+                    @Html.DropDownListFor(model => model.Area, new SelectList(ViewBag.ListOfAreas, "Value", "Text"))
+                    @Html.ValidationMessageFor(model => model.AreaId)
+                </div>
+                
+                <br />
+                
+                <div>
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div>
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
+
+                <br />
+
+                <div>
+                    @Html.LabelFor(model => model.Description)
+                </div>
+                <div>
+                    @Html.TextAreaFor(model => model.Description, new {style = "width:50%;height:100px"})
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+
+                <br />
+                
+                <p>
+                    <input type="submit" value="Create" />
+                </p>
+                @if (ViewBag.error != "")
+                {
+                    <p style="color: #FF0000; font-size: medium;"><strong>@ViewBag.error</strong></p>
+                }
+            </fieldset>
+        }
+    </div>
+</div>

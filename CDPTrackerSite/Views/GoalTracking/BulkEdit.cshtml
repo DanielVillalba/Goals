@@ -1,0 +1,47 @@
+﻿ <!DOCTYPE html>
+@model DataSource.Resource
+
+@{
+    ViewBag.Title = "Bulk Edition of the Goal List";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => Model.ResourceId)
+    <table style="width: 100%;">
+        <tr>
+            <th>@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().Goal)
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().ObjectiveId)                                         
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().Progress)
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().TrainingCategory)
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().TDU)
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().Sources)
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().FinishDate)
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().VerifiedByManager)
+            </th>
+            <th style="text-align: center;">@Html.LabelFor(model => model.GoalTrackings.FirstOrDefault().LastUpdate)
+            </th>            
+        </tr>
+        <tr>
+            @Html.EditorFor(model => model.GoalTrackings)
+        </tr>
+    </table>
+    <p>
+        <input type="submit" value="Save" />
+    </p>
+}
+
+<div>
+    <a href="@Url.Action("Index", "GoalTracking")">
+        <imgsrc="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to List" style="border: none" />
+    </a>
+</div>

@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model DataSource.Assessment
+
+<h2>Edit Assessment</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm("EditAssessmentConfirmed","GoalTracking",FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Edit Assessment</legend>
+        @Html.HiddenFor(model => model.AssessmentId)
+        @Html.HiddenFor(model => model.ResourceId)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Description, new { style = "width:500px",required = "required" })
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+        <div class="editor-label">
+            @Html.Label("Term")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Term, new SelectList(ViewBag.ListOfTerms,"Value","Text"))
+        </div>
+        <div class="editor-label">
+            @Html.Label("Category")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.AssessmentCategory, new SelectList(ViewBag.ListOfAssessmentCategories,"Value","Text"))
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+    <div>
+        <a href="@Url.Action("SelfAssessment", "GoalTracking")">
+            <img src="@Url.Content("~/Content/images/BackTiempoButtonWB.jpg")" height="25" width="25" title="Back to List" style="border: none" />
+        </a>
+    </div>
+}
+

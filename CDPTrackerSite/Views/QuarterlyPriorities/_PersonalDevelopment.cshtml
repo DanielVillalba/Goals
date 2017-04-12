@@ -1,0 +1,67 @@
+﻿<style>
+    .row-eq-height {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+    }
+</style>
+<div id="ValuesInfusionList" class="fancy-table fancy-todo-table">
+    <div class="fancy-description">
+        <div>
+            <label class="subtitle">Personal Development</label>
+        </div>
+        <div></div>
+    </div>
+    <div class="fancy-header fancy-gray">
+        <div class="fancy-row form-group panel-default row-eq-height">
+
+            <div class="form-group col-sm-4">
+                Skill
+            </div>
+            <div class="form-group col-sm-4">
+                Definition of Success<br />
+            </div>
+            <div class="form-group col-sm-4">
+                End of quater results
+            </div>
+            <div class="form-group col-sm-2">
+                Outcome
+            </div>
+            <div class="form-group col-sm-2">
+                <button id="addRow" name="addRow"><img src="/Content/images/add.png" class="img-rounded img-responsive" width="22"></button>
+</div>
+        </div>
+    </div>
+    <div id="holdRow" class="fancy-body">
+        <div id="fields" class="fancy-row form-group" data-core-value-id="0">
+            <div class="form-group col-sm-3">
+                <input type="text" class="form-control" required="required" maxlength="150" placeholder="Skill..." />
+            </div>
+            <div class="form-group col-sm-3">
+                <input type="text" class="form-control" required="required" maxlength="150" placeholder="Definition of Success..." />
+            </div>
+            <div class="form-group col-sm-3">
+                <input type="text" class="form-control" required="required" maxlength="150" placeholder="End of quater results..." />
+            </div>
+            <div class="form-group col-sm-2">
+                <select id="outCombo" class="cbCoreValue form-control">
+                    <option value="1">Postponed</option>
+                    <option value="2">Cancelled</option>
+                    <option value="3">Above Expectation</option>
+                    <option value="4">Expected</option>
+                    <option value="5">Minimum</option>
+                </select>
+            </div>
+       </div>
+</div>
+
+<script type="text/javascript">
+    var cloneIndex = $(".clonedField").length;
+    $("button").click(function () {
+        $('#fields').clone()
+        .appendTo('#holdRow')
+        .attr("id", "clonedField" + cloneIndex)
+        cloneIndex++;
+    });
+</script>

@@ -1,0 +1,111 @@
+﻿@using CDPTrackerSite.Controllers
+@model List<DataSource.Position>
+@{
+    ViewBag.Title = "Job Description Admin";
+}
+
+
+<script type="text/javascript">
+    var AreaId = '@ViewBag.AreaId';
+
+    $(document).ready(function () {
+        if (AreaId != 0) {
+            document.getElementById("Area").value = AreaId;
+        }
+    });
+</script>
+
+<div class="pageDescription">
+    <div class="description">
+
+        <h2>@ViewBag.Title</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <p>
+                <h4>Select an area:</h4>
+                <div>
+                    @Html.DropDownList("Area", (IEnumerable<SelectListItem>)ViewData["ListOfAreas"])
+                </div>
+            </p>
+            <p>
+                <input type="submit" value="Find" style="width: 80px;">
+            </p>
+
+            <br />
+
+            <div class="fancy-table">
+                <div class="fancy-title text-center">
+                    <div>
+                        @ViewBag.Area
+                    </div>
+                </div>
+
+                <div class="fancy-header hidden-xs">
+                    <div class="fancy-row form-group">
+                        <div class="form-group col-sm-6 text-center">
+                            Position
+                        </div>
+                        <div class="form-group col-sm-3 text-center">
+                            Link
+                        </div>
+                        <div class="form-group col-sm-3 text-center">
+                            Add/Edit
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fancy-body">
+                    @if (Model == null)
+                    {
+                        <div class="fancy-row form-group">
+                            <div class="form-group col-sm-12">
+                                <div>
+                                    No Data Available
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+
+                            <div class="fancy-row form-group">
+                                 
+                                <div class="form-group col-sm-6 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        Position
+                                    </div>
+                                    @item.PositionName
+                                </div>
+
+                                <div class="form-group col-sm-3 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        Link
+                                    </div>
+                                    @if (item.Description != null)
+                                    {
+                                        <a href="@item.Description" target="_blank" style="text-decoration: none">
+                                            <img src="@Url.Content("~/Content/images/link.png")" height="22" width="22" title="Click Here" style="margin-left: 10px; border: none" />
+                                        </a>
+                                    }
+                                </div>
+
+                                <div class="form-group col-sm-3 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        Add/Edit
+                                    </div>
+                                    <a href="@Url.Action("EditLink", new { id = item.PositionId })" data-form-method="post" style="text-decoration: none">
+                                        <img src="@Url.Content("~/Content/images/EditGoal-icon.png")" height="22" width="22" title="Edit Link" style="margin-left: 10px; border: none" />
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

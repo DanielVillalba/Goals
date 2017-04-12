@@ -1,0 +1,523 @@
+﻿<div class="pageDescription">
+    <div class="description">        
+        <h2>
+            Quarterly Priorities
+        </h2>
+        <p>
+            This form will help you guide your efforts for this quarter based on the key initiatives and critical numbers to reach.
+        </p>
+
+
+        <div id="quarterlyPrioritiesContainer">
+            @* --------------------------- CRITICAL NUMBER --------------------------- *@
+            <div class="fancy-table fancy-todo-table">
+                <div class="fancy-description">
+                    <div>
+                        <label class="subtitle">Critical Number</label>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                <div class="fancy-body">
+                    <div class="form-group">
+                        <div style="margin:2%">
+                            <ol class="breadcrumb">
+                                <li><h4 style="color:#6CB33F">Critical Numbers</h4></li>
+                                <li> SG <span class="label label-success">@ViewBag.CriticalNumberSG</span></li>
+                                <li> G <span class="label label-success">@ViewBag.CriticalNumberG</span> </li>
+                                <li> R <span class="label label-danger">@ViewBag.CriticalNumberR</span> </li>
+                            </ol>
+                        </div>                    
+                 </div>
+            </div>
+
+
+
+                @* --------------------------- KPI CONTAINER --------------------------- *@
+                <div id="kpiList" class="fancy-table fancy-todo-table">
+                    <div class="fancy-description">
+                        <div>
+                            <label class="subtitle">KPIs</label>
+                        </div>
+                        <div>
+                            <img id="addTaskButton" class="add-row-btn" src="@Url.Content("~/Content/images/Add.png")" title="Add New" />
+                        </div>
+                    </div>
+
+                    <div class="fancy-header fancy-gray">
+                        <div class="fancy-row form-group panel-default">
+                            <div class="form-group col-sm-1 fancy-counter-column">
+                                &nbsp;
+                            </div>
+                            <div class="form-group col-sm-5">
+                                KPI Name
+                            </div>
+                            <div class="form-group col-sm-6">
+                                Goal
+                            </div>
+                            <div class="form-group col-sm-1 fancy-actions-column">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fancy-body">
+                        @if (@ViewBag.quarterlyPriorityId != 0)
+                        {
+                            int i = 0;
+
+                            foreach (var item in @ViewBag.kpiData)
+                            {
+                                <div class="fancy-row form-group" data-kpi-id="@item.KpiId">
+                                    <div class="form-group col-sm-1 fancy-counter-column">
+                                        &nbsp;
+                                    </div>
+                                    <div class="form-group col-sm-5">
+                                        <div class="smallLabels visible-xs">
+                                            KPI Name
+                                        </div>
+                                        <input type="text" class="form-control txtName" value="@item.KpiName" required="required" maxlength="200" />
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <div class="smallLabels visible-xs">
+                                            Goal
+                                        </div>
+                                        <input type="text" class="form-control txtGoal" value="@item.Goal" required="required" maxlength="200" />
+                                    </div>
+                                    <div class="form-group col-sm-1 fancy-actions-column">
+                                        <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove Task" class="removeTaskButton fancy-button remove-row-btn" />
+                                    </div>
+                                </div>
+                            }
+
+                        }               
+
+
+                         
+                        
+                    </div>
+                </div>
+
+
+
+
+
+
+                @* --------------------------- QUARTERLY ACTIONS --------------------------- *@
+                <div id="quarterlyActionsList" class="fancy-table fancy-todo-table">
+                    <div class="fancy-description">
+                        <div>
+                            <label class="subtitle">Quarterly Actions</label>
+                        </div>
+                        <div>
+                            <img id="addTaskButton" class="add-row-btn" src="@Url.Content("~/Content/images/Add.png")" title="Add New" />
+                        </div>
+                    </div>
+
+                    <div class="fancy-header fancy-gray">
+                        <div class="fancy-row form-group question panel-default">
+                            <div class="form-group col-sm-1 fancy-counter-column">
+                                &nbsp;
+                            </div>
+                            <div class="form-group col-sm-4">
+                                Action
+                            </div>
+                            <div class="form-group col-sm-3">
+                                Due Date
+                            </div>
+                            <div class="form-group col-sm-4">
+                                Key Initiative
+                            </div>
+                            <div class="form-group col-sm-1 fancy-actions-column">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fancy-body">
+
+                    @if (@ViewBag.quarterlyPriorityId != 0)
+                    {
+                        int i = 0;
+
+                        foreach (var item in @ViewBag.qaData)
+                        {
+                            <div class="fancy-row form-group" data-quarterly-action-id="@item.QuarterlyActionId">
+                                <div class="form-group col-sm-1 fancy-counter-column">
+                                    &nbsp;
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div class="smallLabels visible-xs">
+                                        Action
+                                    </div>
+                                    <input type="text" class="form-control txtAction" value="@item.Action" required="required" maxlength="500" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <div class="smallLabels visible-xs">
+                                        Due Date
+                                    </div>
+                                    <input type="text" class="form-control date txtDueDate" placeholder="MM/DD/YYYY" value="@item.DueDate.ToString("MM/dd/yyyy")" required />
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <div class="smallLabels visible-xs">
+                                        Key Initiative
+                                    </div>
+                                    @if (@ViewBag.KthurstList != null)
+                                    {
+                                        @Html.DropDownList("Name",
+                                    new SelectList(ViewBag.KthurstList, "KeyThrustsId", "KeyThrust", ""),
+                                    new { @class = "form-control cbKeyInitiative", @required = "required" })
+                                    }
+                                    else
+                                    {
+                                        @Html.DropDownList("Name",
+                                             new SelectList(ViewBag.KthurstList, "KeyThrustsId", "KeyThrust", ""),
+                                    new { @class = "form-control cbKeyInitiative", @required = "required" })
+                                    }
+                                   
+                                    </div>
+                                <div class="form-group col-sm-1 fancy-actions-column">
+                                    <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove Task" class="removeTaskButton fancy-button remove-todo-row-btn" />
+                                </div>
+                            </div>
+                            
+                            
+                        }
+
+                    }
+                    
+               
+            
+                    </div>
+                </div>
+
+
+
+
+                @* --------------------------- VALUES INFUSION --------------------------- *@
+                <div id="valuesInfusionList" class="fancy-table fancy-todo-table">
+                    <div class="fancy-description">
+                        <div>
+                            <label class="subtitle">Values Infusion</label>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+
+                    <div class="fancy-header fancy-gray">
+                        <div class="fancy-row form-group question panel-default">
+                            <div class="form-group col-sm-1 fancy-counter-column">
+                                &nbsp;
+                            </div>
+                            <div class="form-group col-sm-5">
+                                Value
+                            </div>
+                            <div class="form-group col-sm-6">
+                                Action
+                            </div>
+                            <div class="form-group col-sm-1 fancy-actions-column">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fancy-body">
+                        <div class="fancy-row form-group" data-value-infusion-id="1">
+                            <div class="form-group col-sm-1 fancy-counter-column">
+                                &nbsp;
+                            </div>
+                            <div class="form-group col-sm-5">
+                                <div class="smallLabels visible-xs">
+                                    Value
+                                </div>
+                                <label>@ViewBag.Value1</label>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <div class="smallLabels visible-xs">
+                                    Action
+                                </div>
+                                @if (@ViewBag.quarterlyPriorityId != 0 && @ViewBag.valIData.Count > 0)
+                                {
+
+                                    <input type="text" class="form-control txtAction" required="required" value="@ViewBag.valIData[0].Action" maxlength="200" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control txtAction" required="required" maxlength="200" />
+                                }
+                            </div>
+                            <div class="form-group col-sm-1 fancy-button fancy-actions-column">
+
+                            </div>
+                        </div>
+                        <div class="fancy-row form-group" data-value-infusion-id="2">
+                            <div class="form-group col-sm-1 fancy-counter-column">
+                                &nbsp;
+                            </div>
+                            <div class="form-group col-sm-5">
+                                <div class="smallLabels visible-xs">
+                                    Value
+                                </div>
+                                <label>@ViewBag.Value2</label>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <div class="smallLabels visible-xs">
+                                    Action
+                                </div>
+                                @if (@ViewBag.quarterlyPriorityId != 0 && @ViewBag.valIData.Count > 0)
+                                {
+
+                                    <input type="text" class="form-control txtAction" required="required" value="@ViewBag.valIData[1].Action" maxlength="200" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control txtAction" required="required" maxlength="200" />
+                                }
+                               
+                            </div>
+                            <div class="form-group col-sm-1 fancy-button fancy-actions-column">
+
+                            </div>
+                        </div>
+                        <div class="fancy-row form-group" data-value-infusion-id="3">
+                            <div class="form-group col-sm-1 fancy-counter-column">
+                                &nbsp;
+                            </div>
+                            <div class="form-group col-sm-5">
+                                <div class="smallLabels visible-xs">
+                                    Value
+                                </div>
+                                <label>@ViewBag.Value3</label>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <div class="smallLabels visible-xs">
+                                    Action
+                                </div>
+                                @if (@ViewBag.quarterlyPriorityId != 0 && @ViewBag.valIData.Count > 0)
+                                {
+
+                                    <input type="text" class="form-control txtAction" required="required" value="@ViewBag.valIData[2].Action" maxlength="200" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control txtAction" required="required" maxlength="200" />
+                                }
+                                
+                            </div>
+                            <div class="form-group col-sm-1 fancy-button fancy-actions-column">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                @* --------------------------- PERSONAL DEVELOPMENT --------------------------- *@
+                <div id="personalDevelopmentList" class="fancy-table fancy-todo-table">
+                    <div class="fancy-description">
+                        <div>
+                            <label class="subtitle">Personal Development</label>
+                        </div>
+                        <div>
+                            <img id="addTaskButton" class="add-row-btn" src="@Url.Content("~/Content/images/Add.png")" title="Add New" />
+                        </div>
+                    </div>
+
+                    <div class="fancy-header fancy-gray">
+                        <div class="fancy-row form-group question panel-default">
+                            <div class="form-group col-sm-1 fancy-counter-column">
+                                &nbsp;
+                            </div>
+                            <div class="form-group col-sm-5">
+                                Skill
+                            </div>
+                            <div class="form-group col-sm-6">
+                                Definition of Success
+                            </div>
+                            <div class="form-group col-sm-1 fancy-actions-column">
+                                &nbsp;
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fancy-body">
+                    @if (@ViewBag.quarterlyPriorityId != 0)
+                    {
+                        int i = 0;
+
+                        foreach (var item in @ViewBag.pdData)
+                        {
+                            
+                            <div class="fancy-row form-group" data-personal-development-id="@item.PersonalDevelopmentId">
+                                <div class="form-group col-sm-1 fancy-counter-column">
+                                    &nbsp;
+                                </div>
+                                <div class="form-group col-sm-5">
+                                    <div class="smallLabels visible-xs">
+                                        Skill
+                                    </div>
+                                    <input type="text" value="@item.Skill" class="form-control txtSkill" required="required" maxlength="200" />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <div class="smallLabels visible-xs">
+                                        Definition of Success
+                                    </div>
+                                    <input type="text" value="@item.DefinitionSuccess" class="form-control txtDefinitionOfSuccess" required="required" maxlength="200" />
+                                </div>
+                                <div class="form-group col-sm-1 fancy-actions-column">
+                                    <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove" class="removeTaskButton fancy-button remove-row-btn" />
+                                </div>
+                            </div>
+
+                        }
+
+                    }
+                      
+                    </div>
+                </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div id="taskTemplate">
+    <div id="kpiRowTemplate">
+        <div class="fancy-row form-group" data-kpi-id="0">
+            <div class="form-group col-sm-1 fancy-counter-column">
+                &nbsp;
+            </div>
+            <div class="form-group col-sm-5">
+                <div class="smallLabels visible-xs">
+                    KPI Name
+                </div>
+                <input type="text" class="form-control txtName" required="required" maxlength="200" />
+            </div>
+            <div class="form-group col-sm-6">
+                <div class="smallLabels visible-xs">
+                    Goal
+                </div>
+                <input type="text" class="form-control txtGoal" required="required" maxlength="200" />
+            </div>
+            <div class="form-group col-sm-1 fancy-actions-column">
+                <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove" class="removeTaskButton fancy-button remove-row-btn" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="quarterlyActionsRowTemplate">
+        <div class="fancy-row form-group" data-quarterly-action-id="0">
+            <div class="form-group col-sm-1 fancy-counter-column">
+                &nbsp;
+            </div>
+            <div class="form-group col-sm-4">
+                <div class="smallLabels visible-xs">
+                    Action
+                </div>
+                <input type="text" class="form-control txtAction" required="required" maxlength="200" />
+            </div>
+            <div class="form-group col-sm-3">
+                <div class="smallLabels visible-xs">
+                    Due Date
+                </div>
+                <input type="text" class="form-control date txtDueDate" placeholder="MM/DD/YYYY"  required />
+            </div>
+            <div class="form-group col-sm-4">
+                <div class="smallLabels visible-xs">
+                    Key Initiative
+                </div>
+                @if(@ViewBag.KthurstList!=null)
+                {
+                     @Html.DropDownList("Name",
+                                    new SelectList(ViewBag.KthurstList, "KeyThrustsId", "KeyThrust", ""),
+                                    new { @class = "form-control cbKeyInitiative", @required = "required" })
+                }
+                else
+                { 
+                     @Html.DropDownList("Name",
+                                        new SelectList(ViewBag.KthurstList, "KeyThrustsId", "KeyThrust", ""),
+                                    new { @class = "form-control cbKeyInitiative", @required = "required" })
+                }
+            </div>
+            <div class="form-group col-sm-1 fancy-actions-column">
+                <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove" class="removeTaskButton fancy-button remove-row-btn" />
+            </div>
+        </div>
+    </div>
+
+
+    <div id="personalDevelopmentRowTemplate">
+        <div class="fancy-row form-group" data-personal-development-id="0">
+            <div class="form-group col-sm-1 fancy-counter-column">
+                &nbsp;
+            </div>
+            <div class="form-group col-sm-5">
+                <div class="smallLabels visible-xs">
+                    Skill
+                </div>
+                <input type="text" class="form-control txtSkill" required="required" maxlength="200" />
+            </div>
+            <div class="form-group col-sm-6">
+                <div class="smallLabels visible-xs">
+                    Definition of Success
+                </div>
+                <input type="text" class="form-control txtDefinitionOfSuccess" required="required" maxlength="200" />
+            </div>
+            <div class="form-group col-sm-1 fancy-actions-column">
+                <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove" class="removeTaskButton fancy-button remove-row-btn" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer Button -->
+<div id="saveQuarterlyPriorities" class="btn-group footer-button" role="group">
+    <span class="icon">
+        <img src="@Url.Content("~/Content/images/save.png")" title="Save Quarterly Priorities" />
+    </span>
+    <span class="text">
+        Save
+    </span>
+</div>
+
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/QuarterlyPriorities/KpiList.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/QuarterlyPriorities/QuarterlyActionsList.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/QuarterlyPriorities/ValuesInfusionList.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/QuarterlyPriorities/PersonalDevelopmentList.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/QuarterlyPriorities/QuarterlyPrioritiesRequestsHandler.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/GoalTracking/QuarterlyPriorities/QuarterlyPrioritiesManager.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.browser.js")"></script>
+<script>
+    jQuery(document).ready(function () {
+        var config = {
+            quarterlyPriorityId: @ViewBag.quarterlyPriorityId, 
+            onePagePlanId: @ViewBag.onePagePlanId 
+        };
+        var kpiList = new KpiList(jQuery('#kpiList'), jQuery('#kpiRowTemplate'));
+        var quarterlyActionsList = new QuarterlyActionsList(jQuery('#quarterlyActionsList'), jQuery('#quarterlyActionsRowTemplate'));
+        var valuesInfusionList = new ValuesInfusionList(jQuery('#valuesInfusionList'));
+        var personalDevelopmentList = new PersonalDevelopmentList(jQuery('#personalDevelopmentList'), jQuery('#personalDevelopmentRowTemplate'));
+        var quarterlyPrioritiesRequestsHandler = new QuarterlyPrioritiesRequestsHandler();
+        var quarterlyPrioritiesManager = new QuarterlyPrioritiesManager(
+            config,
+            quarterlyPrioritiesRequestsHandler,
+            kpiList,
+            quarterlyActionsList,
+            valuesInfusionList,
+            personalDevelopmentList
+        );
+
+        // Initialize
+        quarterlyPrioritiesManager.init();
+    });
+</script>

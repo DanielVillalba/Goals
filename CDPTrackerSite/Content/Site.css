@@ -1,0 +1,1175 @@
+﻿@import url("/Content/styles/css_menu.css");
+
+/*
+    #6CB33F => green tiempo
+*/
+
+/* General
+--------------------------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+img {
+    border-style: none;
+}
+
+.green-tiempo {
+    background-color: #6CB33F;
+    border-color: #6CB33F;
+}
+
+body {
+    background-color: #d5d5d5;/*#373836;*/
+}
+
+.bg-panel-header {
+    background-color: #5b677b;
+    color: #fff;
+}
+
+#bodyContainer {
+    margin: 0 auto;
+    height: 100vh;
+    display: table;
+    background-color: #FFFFFF;
+    background-image: url(/Content/images/background.png);
+    background-repeat: no-repeat;
+    background-position-x: -50px;
+    background-position-y: 80px;
+}
+
+#bodyContainer,
+#bodyContainer > header,
+#bodyContainer > main,
+#bodyContainer > footer {
+    width: 992px;
+}
+
+.linkDisabled{
+    font-style:italic;
+    color:#949494;
+}
+
+.infoPop {
+  background-color:#FFFFFF;
+  cursor:default;
+  display:none;
+  max-width: 700px;
+  height: auto;
+  padding: 3px 3px 3px 3px;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.infoPop img {
+  width: 100%;
+  height: auto;
+}
+
+.disableFunctionality {
+    pointer-events: none;
+}
+
+.pageInformation {
+    padding-left: 150px;
+}
+    .pageInformation h3 {
+        font-weight: bold;
+    } 
+     
+.pageDescription {
+    padding-left: 5px;
+}
+    .pageDescription .description{
+        /*padding-top: 10px;*/
+        background-color: #fff;
+        border: 1px solid #ddd;        
+        border-radius: 5px 5px 5px 5px;
+        background:rgba(255,255,255,.8);
+        padding-bottom: 25px; 
+    } 
+
+    .pageDescription .description p{
+        padding-top: 5px;        
+    }  
+
+    .pageDescription .greyBorder{
+        border: 1px solid #ddd;        
+        border-radius: 5px 5px 5px 5px;       
+    } 
+
+    .pageDescription .description fieldset div{
+        padding-top: 10px;
+    }
+
+    .pageDescription > div{
+        padding-left: 15px;
+        padding-bottom: 10px;
+        padding-top: 0px;
+    }
+  
+    .pageDescription h2{
+        color: #4B5669;
+        font-weight: bold;
+    }
+
+    .pageDescription h4{
+        font-weight: bold;
+        padding-right: 30px;
+    }
+
+    .pageDescription input[type=submit] input[type=button] {
+        padding: 2px 10px;
+        cursor:pointer;
+    }
+
+    .pageDescription .buttons-div{
+        padding-top: 30px;
+    }
+
+    .pageDescription select{
+        padding: 3px 0px;
+    }
+    .pageDescription .alert{
+        margin-right:15px;
+    }
+
+    .pageDescription .subtitle{
+        color: #528518;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+table.table caption {
+    color: #000000;
+    font-weight: bold;
+}
+
+.bootbox {
+}    
+    .bootbox .modal-header,
+    .bootbox .modal-header button.close {
+        color: #FFFFFF;
+    }
+    .bootbox.modal-success .modal-header {
+        background-color: #337ab7;
+    }
+    .bootbox.modal-danger .modal-header {
+        background-color: #d9534f;
+    }
+    .bootbox.modal-warning .modal-header {
+        background-color: #f0ad4e;
+    }
+    .bootbox.modal-confirm .modal-header {
+        background-color: #337ab7;
+    }
+    .bootbox .modal-header button.close {
+        opacity: 1;
+    }
+
+.bootbox.modal.modal-progress {
+}
+    .bootbox.modal.modal-progress .modal-dialog {
+        max-width: 500px;
+    }
+    .bootbox.modal.modal-progress .modal-header {
+        color: #000000;
+    }
+    .bootbox.modal.modal-progress .modal-header h3 {
+        /*margin-top: 0;
+        margin-bottom:0;*/
+    }
+
+.reportForm{
+    max-width: 700px;
+}
+
+
+/* Header
+--------------------------------------------------------------*/
+#bodyContainer > header {
+    background-color: #5c5c5c; /*#505050;*/
+    position: fixed;
+    display: block;
+    height: 60px;   
+    z-index: 1; 
+}
+
+#header-center {
+    float: left;
+    color: #FFF;
+    padding-top: 18px;
+    margin: 0 auto;
+    text-align: center;
+    width: 50%;
+}
+
+#logindisplay {
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+    #logindisplay #contentPicture {
+        position: relative;
+        float: right;
+    }
+
+        #logindisplay #contentPicture #username {
+            color: #FFFFFF;
+            position: relative;
+            text-align: right;
+            display: inline;
+            float: left;
+            padding-top: 15px;
+            padding-right: 10px;
+        }
+
+    #logindisplay #profilePicture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;    
+        top: 0px;
+        float: right;
+        cursor: pointer;
+    }
+    #contentPicture::after {
+        position: absolute;
+        top: 42px;
+        right: 0;
+        width: 8px;
+        height: 8px;
+        border-bottom: 2px solid #FFFFFF; /* green A8FF0F */
+        border-right: 2px solid #FFFFFF;
+        content: "";
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+        -webkit-transition: border-color 0.2s ease;
+        -moz-transition: border-color 0.2s ease;
+        -ms-transition: border-color 0.2s ease;
+        -o-transition: border-color 0.2s ease;
+        transition: border-color 0.2s ease;
+    }
+    
+
+
+.userProfileBox {
+    background-color: #FFFFFF;
+    border: 1px solid #CCC;
+    border-radius: 10px 0px 10px 10px;
+    width: 200px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+    .userProfileBox .userInfo > * {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .userProfileBox .userInfo h5 {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        font-weight: bold;
+    }
+
+    .userProfileBox .userActions {
+        text-align: right;        
+    }
+
+    #cssmenu .userProfileBox .userActions > * {
+        display: inline;
+        padding: 5px 10px 0px 0px;
+    }
+
+
+    #ListOfQuarters, #ListOfYears {
+        height: 29px;
+        background: transparent;
+        border: none;
+        font-size: 14px;
+        height: 29px;
+        background-color: #5c5c5c;
+    }
+
+    #header-center .btn-default {
+        color: #fff;
+        background-color: #5c5c5c;
+    }
+
+
+/* Main
+--------------------------------------------------------------*/
+#bodyContainer > main {
+    padding: 70px 10px;
+}
+
+
+
+
+
+/* /Index
+--------------------------------------------------------------*/
+.currentCycle {
+    padding-top: 20px;
+    padding-left: 20px;
+    font-weight: bold;
+}
+.objectivesContainer {
+    padding-top: 100px;
+}
+.objectivesLink {
+    width: 280px;
+    margin: 0 auto;
+}
+    .objectivesLink li {
+        width: 100%;
+        text-align: right;
+        list-style: none;
+    }
+        .objectivesLink li + li {
+            padding-top: 10px;
+        }
+    .objectivesLink li a {
+        text-decoration: none;
+    }
+
+
+
+
+
+/* Footer
+--------------------------------------------------------------*/
+#bodyContainer > footer {
+    position: fixed;
+    bottom: 0;
+    padding: 5px 0px;
+    background-color: #FFFFFF;
+    text-align: center;
+}
+    #bodyContainer > footer img {
+        height: 45px;
+    }
+     #bodyContainer > footer .footer-buttons {
+        display: inline-block;
+        text-align: right;
+        float: right;
+    }
+    #bodyContainer > footer .footer-button {
+        text-decoration: none;
+    }
+    #bodyContainer > footer .footer-buttons > .footer-button {
+        cursor: pointer;
+    }
+    #bodyContainer > footer .footer-button + .footer-button {
+        margin-left: 5px;
+    }
+    #bodyContainer > footer .footer-buttons img {
+        max-height: 40px;
+    }
+
+
+/* /PrioritiesManagement
+--------------------------------------------------------------*/
+.prioritiesContainer {
+    padding-top: 30px;
+}
+    .prioritiesContainer .priority {
+        max-width: 400px;
+        width: auto;
+        margin: 0 auto;
+        border: none;        
+    }
+    .prioritiesContainer .priority + .priority {
+        padding-top: 40px;
+    }
+    .prioritiesContainer table thead th {
+        border: none;
+    }
+    .prioritiesContainer table thead th a {
+        font-size: 16px;
+    }
+    .prioritiesContainer tbody {
+        font-weight: bold;
+    }
+    .prioritiesContainer tbody img {
+        max-height: 40px;
+        max-width: 40px;
+    }
+    .prioritiesContainer tbody tr td:first-child {
+        width: 220px;
+        padding-left: 50px;
+    }
+    .prioritiesContainer tbody tr td:nth-child(2) {
+        vertical-align: middle;
+    }
+    .prioritiesContainer tbody tr td {
+        border-top: none;
+    }
+        .prioritiesContainer thead th:last-child,
+        .prioritiesContainer tbody td:last-child {
+            text-align: center;
+        }
+    .prioritiesContainer tbody tr:nth-child(odd) td {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .prioritiesContainer tbody tr:nth-child(even) + tr td {
+        padding-top: 15px;
+    }
+
+
+.addPriorityButton {
+    display: inline-block;
+    position: fixed;
+    bottom: 0;
+    right: 25%;
+    z-index: 1;
+}
+.addPriorityButton a {
+    text-decoration: none;
+}
+.addPriorityButton .icon {
+    text-align: center;
+}
+.addPriorityButton .icon img {
+    max-width: 40px;
+    max-height: 40px;
+}
+.addPriorityButton .text {
+    font-weight: bold;
+}
+
+
+
+/* /Priority
+--------------------------------------------------------------*/
+#addPriorityForm {
+    padding-left: 90px;
+    padding-top: 40px;
+}
+    #addPriorityForm.form-horizontal .form-group {
+        margin-right: 0;
+        padding-right: 0;
+    }
+    #addPriorityForm .cycleContainer div:last-child div:last-child {
+        margin-left: 0;
+    }
+
+
+
+
+/* fancy-table
+--------------------------------------------------------------*/
+.fancy-table {
+    width:98%;
+}
+.fancy-table.fancy-todo-table {
+    width: 100%;
+    display: inline-block;
+}
+    .fancy-table .fancy-row {
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+        clear: both;        
+    }
+        .fancy-table .fancy-row .form-group {
+            padding: 8px 10px 8px 15px;
+            margin: 0;
+        }
+        .fancy-table.fancy-todo-table .fancy-row .form-group {
+            padding: 8px 0px 8px 5px;
+            margin: 0;
+        }
+
+        .fancy-row .mediumButton {
+            max-width: 30px;
+            max-height: 30px; 
+        }
+        .fancy-row .smallIcon {
+            max-width: 30px;
+            max-height: 30px; 
+        }
+
+    .fancy-table .fancy-description {
+        padding-bottom: 40px;
+        margin-right:15px;
+    }
+    .fancy-table .fancy-description div:first-child {
+        float: left;
+        font-weight: bold;
+    }
+    .fancy-table .fancy-description div:last-child {
+        float: right;
+    }
+    .fancy-table .fancy-description img {
+        max-width: 30px;
+        cursor: pointer;
+    }
+
+
+    .fancy-table .fancy-title {
+        font-weight: bold;
+        color: #4B5669;
+        font-size: 18px;
+        padding-bottom: 5px;
+    }
+
+    .fancy-table .fancy-header {
+        font-weight: bold;
+        color: #fff;
+    }
+    .fancy-table .fancy-header.fancy-gray {
+        color: #000;
+    }
+        .fancy-table .fancy-counter-column {
+            max-width: 30px;
+        }
+        .fancy-table .fancy-actions-column {
+            max-width: 40px;
+        }
+        .fancy-table .fancy-header .fancy-row > div {            
+            background-color: #65758F;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        .fancy-table .fancy-header.fancy-gray .fancy-row > div {
+            background-color: #f9f9f9;
+        }
+        .fancy-table .fancy-header .fancy-row > div:first-child {
+            border-left: 1px solid #ddd;
+            border-radius: 5px 0px 0px 5px;
+        }
+        .fancy-table .fancy-header .fancy-row > div:last-child {
+            border-right: 1px solid #ddd;
+            border-radius: 0px 5px 5px 0px;
+        }
+
+    .fancy-table .fancy-body {
+        counter-reset: fancy_table_counter;
+        background-color: #fff;
+        background:rgba(255,255,255,.85);
+    }
+    .fancy-table.fancy-todo-table .fancy-body {
+        display: initial;
+    }
+        .fancy-table:not(.fancy-todo-table) .fancy-body .fancy-row {
+            display: block;
+            /*display: -webkit-box;*/            
+        }
+        .fancy-table .fancy-body .fancy-row .fancy-column-counter,
+        .fancy-table .fancy-body .fancy-row .fancy-counter-column {
+            font-weight: bold;
+            text-align: center;
+        }
+        .fancy-table .fancy-body .fancy-row .fancy-column-counter:before,
+        .fancy-table .fancy-body .fancy-row .fancy-counter-column:before {
+            counter-increment: fancy_table_counter;
+            content: counter(fancy_table_counter);
+            padding-bottom: 5px;
+            margin: 0;
+            height: 100%;                        
+        }        
+        .fancy-table .fancy-button:hover {
+            cursor: pointer;
+            opacity: 0.5;
+            filter: alpha(opacity=50); /* For IE8 and earlier */
+        }
+        .fancy-table .fancy-button {
+            max-width: 20px;
+            max-height: 20px;
+            cursor: pointer;
+        }
+
+            
+    
+/* /PrioritiesManagement
+--------------------------------------------------------------*/
+.cyclePrioritiesContainer  {
+    display: inline-block;
+    width: 100%;
+    margin-top: 30px;
+}
+    .cyclePrioritiesContainer .priority {
+        
+    }
+    .cyclePrioritiesContainer .priority + .priority {
+        margin-top: 50px;
+    }
+    .cyclePrioritiesContainer .priority .priorityHeader div:first-child {
+        float: left;
+        font-weight: bold;
+    }
+    .cyclePrioritiesContainer .priority .priorityHeader div:last-child {
+        float: right;
+        padding-right:25px;
+    }
+    .cyclePrioritiesContainer .priority .priorityHeader img {
+        max-width: 30px;
+        cursor: pointer;
+    }
+     .cyclePrioritiesContainer .priority .priorityHeader a{
+         /*border-radius: 5px 5px 5px 5px;
+         background:rgba(255,255,255,.8);
+         padding-top: 5px;
+         padding-bottom: 5px;*/
+    }
+    
+    .cyclePrioritiesContainer .removeTaskButton {
+        max-width: 20px;
+        max-height: 20px;
+        cursor: pointer;
+    }
+
+    .cyclePrioritiesContainer .changeStatusButton {
+        max-width: 25px;
+        max-height: 25px;
+        cursor: pointer;
+    }
+    .cyclePrioritiesContainer .verifiedTaskButton {
+        max-width: 25px;
+        max-height: 25px;
+    }
+     .cyclePrioritiesContainer .infoButton {
+        max-width: 15px;
+        max-height: 15px;
+        margin-top: -1px;
+        cursor: pointer;
+    }
+    
+
+
+
+
+/*  Fancy Todo List */
+/*.fancy-todo-list  {
+    display: inline-block;
+    width: 100%;
+}
+    .fancy-todo-list .fancy-todo-description {
+        padding-bottom: 40px;
+        margin-right:15px;
+    }
+    .fancy-todo-list .fancy-todo-description div:first-child {
+        float: left;
+        font-weight: bold;
+    }
+    .fancy-todo-list .fancy-todo-description div:last-child {
+        float: right;
+    }
+    .fancy-todo-list .fancy-todo-description img {
+        max-width: 30px;
+        cursor: pointer;
+    }
+
+.fancy-todo-list .fancy-todo-header {
+    font-weight: bold;
+}
+    .fancy-todo-list .fancy-todo-header .infoButton{
+        margin-top:-2px;
+         max-width: 17px;
+         max-height: 17px;
+         cursor: pointer;
+    }
+    .fancy-todo-list .fancy-todo-header .fancy-todo-row .form-group {
+        background-color: #f9f9f9;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    .fancy-todo-list .fancy-todo-header .fancy-todo-row .form-group:first-child {
+        border-left: 1px solid #ddd;
+        border-radius: 5px 0px 0px 5px;
+    }
+    .fancy-todo-list .fancy-todo-header .fancy-todo-row .form-group:last-child {
+        border-right: 1px solid #ddd;
+        border-radius: 0px 5px 5px 0px;
+    }*/
+
+
+
+
+.fancy-todo-list,
+#tasksContainer  {
+    display: inline-block;
+    width: 100%;
+}
+    .fancy-todo-list .fancy-todo-description,
+    #tasksContainer #tasksHeader {
+        padding-bottom: 40px;
+        margin-right:15px;
+    }
+    .fancy-todo-list .fancy-todo-description div:first-child ,
+    #tasksContainer #tasksHeader div:first-child {
+        float: left;
+        font-weight: bold;
+    }
+    .fancy-todo-list .fancy-todo-description div:last-child ,
+    #tasksContainer #tasksHeader div:last-child {
+        float: right;
+    }
+    .fancy-todo-list .fancy-todo-description img,
+    #tasksContainer #tasksHeader img {
+        max-width: 30px;
+        cursor: pointer;
+    }
+
+.fancy-todo-list .fancy-todo-header,
+#tasksListHeader {
+    font-weight: bold;
+}
+    .fancy-todo-list .fancy-todo-header .infoButton,
+    #tasksListHeader .infoButton{
+        margin-top:-2px;
+         max-width: 17px;
+         max-height: 17px;
+         cursor: pointer;
+    }
+    .fancy-todo-list .fancy-todo-header .fancy-todo-row .form-group,
+    #tasksListHeader .task-row .form-group {
+        background-color: #f9f9f9;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+    .fancy-todo-list .fancy-todo-header .fancy-todo-row .form-group:first-child,
+    #tasksListHeader .task-row .form-group:first-child {
+        border-left: 1px solid #ddd;
+        border-radius: 5px 0px 0px 5px;
+    }
+    .fancy-todo-list .fancy-todo-header .fancy-todo-row .form-group:last-child,
+    #tasksListHeader .task-row .form-group:last-child {
+        border-right: 1px solid #ddd;
+        border-radius: 0px 5px 5px 0px;
+    }
+
+    .fancy-todo-list .fancy-todo-body,
+    #taskList {
+        counter-reset: task_counter;
+        /*background-color: #f9f9f9;*/
+    }
+        .fancy-todo-row,
+        .task-row {
+            padding-left: 0;
+            padding-right: 0;
+            margin: 0;
+            clear: both;
+            -webkit-transition: all 2s ease-in-out;
+            -moz-transition: all 2s ease-in-out;
+            -o-transition: all 2s ease-in-out;
+            -ms-transition: all 2s ease-in-out;
+            transition: all 2s ease-in-out;
+        }
+            .fancy-todo-row .form-group:first-child,
+            .task-row .form-group:first-child {
+                max-width: 30px;
+                font-weight: bold;
+            }
+            .fancy-todo-list .fancy-todo-body .fancy-todo-row .form-group:first-child,
+            #taskList .task-row .form-group:first-child {
+                padding-top: 15px;
+            }
+            .fancy-todo-row .form-group:last-child,
+            .task-row .form-group:last-child {
+                max-width: 40px;
+            }
+            .fancy-todo-list .fancy-todo-body .fancy-todo-row .form-group:first-child:before,
+            #taskList .task-row .form-group:first-child:before {
+                counter-increment: task_counter;
+                content: counter(task_counter);
+                padding-bottom: 5px;
+                margin: 0;
+                height: 100%;
+            }
+            .fancy-todo-row .form-group,
+            .task-row .form-group {
+                padding: 8px 0px 8px 5px;
+                margin: 0;
+            }
+                .fancy-todo-list .fancy-todo-body .fancy-todo-row:nth-child(odd),
+                #taskList .task-row:nth-child(odd) {
+                    background-color: #f9f9f9;
+                }
+
+            .fancy-todo-row .removeTaskButton,
+            .task-row .removeTaskButton {
+                max-width: 20px;
+                max-height: 20px;
+                cursor: pointer;
+            }
+            .fancy-todo-row .infoButton,
+            .task-row .infoButton{
+                max-width: 20px;
+                cursor: pointer;
+            }
+            .fancy-todo-row .changeStatusButton,
+            .task-row .changeStatusButton {
+                max-width: 40px;
+                max-height: 40px;
+                cursor: pointer;
+            }
+            .fancy-todo-row .verifiedTaskButton,
+            .task-row .verifiedTaskButton {
+                max-width: 30px;
+                max-height: 30px;
+            }
+            .fancy-todo-row .mediumButton,
+            .task-row .mediumButton {
+                max-width: 30px;
+                max-height: 30px;
+            }
+            .fancy-todo-row .toggleButton,
+            .task-row .toggleButton {
+                max-width: 30px;
+                max-height: 30px;
+                cursor: pointer;
+            }
+            .fancy-todo-row .toggleSmallButton,
+            .task-row .toggleSmallButton {
+                max-width: 20px;
+                max-height: 20px;
+                cursor: pointer;
+            }
+
+
+
+
+
+#taskTemplate {
+    display:none;
+}
+
+.addPriorityButton.savePriorityButton {
+    bottom: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+.addPriorityButton.savePriorityButton a {
+    display: inline-block;
+}
+.addPriorityButton.savePriorityButton .icon {
+    float: left;
+}
+.addPriorityButton.savePriorityButton .icon img {
+    max-width: 30px;
+    max-height: 30px;
+}
+.addPriorityButton.savePriorityButton .text {
+    float: right;
+    height: 100%;
+    padding: 8px;
+}
+
+
+
+/*  /EmployeeGoals
+******************************************************/
+.employeeGoalsButtonMenu:before,
+.employeeGoalsButtonMenu:after {
+    display: table;
+    content: '';
+}
+.employeeGoalsButtonMenu:after {
+    clear: both;
+}
+.employeeGoalsButtonMenu {
+    text-align: right;
+    margin-bottom: 10px;
+}
+.employeeGoalsButtonMenu .toggleSmallButton {
+    cursor: pointer;    
+}
+    .employeeGoalsButtonMenu .toggleSmallButton #imgToggleAll {
+        max-width: 20px;
+    }
+    .employeeGoalsButtonMenu button {
+        float: right;
+    }
+    .employeeGoalsButtonMenu .toggleSmallButton label {
+        cursor: pointer;
+    }
+.employeeGoalsContainer {    
+}
+    .employeeGoalsContainer .panel-default > .panel-heading + .panel-collapse > .panel-body {
+        border-top: none;
+        margin-top: 0;
+    }
+    .employeeGoalsContainer .cyclePrioritiesContainer .priority + .priority {
+        margin-top: 15px;
+    }
+    .employeeGoalsContainer .employeeGoals {        
+    }
+        .employeeGoalsContainer .employeeGoals + .employeeGoals {
+            margin-top: 15px;
+        }
+        .employeeGoalsContainer .employeeGoals .panel-heading {
+            /*background-color: #e9ebee;*/
+            background-color: #5b677b;
+            color: #fff;
+        }
+        .employeeGoalsContainer .employeeGoals .panel-heading .panel-title {
+            font-weight: bold;
+        }
+
+
+
+/*  /TeamMembersInput
+******************************************************/
+#questionsContainer .question .panel-heading {
+        color: #fff;
+        background-color: #5b677b;
+    }
+    #questionsContainer .question .panel-title {
+        font-weight: bold;
+    }
+    #questionsContainer .question .panel-body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    #questionsContainer .question .panel-body label {
+        font-weight: normal;
+    }
+    #questionsContainer .question[data-question-type='1'] .answer {
+        width: 50%;
+        height: auto;
+    }
+    #questionsContainer .question .answer,
+    #questionsContainer .question .answers-container label {
+        cursor: pointer;
+    }
+    #questionsContainer .question .answer .form-control {
+        z-index: 0;
+    }
+    #questionsContainer .question .answer label.form-control {
+        border: none;
+        background-color: #f9f9f9;
+        box-shadow: none;
+        text-align: center;
+    }
+        #questionsContainer .question .answer input[type=radio]:checked + label.form-control {
+            background-color: #e7e7e7;
+            font-weight: bold;
+        }
+    #questionsContainer .question .answers-container .answer + .answer {
+        margin-top: 10px;
+    }
+    #questionsContainer .question .answer .input-group {
+        width: 100%;
+    }
+    #questionsContainer .question .input-group-addon {
+        display: none;
+    }
+    #questionsContainer .question .answer input[type=radio] {
+        display: none;
+    }
+    #questionsContainer .question.empty-answer {
+        border: 2px solid red;
+    }
+
+/*  /PrioritiesVisualization
+******************************************************/
+#prioritiesVisualizationContainer{
+    margin-left: 50px;
+    margin-right: 70px;
+}
+
+    #prioritiesVisualizationContainer .tab{
+        padding-top: 20px;
+        padding-bottom: 15px;
+    }
+
+    #prioritiesVisualizationContainer .tab .tabContent{
+        margin-left: 50px;
+        margin-right: 40px;
+    }
+
+    #prioritiesVisualizationContainer h5{
+        width: 100%;
+        font-weight: bold;
+        color: #4B5669;
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+        border-radius: 5px 5px 5px 5px;
+        background:rgba(108,179,63,.6);
+    }
+
+    #prioritiesVisualizationContainer h4{
+        font-weight: bold;
+        color: #4B5669;
+        font-size: 15px;
+    }
+
+    #prioritiesVisualizationContainer .fancy-title + .fancy-header {
+        margin-top: -10px;
+    }
+
+/*  /TrainingProgram
+******************************************************/
+#trainingProgramContainer{
+}
+
+/* simpleCustomTable
+--------------------------------------------------------------*/
+
+.simpleCustomTable{
+    width: 98%;
+    border: 0px solid #fff;        
+    border-radius: 5px 5px 5px 5px;
+}
+
+    .simpleCustomTable .content{
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .simpleCustomTable td{
+        text-align: center; 
+        background-color: #5b677b; 
+        color: #fff;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        border: none;
+    }
+
+    .simpleCustomTable .blank{
+        text-align: center; 
+        background-color: #fff;        
+        color: #000;
+        background:rgba(255,255,255,.9);
+    }
+
+    .simpleCustomTable .bold{
+        font-weight: bold;        
+    }
+
+    .simpleCustomTable th{
+        text-align: center; 
+        background-color: #7688A6;
+        color: #fff;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+    
+
+    /*  /ManagersCheck
+******************************************************/
+     #questionsContainer {
+        margin-right: 15px;
+    }
+
+    #questionsContainer .question .answers-container .answer {
+        margin-top: 10px;
+    }
+
+    #questionsContainer .question.longAns label{
+        min-height: 70px;
+        width:100%;
+    }
+
+    #listContainer .statusButton {
+        max-width: 25px;
+        max-height: 25px;
+    }
+
+    #listContainer .panel-heading {        
+        background-color: #5b677b;
+        color: #fff;
+    }
+
+    #listContainer .otherButton {
+        max-width: 25px;
+        max-height: 25px;
+        
+}
+
+
+
+
+/* Reports
+--------------------------------------------------------------*/
+#reportForm{
+}
+    #reportForm div{
+        margin-bottom: 5px;
+    }
+    #reportForm div:last-child{
+        margin-bottom: 25px;
+    }
+    #reportForm label{
+        margin-right: 5px;
+    }
+
+
+
+/* /QuartelyPriorites
+--------------------------------------------------------------*/
+#quarterlyPrioritiesContainer{
+}
+    #quarterlyPrioritiesContainer .fancy-table + .fancy-table {
+        padding-top: 30px;
+    }
+
+
+
+.border-danger {
+    border-color: red;
+}
+
+
+.fancy-tables-container {
+
+}
+    .fancy-tables-container .fancy-table {
+        padding-top: 30px;
+    }
+
+
+/* */
+.check_box {
+    display:none;
+}
+
+.check_box + label {
+    background: url('/Content/images/notStarted.png') no-repeat;
+    background-size: cover;
+    height: 25px;
+    width: 25px;
+    display: table;
+    padding: 0;
+    position: absolute;
+    top: 10px;
+}
+
+.check_box:checked + label {
+    background: url('/Content/images/verifiedManager.png') no-repeat;
+    background-size: cover;
+    display: table;
+    padding: 0;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+}
+
+#cycleCommentsContainer {
+    padding-right: 15px;
+}
+
+span.sameWidth {
+    min-width:172px;
+    color:white;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 1);
+}

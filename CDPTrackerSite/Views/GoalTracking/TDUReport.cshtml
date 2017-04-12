@@ -1,0 +1,95 @@
+﻿@using CDPTrackerSite.RoleManagement
+@using Utils
+@{
+    ViewBag.Title = "TDU Report";
+    string userDomainName = User.Identity.Name.StripDomain();
+
+    const string baseReportUrl = "~/Reporting/TDUReport.aspx";
+    string defaultReportUrl = baseReportUrl;
+    if (PreprocessingHelper.IsDebug())
+    {
+        userDomainName = "denisse vega";
+    }
+    else{
+    if (RoleManagementHelper.UserIsInRole(User, Role.Manager) && !RoleManagementHelper.UserIsInRole(User, Role.TalentManagement))
+    {
+        defaultReportUrl += "?mdn=" + userDomainName;
+    }
+   }
+    
+}
+<h2>@ViewBag.Title</h2>
+<style type="text/css">
+    iframe[seamless] {
+        background-color: transparent;
+        border: 0px none transparent;
+        padding: 0px;
+        overflow: hidden;
+    }
+</style>
+<script type="text/javascript">
+    function updateFrame() {
+        
+        var year = $("#yearFilter").val();
+        var quarter = $("#quarterFilter").val();
+
+        var url = '@Url.Content(@baseReportUrl + "?")';
+        url = url + "year=" + year + "&quarter=" + quarter;
+                
+        @if (ViewBag.IsManager == true)
+        {
+            if (ViewBag.IsTalentManagementResource == true)
+            {
+                <text>
+            var showOnlyMyResourcesCheck = document.getElementById("showOnlyMyResources");
+            if (showOnlyMyResourcesCheck.checked)
+                {
+                url = url + '&mdn=@userDomainName&';
+                }
+                </text>
+            }
+           else
+           {
+                <text>
+                url = url + '&mdn=@userDomainName&';
+                </text>
+            }
+        }
+
+        $('#progressReportFrame').attr('src', url);
+    };
+</script>
+
+<div>
+    @{
+        string[] monthNames = new System.Globalization.DateTimeFormatInfo().MonthNames;
+        int currentMonth = DateTime.Now.Month - 1;
+    }
+    <table>
+        <tr>
+            <td colspan="1" style="width: 160px;">
+                <span><strong>By year:</strong></span>
+            </td>
+            <td>                    
+                @Html.DropDownList("Year", (IEnumerable<SelectListItem>)ViewData["ListOfYears"], new { style = "width: 80px;" ,id="yearFilter" })                                 
+            </td>            
+            <td>
+                <span><strong> and quarter:</strong></span>
+            </td>
+            <td>                    
+                @Html.DropDownList("Quarter", (IEnumerable<SelectListItem>)ViewData["ListOfQuarters"], new { style = "width: 110px;", id="quarterFilter" })                                 
+            </td>
+  @if (ViewBag.IsManager == true && ViewBag.IsTalentManagementResource == true)
+            {
+            <td>
+                <input type="checkbox" id="showOnlyMyResources" value="showOnlyMyResources" /><text>Show only My Resources</text>
+            </td>
+            }
+            <td>
+                <input type="button" id="changeframe" value="Change" onclick="updateFrame()">
+            </td>
+        </tr>
+    </table>
+</div>
+
+<IFrame id="progressReportFrame" src="@Url.Content(defaultReportUrl)" width="100%" height="650" seamless="seamless"></iframe>

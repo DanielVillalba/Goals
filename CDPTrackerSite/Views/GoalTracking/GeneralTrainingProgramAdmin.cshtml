@@ -1,0 +1,131 @@
+﻿@model List<DataSource.GeneralTrainingProgram>
+@{
+    ViewBag.Title = "General Training Programs";
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+
+
+<div class="pageDescription">
+    <div class="description">
+        <h2>@ViewBag.Title</h2>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+            <div class="fancy-table">
+
+                <div class="smallLabels visible-xs pull-right" style="padding-bottom:3px">
+                    Add New
+                    <a href="@Url.Action("CreateGeneralTrainingProgram")" style="text-decoration: none;">
+                        <img src="@Url.Content("~/Content/images/AddGoal-icon.png")" height="18" width="18" title="Add General Training Program" style="border:none;" />
+                    </a>
+                </div>
+
+                <div class="fancy-header hidden-xs">
+                    <div class="fancy-row form-group">
+                        <div class="form-group col-sm-2 text-center">
+                            Name
+                        </div>
+                        <div class="form-group col-sm-3 text-center">
+                            Category
+                        </div>
+                        <div class="form-group col-sm-2 text-center">
+                            Start Date
+                        </div>
+                        <div class="form-group col-sm-2 text-center">
+                            Finish Date
+                        </div>
+                        <div class="form-group col-sm-1 text-center">
+                            Link
+                        </div>
+                        <div class="form-group col-sm-2 text-center">
+                            <a href="@Url.Action("CreateGeneralTrainingProgram")" style="text-decoration: none;">
+                                <img src="@Url.Content("~/Content/images/AddGoal-icon.png")" height="18" width="18" title="Add General Training Program" style="border:none;" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="fancy-body">
+                    @if (Model == null)
+                    {
+                        <div class="fancy-row form-group">
+                            <div class="form-group col-sm-12">
+                                <div>
+                                    No Data Available
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="fancy-row form-group">
+
+                                <div class="form-group col-sm-2 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        Name
+                                    </div>
+                                    @item.Name
+                                </div>
+
+                                <div class="form-group col-sm-3 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        Category
+                                    </div>
+                                    @item.TrainingProgramCategory.Name
+                                </div>
+
+                                <div class="form-group col-sm-2 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        Start Date
+                                    </div>
+                                    @if (item.StartDate != null)
+                                    {
+                                        @String.Format("{0:d}", item.StartDate)
+                                    }
+                                </div>
+
+                                <div class="form-group col-sm-2 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        End Date
+                                    </div>
+                                    @if (item.FinishDate != null)
+                                    {
+                                        @String.Format("{0:d}", item.FinishDate)
+                                    }
+                                </div>
+
+                                <div class="form-group col-sm-1 text-center">
+                                    <div class="smallLabels visible-xs">
+                                        Link
+                                    </div>
+                                    @if (item.Link != null)
+                                    {
+                                        <a href="@item.Link" target="_blank" style="text-decoration: none">
+                                            <img src="@Url.Content("~/Content/images/link.png")" height="22" width="22" title="Click Here" style="margin-left: 10px; border: none" />
+                                        </a>
+                                    }
+                                </div>
+
+                                <div class="form-group col-sm-2 text-center">
+                                    <a href="@Url.Action("EditGeneralTrainingProgram", new { id = item.IdGeneralTrainingProgram })" style="text-decoration: none">
+                                        <img src="@Url.Content("~/Content/images/EditGoal-icon.png")" height="22" width="22" title="Edit General Training Program" style="margin-left: 10px; border: none;" />
+                                    </a>
+                                    &nbsp &nbsp
+                                    <a href="@Url.Action("DeleteGeneralTrainingProgram", new { id = item.IdGeneralTrainingProgram})" style="text-decoration:none">
+                                        <img src="@Url.Content("~/Content/images/DeleteGoal-icon.png")" height="17" width="17" title="Delete General Training Program" style="border: none;" />
+                                    </a>
+                                </div>
+
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

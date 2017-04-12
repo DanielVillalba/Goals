@@ -1,0 +1,344 @@
+﻿<div class="currentCycle">
+    Cycle: @ViewBag.CurrentCycle
+</div>
+
+<div class="pageInformation">
+    <h3 class="title">
+        What are your priorities for the upcoming cycle?
+    </h3>
+    <div class="description">
+        In your priorities you can include skills you would like to develop, key goals, activities you want to complete.
+        <br />
+        Think of this as your growth plan for the upcoming cycle. In your priorities you may also include any performance goal.
+        <br /><br />
+        Useful information you can include:<br />
+        What will you do and when. How will you measure your success?
+    </div>
+</div>
+
+<form id="addPriorityForm" class="form-horizontal">
+    <div class="form-group">
+        <label for="Priority" class="col-sm-2 control-label">
+            Priority:
+        </label>
+        <div class="col-sm-6">
+            <input id="Priority" type="text" class="form-control" placeholder="Priority" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Category" class="col-sm-2 control-label">
+            Category:
+        </label>
+        <div class="col-sm-6">
+            @Html.DropDownList("Category", (IEnumerable<SelectListItem>)ViewData["ListOfCategories"], new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group cycleContainer">
+        <label for="Year" class="col-sm-2 control-label">
+            Cycle:
+        </label>
+        <div class="col-sm-6">
+            <div class="form-group col-sm-4">
+                @Html.DropDownList("Year", (IEnumerable<SelectListItem>)ViewData["ListOfYears"], new { @class = "form-control" })
+            </div>
+            <div class="form-group col-sm-8">
+                @Html.DropDownList("Quarter", (IEnumerable<SelectListItem>)ViewData["ListOfQuarters"], new { @class = "form-control" })
+            </div>
+         </div>
+    </div>
+</form>
+
+<div id="tasksContainer">
+    <div id="tasksHeader">
+        <div>
+            Tasks
+        </div>
+        <div>
+            <img id="addTaskButton" src="@Url.Content("~/Content/images/Add.png")" title="Add Task" />
+        </div>
+    </div>
+    
+    <div id="tasksListHeader">
+        <div class="task-row form-group">
+            <div class="form-group col-sm-1">
+                #
+            </div>
+            <div class="form-group col-sm-4">
+                Task
+            </div>
+            <div class="form-group col-sm-2">
+                Category
+            </div>
+            <div class="form-group col-sm-2">
+                Source
+            </div>
+            <div class="form-group col-sm-1">
+                TDUs
+            </div>
+            <div class="form-group col-sm-2">
+                Finish By
+            </div>
+            <div class="form-group col-sm-1">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+    
+    <div id="taskList">
+             
+    </div>
+</div>
+
+
+<div id="taskTemplate">
+    <div class="task-row form-group" style="display: none">
+        <div class="form-group col-sm-1">
+            <div class="smallLabels visible-xs">
+                
+            </div>
+        </div>
+        <div class="form-group col-sm-4">
+            <div class="smallLabels visible-xs">
+                Task
+            </div>
+            <input type="text" class="form-control txtTask" required="required" />
+        </div>
+        <div class="form-group col-sm-2">
+            <div class="smallLabels visible-xs">
+                Category
+            </div>
+            @Html.DropDownList("Category", (IEnumerable<SelectListItem>)ViewData["ListOfCategories"], new { @class = "form-control cbCategory" })
+        </div>
+        <div class="form-group col-sm-2">
+            <div class="smallLabels visible-xs">
+                Source
+            </div>
+            @Html.DropDownList("Name", (IEnumerable<SelectListItem>)ViewData["ListOfSources"], new { @class = "form-control cbSource" })
+            
+        </div>
+        <div class="form-group col-sm-1">
+            <div class="smallLabels visible-xs">
+                TDUs
+            </div>
+            <input type="number" class="form-control txtTdus" min="0" value="0" required />
+        </div>
+        <div class="form-group col-sm-2">
+            <div class="smallLabels visible-xs">
+                Finished By
+            </div>
+            <input type="date" class="form-control txtFinishBy" placeholder="mm/dd/yyyy" required />
+        </div>
+        <div class="form-group col-sm-1">
+            <img src="@Url.Content("~/Content/images/Delete-icon.png")" title="Remove Task" class="removeTaskButton" />
+        </div>
+    </div>
+</div>
+
+<div class="addPriorityButton savePriorityButton">
+    <a id="savePriority">
+        <div class="icon">
+            <img src="@Url.Content("~/Content/images/AddGoal-icon.png")" title="Save Priority" />
+        </div>
+        <div class="text">
+            Save Priority
+        </div>
+    </a>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var priorityId = undefined;
+        var taskListManager = new TaskListManager();
+        var priorityRequestHandler = new PriorityRequestHandler();
+
+        new PriorityManager(priorityId, taskListManager, priorityRequestHandler);
+    });
+
+
+    /**
+    * Manages Task List
+    */
+    var TaskListManager = function () {
+        
+        // Private variables
+        var self = this;
+        var TASK_LIST = '#taskList';
+        var TASK_CONTAINER = '.task-row';
+        var TEMPLATE = '#taskTemplate > div';
+        var ADD_TASK_BUTTON = '#addTaskButton';
+        var REMOVE_TASK_BUTTON = '.removeTaskButton';
+        var REMOVE_MESSAGE = 'Are you sure you want to remove this task?';
+
+        // Initialize
+        self.init = function () {
+            // Attach Add Task Event
+            jQuery(ADD_TASK_BUTTON).click(addTask);
+
+            // Attach Remove Task Event
+            jQuery(document).on('click', REMOVE_TASK_BUTTON, confirmRemoveTask);
+
+            // Add a new empty Task
+            addTask();
+        };
+
+        // Get task data
+        self.getTaskListData = function () {
+            return getTaskListData();
+        };
+
+
+        // Add Task to List
+        function addTask () {
+            var tasksList = jQuery(TASK_LIST);
+            var template = jQuery(TEMPLATE).clone();
+
+            tasksList.append(template);
+            template.fadeIn(150);
+        };
+
+        // Get all Tasks Data
+        function getTaskListData() {
+            var taskList = [];
+
+            jQuery(TASK_LIST).find(TASK_CONTAINER).each(function () {
+                var task = {};
+
+                task.taskID = 0;
+                task.taskDescription = jQuery(this).find(".txtTask").val().trim();
+                task.categoryID = jQuery(this).find(".cbCategory").val();
+                task.sourceId = jQuery(this).find(".cbSource").val();
+                task.taskTDU = jQuery(this).find(".txtTdus").val().trim();
+                task.taskFinishDate = jQuery(this).find(".txtFinishBy").val().trim();
+                taskList.push(task);
+            });
+
+            return taskList;
+        }
+
+        // Confirm removal of selected task
+        function confirmRemoveTask() {
+            if (confirm(REMOVE_MESSAGE)) {
+                removeTask(jQuery(this).closest(TASK_CONTAINER));
+            }
+        };
+
+        // Removes task
+        function removeTask(taskRow) {
+            taskRow.slideUp(1000).remove();
+        }
+    };
+
+    var PriorityRequestHandler = function () {
+
+        // Private variables
+        var self = this;
+        var ADD_PRIORITY_URL = './AddPriority';
+        var UPDATE_PRIORITY_URL = './UpdatePriority';
+        var DELETE_PRIORITY_URL = './DeletePriority';
+        
+        // Add Priority
+        self.addPriority = function (priorityData) {
+            //console.log(priorityData);
+            return jQuery.ajax({
+                'type': 'POST',
+                'url': ADD_PRIORITY_URL,
+                'data': { data: JSON.stringify(priorityData) },
+                'error': onError
+            });
+        };
+
+        // Update Priority
+        self.updatePriority = function (priorityId, priorityData) {
+            return jQuery.ajax({
+                'type': 'PUT',
+                'url': UPDATE_PRIORITY_URL + '/' + priorityId,
+                'data': { data: JSON.stringify(priorityData) },
+                'error': onError
+            });
+        };
+
+        // Delete Priority
+        self.deletePriority = function (priorityId) {
+            return jQuery.ajax({
+                'type': 'DELETE',
+                'url': DELETE_PRIORITY_URL + '/' + priorityId,
+                'data': priorityData,
+                'error': onError
+            });
+        };
+
+        // On Error Handler
+        function onError() {
+            alert('Error :(');
+        }
+    };
+
+    /**
+    * Manages the Priority Actions
+    */
+    var PriorityManager = function (priorityId, taskListManager, priorityRequestsHandler) {
+
+        // Private variables
+        var self = this;
+        var SAVE_PRIORITY_BUTTON = '#savePriority';
+        
+        // Initialize functionality
+        function init() {
+            // Attach Add Priority Event
+            jQuery(SAVE_PRIORITY_BUTTON).click(addPriority);
+
+            // Init Task List Actions
+            taskListManager.init();
+        }
+
+        // Add Priority
+        function addPriority() {
+            var priorityData = getPriorityData();
+
+            priorityRequestsHandler
+                .addPriority(priorityData)
+                .success(function () {
+                    alert('Priority Created!');
+                });
+        };
+
+        // Update Priority
+        function updatePriority() {
+            var priorityData = getPriorityData();
+
+            priorityRequestsHandler
+                .updatePriority(priorityId, priorityData)
+                .success(function () {
+                    alert('Updated','Priority Updated!');
+                });
+        };
+
+        // Delete Priority
+        function deletePriority() {
+            var priorityData = getPriorityData();
+
+            priorityRequestsHandler
+                .deletePriority(priorityId, priorityData)
+                .success(function () {
+                    alert('Priority Deleted!');
+                });
+        };
+
+        // Get all the Priority Data
+        function getPriorityData() {
+            var data = {};
+
+            data.priorityDescription = jQuery('#Priority').val();
+            data.categoryId = jQuery('#Category').val();
+            data.Year = jQuery('#Year').val();
+            data.Quarter = jQuery('#Quarter').val();
+            data.tasks = taskListManager.getTaskListData();
+            return data;
+        }
+
+        // Initialize
+        init();
+    };
+
+</script>

@@ -1,0 +1,977 @@
+﻿<div class="pageDescription">
+    <div class="description">
+        <h2>
+            Dashboard report
+        </h2>
+
+        <p>
+            Please select the specific quarter to build the report
+        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Report Quarter :
+                </p>
+                <select id="quarter" class="cbCoreValue form-control">
+                    @foreach (var quarter in Model[0])
+                    {
+                        <option data-value='{"quarter":@quarter.Item1,"year":@quarter.Item2}'> Q@(quarter.Item1)  @quarter.Item2 </option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6" style="visibility:@(ViewBag.HideLocations ? "hidden" : "visible")">
+                @*Only available for Talent Management / CEO, VIP Users*@
+                <p>
+                    Site :
+                </p>
+                <select id="site" class="cbCoreValue form-control">
+                    @if (!ViewBag.HideLocations)
+                    {
+                        <option value="-1"> All sites </option>
+                    }
+                    @foreach (var site in Model[1])
+                    {
+                        <option value="@site.ID"> @site.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    Employee type:
+                </p>
+                <input id="billableChkbox" type="checkbox" value="Billable" checked> Billable<br>
+                <input id="overheadChkbox" type="checkbox" value="Overhead" > Overhead<br>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div class="row">
+            <div class="col-md-12 che">
+                <button id="btnBuildReport" type="button" class="btn btn-success">Build report</button>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div id="CompletionPercentageData" class="panel panel-default">
+            <div class="panel-heading">
+                <!-- here a tittle to the panel can be added -->
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div id="tmiTitle" class="col-lg-6 col-md-6 col-sm-6">
+                        <h4 class="text-center text-primary">Team member input % completed on the system</h4>
+                    </div>
+                    <div id="mcTitle" class="col-lg-6 col-md-6 col-sm-6">
+                        <h4 class="text-center text-primary">Manager's check % completed by manager on the system</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="tmiTableToPDF"class="col-lg-6 col-md-6 col-sm-6">
+                        <table id="tmiTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Percentage completed</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="mcTableToPDF" class="col-lg-6 col-md-6 col-sm-6">
+                        <table id="mcTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Percentage completed</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div id="pieChartsPanel" class="panel panel-default">
+            <div class="panel-heading">
+                <!-- here a tittle to the panel can be added -->
+            </div>
+            <div class="panel-body">
+                <div id="piechart1" class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div id="categorizePersonTitle">
+                            <h4 class="text-center text-primary">How would you categorize this person according to the value he/she brings to your team?</h4>
+                        </div>
+                        <div id="categorizePersonPiechart"></div>
+                    </div>
+                </div>
+                <p>
+
+                </p>
+                <div id="threePieChartArea">
+                    <div class="row">
+                        <div id="performanceTitle" class="col-sm-4 col-md-4 col-lg-4">
+                            <h4 class="text-center text-primary">Performance according to manager.</h4>
+                        </div>
+                        <div id="workAgainTitle" class="col-sm-4 col-md-4 col-lg-4">
+                            <h4 class="text-center text-primary">If I had to/needed to, I would choose this person again today to work within my team.</h4>
+                        </div>
+                        <div id="greatResultsTitle" class="col-sm-4 col-md-4 col-lg-4">
+                            <h4 class="text-center text-primary">I always go to this person when I need great results.</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="performanceChart" class="col-sm-4 col-md-4 col-lg-4">
+                            <div id="performancePiechart"></div>
+                        </div>
+                        <div id="workAgainChart" class="col-sm-4 col-md-4 col-lg-4">
+                            <div id="workAgainPiechart"></div>
+                        </div>
+                        <div id="greatResultsChart"class="col-sm-4 col-md-4 col-lg-4">
+                            <div id="greatResultPiechart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div id="stackChartsPanel" class="panel panel-default">
+            <div class="panel-heading">
+                <!-- here a tittle to the panel can be added -->
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div id="meQuestionsTitle">
+                            <h4 class="text-center text-primary">Individuality, what makes me stay at Tiempo</h4>
+                        </div>
+                        <div id="meQuestionsChart"></div>
+                    </div>
+                </div>
+                <p>
+
+                </p>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div id="weQuestionsTitle">
+                            <h4 class="text-center text-primary">Company Proudness</h4>
+                        </div>
+                        <div id="weQuestionsChart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>
+
+        </p>
+        <div id="downloadReportPDF" class="row">
+            <div class="col-md-12">
+                <button id="btnDownloadReport" type="button" class="btn btn-success">PDF Download</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <script src="@Url.Content("~/Scripts/bootstrap-3.3.6.min.js")"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart', 'bar'] });
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            InitialDisplaySettings();
+        });
+
+        function InitialDisplaySettings() {
+            // initialize the DOM by hiding the some of the elements from the report, this will be displayed when succesfully are loaded with data
+            $('#CompletionPercentageData').hide();
+            $('#pieChartsPanel').hide();
+            $('#piechart1').hide();
+            $('#threePieChartArea').hide();
+            $('#stackChartsPanel').hide();
+            $('#tmiMeChart').hide();
+            $('#tmiWeChart').hide();
+            $('#downloadReportPDF').hide();
+        }
+
+        // build report
+        $("#btnBuildReport").click(function () {
+            // hide the report area again
+            InitialDisplaySettings();
+
+            var quarterSelection;
+            var yearSelection;
+            var locationIdSelection;
+            var locationNameSelection;
+
+            // getting selected quarter data
+            quarterSelection = $('#quarter :selected').data('value').quarter;
+            yearSelection = $('#quarter :selected').data('value').year;
+            locationIdSelection = $("#site").val();
+            locationNameSelection = $("#site :selected").text();
+
+            // build select data object
+            var selectedQuarterSelection = {
+                quarterOfTheYear: quarterSelection,
+                selectedYear: yearSelection
+            };
+
+            var selectedSiteSelection = {
+                LocationId: locationIdSelection,
+                nameLocation: locationNameSelection
+            };
+
+            var selectedSiteAndQuarter = {
+                selectedQuarter: selectedQuarterSelection,
+                selectedSite: selectedSiteSelection
+            };
+
+            // getting employee type param for the report
+            var isBillable = $("#billableChkbox").prop('checked') ? $("#billableChkbox").val() : null;
+            var isOverhead = $("#overheadChkbox").prop('checked') ? $("#overheadChkbox").val() : null;
+
+            // if not type selected warn the user and return
+            if (!isBillable && !isOverhead) {
+                alert('Please select the employee type, select both of them to include All');
+                return;
+            }
+
+            // no identify the employee type param
+            var selectedEmployeeType;
+            if (isBillable && isOverhead) selectedEmployeeType = 'All';
+            else if (isBillable) selectedEmployeeType = 'Billable';
+            else if (isOverhead) selectedEmployeeType = 'Overhead';
+
+
+            // wrapping up data to send request, this data is the same for all the AJAX request required to build the dashboard
+            var data = {
+                siteAndQuarter: selectedSiteAndQuarter,
+                employeeType: selectedEmployeeType
+            };
+
+            // perform the request to the diferent data to build the report
+            BuildCompletedPercentage(data);
+            $('#pieChartsPanel').show();
+            BuildHowWouldYouCategorizeThisPersonPiechart(data);
+            BuildPerformanceBasedOnManagerPiechart(data);
+            BuildChooseToWorkAgainPiechart(data);
+            BuildGreatResultPiechart(data);
+            $('#stackChartsPanel').show();
+            BuildMeQuestionsChart(data);
+            BuildWeQuestionsChart(data);
+            $('#downloadReportPDF').show();
+        });
+
+        function BuildCompletedPercentage(data) {
+            $.ajax({
+                type: "post",
+                url: "GetSurveyCompletePercentage",
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+                    
+                    // remove rows from previous query
+                    $("#tmiTable > tbody").html("");
+                    $("#mcTable > tbody").html("");
+
+                    // validate if there are data available to display on tmiTable
+                    if (data[0].length < 1) {
+                        var rowToAddSurvey = '<tr>' +
+                                                '<td>' +
+                                                    displayWarning() +
+                                                '</td>' +
+                                            '</tr>';
+                        // display warning
+                        $("#tmiTable > thead").html("");
+                        $('#tmiTable').append(rowToAddSurvey);
+                    }
+                    // adding team members input data
+                    for (var i = 0; i < data[0].length; i++) {
+                        var dataToDisplay = data[0][i];
+                        var rowToAddSurvey = '<tr>' +
+                                                '<td>' +
+                                                    dataToDisplay.Name +
+                                                '</td>' +
+                                                '<td>' +
+                                                    dataToDisplay.CompletionPercentage + ' %' +
+                                                '</td>' +
+                                            '</tr>';
+                        $('#tmiTable').append(rowToAddSurvey);
+                    }
+
+                    // validate if there are data available to display on tmiTable
+                    if (data[1].length < 1) {
+                        var rowToAddSurvey = '<tr>' +
+                                                '<td>' +
+                                                    displayWarning() +
+                                                '</td>' +
+                                            '</tr>';
+                        // display warning
+                        $("#mcTable > thead").html("");
+                        $('#mcTable').append(rowToAddSurvey);
+                    }
+                    // adding managers check data
+                    for (var i = 0; i < data[1].length; i++) {
+                        var dataToDisplay = data[1][i];
+                        var rowToAddSurvey = '<tr>' +
+                                                '<td>' +
+                                                    dataToDisplay.Name +
+                                                '</td>' +
+                                                '<td>' +
+                                                    dataToDisplay.CompletionPercentage + ' %' +
+                                                '</td>' +
+                                            '</tr>';
+                        $('#mcTable').append(rowToAddSurvey);
+                    }
+
+                    $('#CompletionPercentageData').show();
+                },
+                error: function () {
+                    alert("Error.");
+                }
+            })
+        }
+
+        // ************************************************************************************
+        function BuildHowWouldYouCategorizeThisPersonPiechart(quarterSiteAndType) {
+            var data = {
+                LocationQuarterAndType: quarterSiteAndType,
+                QuestionSequence: 8     // to define this value please check the udf_Calculate_MangCheck_Comendation function from sql server
+            };
+
+            $.ajax({
+                type: "post",
+                url: "GetManagersCheckSurveyDataBasedOnQuestionSequence",
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+
+                    // validate if there is information available
+                    if (data.length < 1) {
+                        var rowToAddSurvey = displayWarning();
+                        // display warning
+                        deleteDivContent('#categorizePersonPiechart');
+                        $('#categorizePersonPiechart').append(rowToAddSurvey);
+                        console.log('No information available for categorize pie chart.');
+                        $('#piechart1').show(); // this needs to be here, otherwise the .show will redraw the chart and the positioning will be messed up !
+                        return;
+                    }
+
+                    var chartData= [];
+                    chartData.push(['Answer', 'Percentage']);
+
+                    // adding the values from backend's controller
+                    for (var i = 0; i < data.length; i++) {
+                        chartData.push([data[i].Answers, data[i].CompletionPercentage]);
+                    }
+
+                    var data = google.visualization.arrayToDataTable(chartData);
+
+                    $('#piechart1').show(); // this needs to be here, otherwise the .show will redraw the chart and the positioning will be messed up !
+                    categorizePersonPiechartDraw(data);
+
+                    
+                },
+                error: function (error) {
+                    alert('Error found');
+                }
+            })
+
+            // show the three pie charts area at this point, since the creation of each pie chart is async, we don't really control over which chart is 
+            // being drawing, if we draw one chart before the following statement we might end up with a messed layout
+            $('#threePieChartArea').show();
+        }
+
+        function categorizePersonPiechartDraw(data) {
+            var options = {
+                legend: {
+                    position: 'top',
+                    maxLines: 3,
+                    alignment: 'center'
+                },
+                //pointSize: 10,
+                //pointColor: '#b1FFFF',
+                //vAxis: { title: "Response", ticks: [{ v: 0, f: "Strongly Disagree" }, { v: 1, f: "Disagree" }, { v: 2, f: "Neutral" }, { v: 3, f: "Agree" }, { v: 4, f: "Strongly agree" }] },
+                //series: {
+                //    0: { color: '#b1d787' }
+                //},
+                //tooltip: { trigger: "none" },
+                colors: ['#5d89ef', '#f28b1d', '#989da5', '#ede91c'],
+                height: 300,
+                chartArea: {
+                    left: 'auto',
+                    top: 40,
+                    width: '100%',
+                    height: '100%'
+                }
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('categorizePersonPiechart'));
+            chart.draw(data, options);
+        }
+
+        // ************************************************************************************
+        function BuildPerformanceBasedOnManagerPiechart(quarterSiteAndType) {
+            var data = {
+                LocationQuarterAndType: quarterSiteAndType,
+                QuestionSequence: 6     // to define this value please check the udf_Calculate_MangCheck_Comendation function from sql server
+            };
+
+            $.ajax({
+                type: "post",
+                url: "GetManagersCheckSurveyDataBasedOnQuestionSequence",
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+
+                    // validate if there is information available
+                    if (data.length < 1) {
+                        var rowToAddSurvey = displayWarning();
+                        // display warning
+                        deleteDivContent('#performancePiechart');
+                        $('#performancePiechart').append(rowToAddSurvey);
+                        console.log('No information available for performance pie chart.');
+                        return;
+                    }
+
+                    var chartData = [];
+                    chartData.push(['Answer', 'Percentage']);
+
+                    // adding the values from backend's controller
+                    for (var i = 0; i < data.length; i++) {
+                        chartData.push([data[i].Answers, data[i].CompletionPercentage]);
+                    }
+
+                    var data = google.visualization.arrayToDataTable(chartData);
+                    performanceBasedOnManagerPiechartDraw(data);
+                },
+                error: function (error) {
+                    alert('Error found');
+                }
+            })
+        }
+
+        function performanceBasedOnManagerPiechartDraw(data) {
+            var options = {
+                legend: {
+                    position: 'top',
+                    maxLines: 3,
+                    alignment: 'center'
+                },
+                colors: ['#989da5', '#5d89ef', '#f28b1d', '#ede91c'],
+                height: 250,
+                chartArea: {
+                    left: 'auto',
+                    top: 40,
+                    width: '100%',
+                    height: '100%'
+                }
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('performancePiechart'));
+            chart.draw(data, options);
+        }
+
+        // ************************************************************************************
+        function BuildChooseToWorkAgainPiechart(quarterSiteAndType) {
+            var data = {
+                LocationQuarterAndType: quarterSiteAndType,
+                QuestionSequence: 2     // to define this value please check the udf_Calculate_MangCheck_Comendation function from sql server
+            };
+
+            $.ajax({
+                type: "post",
+                url: "GetManagersCheckSurveyDataBasedOnQuestionSequence",
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+
+                    // validate if there is information available
+                    if (data.length < 1) {
+                        var rowToAddSurvey = displayWarning();
+                        // display warning
+                        deleteDivContent('#workAgainPiechart');
+                        $('#workAgainPiechart').append(rowToAddSurvey);
+                        console.log('No information available for work again pie chart.');
+                        return;
+                    }
+
+                    var chartData = [];
+                    chartData.push(['Answer', 'Percentage']);
+
+                    // adding the values from backend's controller
+                    for (var i = 0; i < data.length; i++) {
+                        chartData.push([data[i].Answers, data[i].CompletionPercentage]);
+                    }
+
+                    var data = google.visualization.arrayToDataTable(chartData);
+                    workAgainPiechartDraw(data);
+                },
+                error: function (error) {
+                    alert('Error found');
+                }
+            })
+        }
+
+        function workAgainPiechartDraw(data) {
+            var options = {
+                legend: {
+                    position: 'top',
+                    maxLines: 3,
+                    alignment: 'center'
+                },
+                colors: ['#f28b1d', '#5d89ef'],
+                height: 250,
+                chartArea: {
+                    left: 'auto',
+                    top: 40,
+                    width: '100%',
+                    height: '100%'
+                }
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('workAgainPiechart'));
+            chart.draw(data, options);
+        }
+
+        // ************************************************************************************
+        function BuildGreatResultPiechart(quarterSiteAndType) {
+            var data = {
+                LocationQuarterAndType: quarterSiteAndType,
+                QuestionSequence: 1     // to define this value please check the udf_Calculate_MangCheck_Comendation function from sql server
+            };
+
+            $.ajax({
+                type: "post",
+                url: "GetManagersCheckSurveyDataBasedOnQuestionSequence",
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+
+                    // validate if there is information available
+                    if (data.length < 1) {
+                        var rowToAddSurvey = displayWarning();
+                        // display warning
+                        deleteDivContent('#greatResultPiechart');
+                        $('#greatResultPiechart').append(rowToAddSurvey);
+                        console.log('No information available for great results pie chart.');
+                        return;
+                    }
+
+                    var chartData = [];
+                    chartData.push(['Answer', 'Percentage']);
+
+                    // adding the values from backend's controller
+                    for (var i = 0; i < data.length; i++) {
+                        chartData.push([data[i].Answers, data[i].CompletionPercentage]);
+                    }
+
+                    var data = google.visualization.arrayToDataTable(chartData);
+                    greatResultPiechartDraw(data);
+                },
+                error: function (error) {
+                    alert('Error found');
+                }
+            })
+        }
+
+        function greatResultPiechartDraw(data) {
+            var options = {
+                legend: {
+                    position: 'top',
+                    maxLines: 3,
+                    alignment: 'center'
+                },
+                colors: ['#5d89ef', '#f28b1d', '#989da5', '#ede91c', '#5746c4'],
+                height: 250,
+                chartArea: {
+                    left: 'auto',
+                    top: 40,
+                    width: '100%',
+                    height: '100%'
+                }
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('greatResultPiechart'));
+            chart.draw(data, options);
+        }
+
+        // ************************************************************************************
+        function BuildMeQuestionsChart(quarterSiteAndType) {
+            var data = {
+                LocationQuarterAndType: quarterSiteAndType,
+                QuestionSequence: 1     // in this case we use the same model to handle the sequence field on udf_Calculate_team_agreement
+            };
+
+            $.ajax({
+                type: "post",
+                url: "GetMeWeQuestionsBasedOnSequence",
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+
+                    // validate if there is information available
+                    if (data.length < 1) {
+                        var rowToAddSurvey = displayWarning();
+                        // display warning
+                        deleteDivContent('#meQuestionsChart');
+                        $('#meQuestionsChart').append(rowToAddSurvey);
+                        console.log('No information available for ME questions stacked bar chart.');
+                        $('#tmiMeChart').show();    // show the div before draw the chart ;-)
+                        return;
+                    }
+
+                    var chartData = [];
+                    chartData.push(['Question', 'Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree']);
+
+                    // adding the values from backend's controller
+                    for (var i = 0; i < data.length; i++) {
+                        chartData.push([data[i].Text, data[i].Strongly_Agree, data[i].Agree, data[i].Neutral, data[i].Disagree, data[i].Strongly_Disagree]);
+                    }
+
+                    var dataTable = google.visualization.arrayToDataTable(chartData);
+
+                    $('#tmiMeChart').show();    // show the div before draw the chart ;-)
+                    meQuestionsBarStackChartDraw(dataTable);
+                },
+                error: function (error) {
+                    alert('Error found');
+                }
+            })
+        }
+
+        function meQuestionsBarStackChartDraw(data) {
+
+            // if the value is less than the minimun value defined, we do not display the annotation since the area displayed is too small
+            var minimunValueToAnnotation = 5.00;
+            var calculateAnnotation = function (value) {
+                if (value < minimunValueToAnnotation) {
+                    return '';
+                } else {
+                    return value + '%';
+                }
+            }
+
+            // add annotations to the data
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0,
+                            1,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 1));
+                                },
+                                //sourceColumn: 1,
+                                type: "string",
+                                role: "annotation"
+                            },
+                            2,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 2));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            },
+                            3,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 3));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            },
+                            4,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 4));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            },
+                            5,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 5));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            }
+            ]);
+
+            var options = {
+                isStacked: 'percent',
+                legend: {
+                    position: 'top',
+                    maxLines: 2,
+                    alignment: 'center'
+                },
+                colors: ['#5d89ef', '#f28b1d', '#989da5', '#ede91c', '#5746c4'],
+                height: 300,
+                chartArea: {
+                    left: '30%',
+                    top: 40,
+                    width: '70%',
+                    height: '100%'
+                }
+            };
+            var chart = new google.visualization.BarChart(document.getElementById('meQuestionsChart'));
+            chart.draw(view, options);
+        }
+
+        // ************************************************************************************
+        function BuildWeQuestionsChart(quarterSiteAndType) {
+            var data = {
+                LocationQuarterAndType: quarterSiteAndType,
+                QuestionSequence: 0     // in this case we use the same model to handle the sequence field on udf_Calculate_team_agreement
+            };
+
+            $.ajax({
+                type: "post",
+                url: "GetMeWeQuestionsBasedOnSequence",
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+
+                    // validate if there is information available
+                    if (data.length < 1) {
+                        var rowToAddSurvey = displayWarning();
+                        // display warning
+                        deleteDivContent('#weQuestionsChart');
+                        $('#weQuestionsChart').append(rowToAddSurvey);
+                        console.log('No information available for WE questions stacked bar chart.');
+                        $('#tmiWeChart').show();    // show the div before draw the chart ;-)
+                        return;
+                    }
+
+                    var chartData = [];
+                    chartData.push(['Question', 'Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree']);
+
+                    // adding the values from backend's controller
+                    for (var i = 0; i < data.length; i++) {
+                        chartData.push([data[i].Text, data[i].Strongly_Agree, data[i].Agree, data[i].Neutral, data[i].Disagree, data[i].Strongly_Disagree]);
+                    }
+
+                    var dataTable = google.visualization.arrayToDataTable(chartData);
+
+                    $('#tmiWeChart').show();    // show the div before draw the chart ;-)
+                    weQuestionsBarStackChartDraw(dataTable);
+                },
+                error: function (error) {
+                    alert('Error found');
+                }
+            })
+        }
+
+        function weQuestionsBarStackChartDraw(data) {
+
+            // if the value is less than the minimun value defined, we do not display the annotation since the area displayed is too small
+            var minimunValueToAnnotation = 5.00;
+            var calculateAnnotation = function (value) {
+                if (value < minimunValueToAnnotation) {
+                    return '';
+                } else {
+                    return value + '%';
+                }
+            }
+
+            // add annotations to the data
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0,
+                            1,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 1));
+                                },
+                                //sourceColumn: 1,
+                                type: "string",
+                                role: "annotation"
+                            },
+                            2,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 2));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            },
+                            3,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 3));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            },
+                            4,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 4));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            },
+                            5,
+                            {
+                                calc: function (dt, row) {
+                                    return calculateAnnotation(dt.getValue(row, 5));
+                                },
+                                type: "string",
+                                role: "annotation"
+                            }
+            ]);
+
+            var options = {
+                isStacked: 'percent',
+                legend: {
+                    position: 'top',
+                    maxLines: 2,
+                    alignment: 'center'
+                },
+                colors: ['#5d89ef', '#f28b1d', '#989da5', '#ede91c', '#5746c4'],
+                height: 300,
+                chartArea: {
+                    left: '30%',
+                    top: 40,
+                    width: '70%',
+                    height: '100%'
+                }
+            };
+            var chart = new google.visualization.BarChart(document.getElementById('weQuestionsChart'));
+            chart.draw(view, options);
+        }
+
+        // build report
+        $("#downloadReportPDF").click(function () {
+            // construct the PDF report using HTML code !, please note that the width values are hardcoded, this is fine
+            // we are sending this HTML to be parsed as PDF and those values works well enough.
+
+            // getting the title of the report
+            //quarterSelection = $('#quarter :selected').data('value').quarter;
+            //yearSelection = $('#quarter :selected').data('value').year;
+            var quarterSelected = $('#quarter :selected').text();
+            var locationNameSelection = $("#site :selected").text();
+
+            var title = locationNameSelection + ' Cycle: ' + quarterSelected + ' - Dashboard Report';
+
+            var html =
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '<div style="width: 918px;" align="center">' +
+                    '<h1>' + title + '</h1>' +
+                '</div>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '<div style="width: 918px;">' +
+                    '<div style="width: 459px; display: inline-block;" >' +
+                        $('#tmiTitle').html() +
+                        $('#tmiTableToPDF').html() +
+                    '</div>' +
+                    '<div style="width: 459px; display: inline-block;" >' +
+                        $('#mcTitle').html() +
+                        $('#mcTableToPDF').html() +
+                    '</div>' +
+                '</div>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '<div style="width: 918px;" align="center">' +
+                    $('#categorizePersonTitle').html() +
+                '</div>' +
+                $('#categorizePersonPiechart').html() +
+                '</br>' +
+                '</br>' +
+                '<div style="width: 918px;">' +
+                    '<div style="width: 306; display: inline-block;" >' +
+                        $('#performanceTitle').html() +
+                        $('#performanceChart').html() +
+                    '</div>' +
+                    '<div style="width: 306; display: inline-block;" >' +
+                        $('#workAgainTitle').html() +
+                        $('#workAgainChart').html() +
+                    '</div>' +
+                    '<div style="width: 306; display: inline-block;" >' +
+                        $('#greatResultsTitle').html() +
+                        $('#greatResultsChart').html() +
+                    '</div>' +
+                '</div>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +   // page break on the pdf file
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                //$('#tmiMeChart').html() +
+                '<div style="width: 918px;" align="center">' +
+                    $('#meQuestionsTitle').html() +
+                '</div>' +
+                $('#meQuestionsChart').html() +
+                '</br>' +
+                '</br>' +
+                '</br>' +
+                '<div style="width: 918px;" align="center">' +
+                    $('#weQuestionsTitle').html() +
+                '</div>' +
+                $('#weQuestionsChart').html();
+                
+            var DashboardPDFasHTML = html;
+
+            var data = {
+                html2PDF: DashboardPDFasHTML,
+                Name: 'Dashboard.pdf'    // not required for now
+            };
+
+
+            $.ajax({
+                type: 'post',
+                url: 'UploadHTMLCode',
+                data: { data: JSON.stringify(data) },
+                success: function (data) {
+                    if (data.success) {
+                        console.log(data.message);
+                        window.location.href = "/GoalTracking/DownloadDashboardPDF";
+                    }
+                    else {
+                        console.log(result.message);
+                        alert('Something went wrong with the PDF download, please try again.');
+                    }
+                },
+                error: function (e) {
+                    console.log(e.responseText);
+                }
+            });
+
+        });
+
+        // adding warning text when empty
+        function displayWarning() {
+            var warningMessage = '<div class="alert alert-warning">' +
+                                 '<strong>No data available !</strong>' +
+                                 '<br/>There is no information available on the DB.' +
+                                 '<br/> Thank you !'
+            '</div>';
+            return warningMessage;
+        }
+
+        function deleteDivContent(divID) {
+            $(divID+'').html('');
+        }
+    </script>

@@ -1,0 +1,72 @@
+﻿/* Medium devices (desktops, 992px and up) */
+@media all and (max-width: 992px) {
+    #bodyContainer,
+    #bodyContainer > header,
+    #bodyContainer > main,
+    #bodyContainer > footer {
+        width: 100%;
+    }
+    #header-center {
+        width: 40%;
+    }
+
+    .pageInformation {
+        padding-left: 0px;
+    }   
+        .pageInformation .description {
+            font-size: 12px;
+        }
+
+    #bodyContainer > footer {
+        text-align: left;
+        padding: 5px 5px;
+    }
+
+    .addPriorityButton {
+        bottom: 3px;
+        right: 3px;
+        z-index: 1;
+    }
+    .addPriorityButton .icon img {
+        max-width: 35px;
+        max-height: 35px;
+    }
+    .addPriorityButton .text {
+        display: none;
+    }
+
+
+    /* AddPriority
+    --------------------------------------------------------------*/
+    #addPriorityForm {
+        padding-left: 0;
+    }
+        #addPriorityForm .cycleContainer div:last-child div:last-child {
+            margin-left: 0;
+        }
+
+
+    /*  /TeamMembersInput
+    ******************************************************/
+    #questionsContainer {
+        margin-top: 10px;
+    }
+    #questionsContainer .question .answer,
+    #questionsContainer .question[data-question-type='1'] .answer {
+        width: 100%;
+        height:auto;
+    }
+
+    /*  /ManagersCheck
+    ******************************************************/
+    #questionsContainer .question .answers-container .answer {
+        margin-top: 10px;
+        width: 100%;
+        height: auto;
+    }
+    
+    #questionsContainer .question.longAns label{
+        /*min-height: 90px;*/
+        height:auto;
+    }
+}
